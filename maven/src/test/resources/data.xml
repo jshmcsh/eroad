@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <user id="1" username="abcd" passwd="123456" />
+    <user id="2" username="zxcv" passwd="654321" />
+</dataset>
