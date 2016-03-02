@@ -33,7 +33,7 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(head3.getStatus(), is("fail"));
                 
     }
-*/    
+   
     @Test
     public void test_do_regist() {
         
@@ -42,7 +42,25 @@ public class CompanyControllerTest extends IntegrateBase {
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok"));
         int addid=Integer.parseInt(getSingleObject(list, String.class));
-        assertThat(addid, is(5));
+        assertThat(addid, is(7));
+        
+    }
+    
+    
+     @Test
+    public void test_do_logout() {
+  
+        List list = getJsonReturn("/company/logout.erd");
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok")); 
+        
+    }*/ 
+     @Test
+    public void test_show_car_around() {
+  
+        List list = getJsonReturn("/company/show_car_around.erd");
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok")); 
         
     }
 /*

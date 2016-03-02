@@ -2,7 +2,9 @@ package jlxy.eroad.server.web.controller;
 
 import com.google.gson.Gson;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import jlxy.eroad.server.bean.param.LoginBean;
+import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.regist(param);
         return getRetList(sr);
     }
-   
+
     @RequestMapping("login.erd")
     @ResponseBody
     public List do_login(@RequestParam("json") String json) {
@@ -39,7 +41,24 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.login(param);
         return getRetList(sr);
     }
-    
+
+    @RequestMapping("logout.erd")
+    @ResponseBody
+    public List do_logout(HttpServletRequest req) {
+        Sret sr = new Sret();
+        req.getSession().invalidate();
+        return getRetList(sr);
+    }
+
+    @RequestMapping("show_car_around.erd")
+    @ResponseBody
+    //@Logged
+    public List do_show_car_around(@RequestParam("json") String json) {  
+        Position param = new Gson().fromJson(json, Position.class);
+        Sret sr = cs.ShowCarAround(param);
+        return getRetList(sr);
+    }
+
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {
