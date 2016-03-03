@@ -14,7 +14,7 @@ import org.yecq.baseframework.web.Head;
  * @author yecq
  */
 public class CompanyControllerTest extends IntegrateBase {
-/*
+
     @Test
     public void test_do_login() {
         LoginBean param = new LoginBean("abcd", "123456");
@@ -24,7 +24,7 @@ public class CompanyControllerTest extends IntegrateBase {
       
         LoginBean param2 = new LoginBean("abcd", "12345");
         List list2 = getJsonReturn("/company/login.erd", param2);
-        Head head2 = getHeader(list2);
+       Head head2 = getHeader(list2);
         assertThat(head2.getStatus(), is("fail"));
         
         LoginBean param3 = new LoginBean("aaa", "aaa");
@@ -33,7 +33,7 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(head3.getStatus(), is("fail"));
                 
     }
-   
+   /* 
     @Test
     public void test_do_regist() {
         
@@ -54,7 +54,7 @@ public class CompanyControllerTest extends IntegrateBase {
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok")); 
         
-    }*/ 
+    }
      @Test
     public void test_show_car_around() {
   
@@ -62,7 +62,7 @@ public class CompanyControllerTest extends IntegrateBase {
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok")); 
         
-    }
+    }*/ 
 /*
     @Test
     public void test_throwException() {
