@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
+import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,16 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.ShowCarAround(param);
         return getRetList(sr);
     }
-
+    
+    @RequestMapping("send_order.erd")
+    @ResponseBody
+    //@Logged
+    public List do_send_order(@RequestParam("json") String json) {  
+        OrderBean param = new Gson().fromJson(json, OrderBean.class);
+        Sret sr = cs.send_order(param);
+        return getRetList(sr);
+    }
+    
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {
