@@ -18,7 +18,7 @@ import org.yecq.baseframework.web.Logged;
 
 /**
  *
- * @author cp
+ * @author CP
  */
 @Controller
 @RequestMapping("/company/")
@@ -66,6 +66,15 @@ public class CompanyController extends ControllerBase {
     public List do_send_order(@RequestParam("json") String json) {  
         OrderBean param = new Gson().fromJson(json, OrderBean.class);
         Sret sr = cs.send_order(param);
+        return getRetList(sr);
+    }
+    
+    @RequestMapping("get_bidding_order_list.erd")
+    @ResponseBody
+    //@Logged
+    
+    public List do_get_bidding_order_list() {  
+        Sret sr = cs.get_bidding_order_list();
         return getRetList(sr);
     }
     

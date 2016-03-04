@@ -9,7 +9,7 @@ import org.yecq.baseframework.plain.core.Root;
 /**
  * 数据库操作示例
  *
- * @author cp
+ * @author CP
  */
 @Component
 public class CompanyDatabase {
@@ -42,13 +42,22 @@ public class CompanyDatabase {
     }
     // 插入一条订单到数据库
     public String addSendOrder(OrderBean order){
-        String stmt="insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,state) values (?,?)";
+        String stmt="insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,state) values (?,?,?,?,?,?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{order.getOrder_number(),order.getStart_time(),order.getExpect_end_time(),order.getExpect_fare(),order.getStart_address(),order.getDestination(),order.getDescription(),"发布中"});
         return ids[0];
     }
+    //得到所有正在发布的订单
+    
+    public List getBiddingOrderList(){
+        String stmt="select * from orders where state ='displaying'";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt);
+        return ret;
+    }
+    
     // 修改用户
     public void modifyPasswd(String username, String passwd) {
         String stmt = "update user set passwd = ? where username = ?";
         Root.getInstance().getSqlOperator().update(stmt, new Object[]{passwd, username});
+
     }
 }

@@ -81,7 +81,19 @@ public class CompanyService {
         sr.setData(addSendOrderRet);
         return sr;
     }
+    
+    public Sret get_bidding_order_list(){
+        List BiddingOrderList=cdb.getBiddingOrderList();
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(BiddingOrderList);
+        return sr;
+    }
+    
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");
     }
+    
+    
+    
 }
