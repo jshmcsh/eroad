@@ -15,7 +15,7 @@
                     o.a = a;
                     o.b = b;
 
-                    $.post("/eroad/test/compute.erd", {json: JSON.stringify(o)},
+                    $.post(prefix+"/test/compute.erd", {json: JSON.stringify(o)},
                             function (data) {
                                 alert("返回状态：" + data[0].status + ", 结果：" + data[1].result);
                             },
