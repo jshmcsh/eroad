@@ -2,6 +2,7 @@ package jlxy.eroad.server.web.controller;
 
 import java.util.List;
 import jlxy.eroad.server.bean.param.LoginBean;
+import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,7 +15,7 @@ import org.yecq.baseframework.web.Head;
  * @author yecq
  */
 public class CompanyControllerTest extends IntegrateBase {
-
+ /*
     @Test
     public void test_do_login() {
         LoginBean param = new LoginBean("abcd", "123456");
@@ -33,7 +34,7 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(head3.getStatus(), is("fail"));
                 
     }
-   /* 
+   
     @Test
     public void test_do_regist() {
         
@@ -74,4 +75,17 @@ public class CompanyControllerTest extends IntegrateBase {
 
     }
     */
+     @Test
+    public void test_do_send_order() {
+        
+        OrderBean param = new OrderBean("111","2012-1-1","2012-1-1","111","撒范德萨","北京","上海");
+        List list = getJsonReturn("/company/send_order.erd", param);
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok"));
+        
+        int addid=Integer.parseInt(getSingleObject(list, String.class));
+        assertThat(addid, is(1));
+        
+    }
+    
 }

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import jlxy.eroad.server.bean.param.ComputeParam;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
+import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
 import jlxy.eroad.server.core.CompanyDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,14 @@ public class CompanyService {
         sr.setOk();
         return sr;
     }
-
+    
+    public Sret send_order(OrderBean order){
+        String addSendOrderRet=cdb.addSendOrder(order);
+        Sret sr = new Sret();
+        sr.setOk();
+        sr.setData(addSendOrderRet);
+        return sr;
+    }
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");
     }
