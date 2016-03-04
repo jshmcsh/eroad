@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Eroad</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="js/jquery.min.js"></script>
-        <script>
-            $(function () {
-                $("#compute").click(function () {
-                    var a = $("#a").val();
-                    var b = $("#b").val();
 
-                    var o = {};
-                    o.a = a;
-                    o.b = b;
+<head>
+    <title>Eroad</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="js/jquery.min.js"></script>
+    <script>
+    $(function() {
+        var prefix = "http://eroadautobuilder.applinzi.com";
+        $("#compute").click(function() {
+            var a = $("#a").val();
+            var b = $("#b").val();
 
-                    $.post("/eroad/test/compute.erd", {json: JSON.stringify(o)},
-                            function (data) {
-                                alert("返回状态：" + data[0].status + ", 结果：" + data[1].result);
-                            },
-                            "json");
-                });
-            });
-        </script>
-    </head>
-    <body>
-        <div>
-            <input type="text" id="a"/>&nbsp;+&nbsp;<input type="text" id="b"/>&nbsp;<input type="button" id="compute" value="计算"/>
-        </div>
-    </body>
+            var o = {};
+            o.a = a;
+            o.b = b;
+            $.post(prefix + "/test/compute.erd", {
+                    json: JSON.stringify(o)
+                }, 
+                function(data) {
+                    alert("返回状态：" + data[0].status + ", 结果：" + data[1].result);
+                },
+                "json");
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div>
+        <input type="text" id="a" />&nbsp;+&nbsp;
+        <input type="text" id="b" />&nbsp;
+        <input type="button" id="compute" value="计算" />
+    </div>
+</body>
+
 </html>
