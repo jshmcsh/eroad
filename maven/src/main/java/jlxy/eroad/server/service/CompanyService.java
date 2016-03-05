@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 import javax.transaction.Transactional;
 import jlxy.eroad.server.bean.param.ComputeParam;
+import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.OrderBean;
+import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
 import jlxy.eroad.server.core.CompanyDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,15 @@ public class CompanyService {
         Sret sr=new Sret();
         sr.setOk();
         sr.setData(BiddingOrderList);
+        return sr;
+    }
+    
+    //订单成交
+    public Sret deal_order(SelectBidBean orderbean){
+        String dealOrderRet=cdb.getDeal(orderbean);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(dealOrderRet);
         return sr;
     }
     

@@ -3,6 +3,7 @@ package jlxy.eroad.server.core;
 import java.util.List;
 import java.util.Map;
 import jlxy.eroad.server.bean.param.company.OrderBean;
+import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import org.springframework.stereotype.Component;
 import org.yecq.baseframework.plain.core.Root;
 
@@ -52,6 +53,16 @@ public class CompanyDatabase {
         String stmt="select * from orders where state ='displaying'";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt);
         return ret;
+    }
+    //订单成交
+    public String getDeal(SelectBidBean sbb){
+        String stmt_update_order="update orders set state = 'executing',finish_or_not='no' where id =?";
+        Root.getInstance().getSqlOperator().update(stmt_update_order, new Object[]{sbb.getOrder_id()});
+        String stmt_update_carDetail="update car_detail set state = '运输中' where car_id =?";
+        Root.getInstance().getSqlOperator().update(stmt_update_carDetail, new Object[]{sbb.getCar_id()});
+        String stmt_insert="insert into order_relation_detail (car_id,orders_id,company_id) values(?,?,?)";
+        String[] ids=Root.getInstance().getSqlOperator().insert(stmt_insert, new Object[]{sbb.getCar_id(),sbb.getOrder_id(),sbb.getCompany_id()});
+        return ids[0];
     }
     
     // 修改用户

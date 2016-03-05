@@ -3,9 +3,11 @@ package jlxy.eroad.server.web.controller;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.OrderBean;
+import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -78,6 +80,24 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
     
+    @RequestMapping("deal_order.erd")
+    @ResponseBody
+    //@Logged
+    public List do_deal_order(@RequestParam("json") String json) {
+        SelectBidBean orderId = new Gson().fromJson(json, SelectBidBean.class);
+        Sret sr = cs.deal_order(orderId);
+        return getRetList(sr);
+    }/*
+    @RequestMapping("deal_order.erd")
+    @ResponseBody
+    //@Logged
+    
+    public List do_get_executing_order(@RequestParam("json") String json) {
+        IdBean companyId = new Gson().fromJson(json, IdBean.class);
+        Sret sr = cs.deal_order(companyId);
+        return getRetList(sr);
+    }
+    */
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {
