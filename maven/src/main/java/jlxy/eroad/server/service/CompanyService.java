@@ -100,6 +100,14 @@ public class CompanyService {
         sr.setData(dealOrderRet);
         return sr;
     }
+    //正在运行的订单信息列表
+    public Sret get_executing_order(IdBean companyId){
+        List ExecutingOrderListRet=cdb.getExecutingOrderList(companyId);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(ExecutingOrderListRet);
+        return sr;
+    }
     
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");

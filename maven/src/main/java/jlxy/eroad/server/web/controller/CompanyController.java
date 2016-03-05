@@ -87,17 +87,16 @@ public class CompanyController extends ControllerBase {
         SelectBidBean orderId = new Gson().fromJson(json, SelectBidBean.class);
         Sret sr = cs.deal_order(orderId);
         return getRetList(sr);
-    }/*
-    @RequestMapping("deal_order.erd")
+    }
+    @RequestMapping("get_executing_order.erd")
     @ResponseBody
     //@Logged
-    
     public List do_get_executing_order(@RequestParam("json") String json) {
         IdBean companyId = new Gson().fromJson(json, IdBean.class);
-        Sret sr = cs.deal_order(companyId);
+        Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
     }
-    */
+    
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {

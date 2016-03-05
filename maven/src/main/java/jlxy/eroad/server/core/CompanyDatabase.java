@@ -2,6 +2,7 @@ package jlxy.eroad.server.core;
 
 import java.util.List;
 import java.util.Map;
+import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import org.springframework.stereotype.Component;
@@ -63,6 +64,12 @@ public class CompanyDatabase {
         String stmt_insert="insert into order_relation_detail (car_id,orders_id,company_id) values(?,?,?)";
         String[] ids=Root.getInstance().getSqlOperator().insert(stmt_insert, new Object[]{sbb.getCar_id(),sbb.getOrder_id(),sbb.getCompany_id()});
         return ids[0];
+    }
+    //正在运行的订单信息列表
+    public List<Map<String, Object>> getExecutingOrderList(IdBean companyId) {
+        String stmt = "select * from executing_order_list where id = ?";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
+        return ret;
     }
     
     // 修改用户

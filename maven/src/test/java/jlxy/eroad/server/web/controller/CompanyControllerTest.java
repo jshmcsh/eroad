@@ -118,18 +118,43 @@ public class CompanyControllerTest extends IntegrateBase {
 
      }
      */
+    /*
+     @Test
+     public void test_do_deal_order() {
+
+     SelectBidBean sbb = new SelectBidBean("1", "1", "1", "111");
+     List list = getJsonReturn("/company/deal_order.erd", sbb);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+        
+     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+     assertThat(addid, is(1));
+
+     }
+     */
 
     @Test
-    public void test_do_deal_order() {
+    public void test_do_get_executing_order() {
 
-        SelectBidBean sbb = new SelectBidBean("1", "1", "1", "111");
-        List list = getJsonReturn("/company/deal_order.erd", sbb);
+        IdBean companyId = new IdBean("1");
+        List list = getJsonReturn("/company/get_executing_order.erd", companyId);
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok"));
-        
-        int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
-        assertThat(addid, is(1));
 
+        List executingOrderList = getListObject(list, Map.class);
+        //如果是多个数据就是getlistObject()方法
+
+        Iterator<Map<String, String>> it = executingOrderList.iterator();
+        for (; it.hasNext();) {
+            Map<String, String> map2 = it.next();
+            //assertThat((String) map2.get("id") , is("1"));
+            assertThat((String) map2.get("username"), is("aaa"));
+            assertThat((String) map2.get("car_number"), is("苏E12345"));
+            assertThat((String) map2.get("phone_number"), is("11111111111"));
+            assertThat((String) map2.get("sketch"), is("车"));
+            assertThat((String) map2.get("start_address"), is("北京"));
+            assertThat((String) map2.get("destination"), is("上海"));
+
+        }
     }
-    
 }
