@@ -1,16 +1,16 @@
 package jlxy.eroad.server.bean.param.company;
 
-public class CancelOrderBean {
+public class CancelExecutingOrderBean {
 
     private String order_id;
     private String car_id;
     private String reason;
     private int evaluate;
 
-    public CancelOrderBean() {
+    public CancelExecutingOrderBean() {
     }
 
-    public CancelOrderBean(String order_id, String car_id, String reason, int evaluate) {
+    public CancelExecutingOrderBean(String order_id, String car_id, String reason, int evaluate) {
         this.order_id = order_id;
         this.car_id = car_id;
         this.reason = reason;

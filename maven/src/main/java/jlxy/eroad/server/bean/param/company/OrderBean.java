@@ -17,16 +17,21 @@ public class OrderBean {
     private String description;
     private String start_address;
     private String destination;
-    
-    public OrderBean(String order_number,String start_time,String expect_end_time,String expect_fare,String description,String start_address,String destination){
-        this.order_number=order_number;
-        this.start_time=start_time;
-        this.expect_end_time=expect_end_time;
-        this.expect_fare=expect_fare;
-        this.description=description;
-        this.start_address=start_address;
-        this.destination=destination;
+    private String sketch;
+    private int company_id;
+
+    public OrderBean(String order_number, String start_time, String expect_end_time, String expect_fare, String description, String start_address, String destination, String sketch, int company_id) {
+        this.order_number = order_number;
+        this.start_time = start_time;
+        this.expect_end_time = expect_end_time;
+        this.expect_fare = expect_fare;
+        this.description = description;
+        this.start_address = start_address;
+        this.destination = destination;
+        this.sketch = sketch;
+        this.company_id = company_id;
     }
+
     public String getOrder_number() {
         return order_number;
     }
@@ -82,4 +87,22 @@ public class OrderBean {
     public void setDestination(String destination) {
         this.destination = destination;
     }
+
+    public String getSketch() {
+        return sketch;
+    }
+
+    public void setSketch(String sketch) {
+        this.sketch = sketch;
+    }
+
+    public int getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(int company_id) {
+        this.company_id = company_id;
+    }
+
+    
 }

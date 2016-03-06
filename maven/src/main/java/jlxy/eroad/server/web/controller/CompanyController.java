@@ -57,30 +57,30 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("show_car_around.erd")
     @ResponseBody
     //@Logged
-    public List do_show_car_around(@RequestParam("json") String json) {  
+    public List do_show_car_around(@RequestParam("json") String json) {
         Position param = new Gson().fromJson(json, Position.class);
         Sret sr = cs.ShowCarAround(param);
         return getRetList(sr);
     }
-    
+
     @RequestMapping("send_order.erd")
     @ResponseBody
     //@Logged
-    public List do_send_order(@RequestParam("json") String json) {  
+    public List do_send_order(@RequestParam("json") String json) {
         OrderBean param = new Gson().fromJson(json, OrderBean.class);
         Sret sr = cs.send_order(param);
         return getRetList(sr);
     }
-    
+
     @RequestMapping("get_bidding_order_list.erd")
     @ResponseBody
-    //@Logged
-    
-    public List do_get_bidding_order_list() {  
-        Sret sr = cs.get_bidding_order_list();
+  //  @Logged
+    public List do_get_bidding_order_list(@RequestParam("json") String json) {
+        IdBean company_id = new Gson().fromJson(json, IdBean.class);
+        Sret sr = cs.get_bidding_order_list(company_id);
         return getRetList(sr);
     }
-    
+
     @RequestMapping("deal_order.erd")
     @ResponseBody
     //@Logged
@@ -89,6 +89,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.deal_order(orderId);
         return getRetList(sr);
     }
+
     @RequestMapping("get_executing_order.erd")
     @ResponseBody
     //@Logged
@@ -97,7 +98,8 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
     }
-     @RequestMapping("finish_order.erd")
+
+    @RequestMapping("finish_order.erd")
     @ResponseBody
     //@Logged
     public List do_finish_order(@RequestParam("json") String json) {
@@ -105,14 +107,16 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.finish_order(fobean);
         return getRetList(sr);
     }
-     @RequestMapping("cancel_order.erd")
+
+    @RequestMapping("cancel_launching_order.erd")
     @ResponseBody
     //@Logged
-    public List do_cancel_order(@RequestParam("json") String json) {
+    public List do_cancel_launching_order(@RequestParam("json") String json) {
         FinishOrderBean fobean = new Gson().fromJson(json, FinishOrderBean.class);
         Sret sr = cs.finish_order(fobean);
         return getRetList(sr);
     }
+
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {

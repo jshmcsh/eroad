@@ -3,6 +3,7 @@ package jlxy.eroad.server.core;
 import java.util.List;
 import java.util.Map;
 import jlxy.eroad.server.bean.param.IdBean;
+import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
@@ -45,17 +46,19 @@ public class CompanyDatabase {
     }
 
     // 插入一条订单到数据库
-
     public String addSendOrder(OrderBean order) {
-        String stmt = "insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,state) values (?,?,?,?,?,?,?,?)";
-        String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{order.getOrder_number(), order.getStart_time(), order.getExpect_end_time(), order.getExpect_fare(), order.getStart_address(), order.getDestination(), order.getDescription(), "发布中"});
-        return ids[0];
+        String stmt_insert_orders = "insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,sketch,state) values (?,?,?,?,?,?,?,?,?)";
+        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_orders, new Object[]{order.getOrder_number(), order.getStart_time(), order.getExpect_end_time(), order.getExpect_fare(), order.getStart_address(), order.getDestination(), order.getDescription(),order.getSketch(), "displaying"});
+        String stmt_insert_launching="insert into launching (flag,company_id,order_id) values (?,?,?)";
+        String[] ids2 = Root.getInstance().getSqlOperator().insert(stmt_insert_launching, new Object[]{"valid",order.getCompany_id(),ids[0]});
+       
+        return ids2[0];
     }
-    //得到所有正在发布的订单
 
-    public List getBiddingOrderList() {
-        String stmt = "select * from orders where state ='displaying'";
-        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt);
+    //得到所有正在发布的订单
+    public List getBiddingOrderList(IdBean companyId) {
+        String stmt = "select * from orders where id in(select launching.order_id from company join launching on company.id=launching.company_id where company.id=?) and state='displaying'";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }
 
@@ -89,7 +92,13 @@ public class CompanyDatabase {
         System.out.println("ids[0] is --->"+ids[0]);
         return ids[0];
     }
+    
+    // 取消发布中的订单
 
+    public void cancelLaunchingOrder(CancelLaunchingOrderBean clob) {
+        String stmt_update_orders = "update orders set state = 'invalid' where id=?";
+        Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{clob.getOrder_id()});
+    }
     // 修改用户
 
     public void modifyPasswd(String username, String passwd) {
