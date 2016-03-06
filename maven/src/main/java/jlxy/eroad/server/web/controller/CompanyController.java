@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
+import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.service.CompanyService;
@@ -96,7 +97,22 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
     }
-    
+     @RequestMapping("finish_order.erd")
+    @ResponseBody
+    //@Logged
+    public List do_finish_order(@RequestParam("json") String json) {
+        FinishOrderBean fobean = new Gson().fromJson(json, FinishOrderBean.class);
+        Sret sr = cs.finish_order(fobean);
+        return getRetList(sr);
+    }
+     @RequestMapping("cancel_order.erd")
+    @ResponseBody
+    //@Logged
+    public List do_cancel_order(@RequestParam("json") String json) {
+        FinishOrderBean fobean = new Gson().fromJson(json, FinishOrderBean.class);
+        Sret sr = cs.finish_order(fobean);
+        return getRetList(sr);
+    }
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {

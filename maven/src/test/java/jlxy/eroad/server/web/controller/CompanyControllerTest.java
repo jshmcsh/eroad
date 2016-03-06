@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
+import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
@@ -119,6 +120,7 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      */
     /*
+    //订单成交
      @Test
      public void test_do_deal_order() {
 
@@ -132,7 +134,8 @@ public class CompanyControllerTest extends IntegrateBase {
 
      }
      */
-
+/*
+    //得到正在运行的订单的列表
     @Test
     public void test_do_get_executing_order() {
 
@@ -157,4 +160,19 @@ public class CompanyControllerTest extends IntegrateBase {
 
         }
     }
+    */
+    //结束订单
+     @Test
+     public void test_do_finish_order() {
+
+     FinishOrderBean fob = new FinishOrderBean("1", "1", 5, "非常好");
+     List list = getJsonReturn("/company/finish_order.erd", fob);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+        
+     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+     assertThat(addid, is(1));
+
+     }
+    
 }

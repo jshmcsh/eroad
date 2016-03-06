@@ -11,7 +11,8 @@
 
     <company id="1" username="aaa" passwd="fdsa" state="正常" company_name="e路网" phone_number="11111111111" company_represent="chris"/>
     <car_account id="1" username="aaa" passwd="fdsa" />
-    <car_detail id="1" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="123" car_number="苏E12345" credit="5" onlineflag="在线" state="空闲" car_id="1" phone_number="11111111111"/>
+    <car_detail id="1" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="123" car_number="苏E12345" onlineflag="在线" state="空闲" car_id="1" phone_number="11111111111" latitude="120.11" longtitude="130.11"/>
+    
     <order_relation_detail id="1" car_id="1" company_id="1" orders_id="1"/>
    
 </dataset>
