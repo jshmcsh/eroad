@@ -100,7 +100,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
     }
-
+    //完成订单
     @RequestMapping("finish_order.erd")
     @ResponseBody
     //@Logged
@@ -127,7 +127,16 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.cancel_executing_order(ceob);
         return getRetList(sr);
     }
-
+ 
+    @RequestMapping("get_car_remark.erd")
+    @ResponseBody
+    //@Logged
+    public List do_get_car_remark(@RequestParam("json") String json) {
+        IdBean carId = new Gson().fromJson(json, IdBean.class);
+        Sret sr =cs.get_car_remark(carId);
+        return getRetList(sr);
+    }
+    
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {

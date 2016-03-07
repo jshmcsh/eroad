@@ -134,6 +134,15 @@ public class CompanyService {
         sr.setData(cancelExecutingOrderRet);
         return sr;
     }
+    
+    //得到某个司机评价
+    public Sret get_car_remark(IdBean carId){
+        List ret=cdb.getCarRemark(carId);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(ret);
+        return sr;
+    }
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");
     }

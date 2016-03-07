@@ -90,8 +90,8 @@ public class CompanyDatabase {
     public String finishOrder(FinishOrderBean fob) {
         String stmt_update_orders = "update orders set finish_or_not = 'yes' where id=?";
         Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{fob.getOrder_id()});
-        String stmt_insert_remark = "insert into remark (evaluate,remark,car_id,order_id) values(?,?,?,?)";
-        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{fob.getEvaluate(),fob.getRemark(),fob.getCar_id(),fob.getOrder_id()});
+        String stmt_insert_remark = "insert into remark (evaluate,remark,car_id,order_id,company_id) values(?,?,?,?,?)";
+        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{fob.getEvaluate(),fob.getRemark(),fob.getCar_id(),fob.getOrder_id(),"1"});
         return ids[0];
     }
     
@@ -110,10 +110,18 @@ public class CompanyDatabase {
         Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{ceob.getOrder_id()});
         String stmt_update_launching = "update car_detail set state = '空闲' where car_id=?";
         Root.getInstance().getSqlOperator().update(stmt_update_launching, new Object[]{ceob.getCar_id()});
-        String stmt_insert_remark = "insert into remark (evaluate,car_id,order_id) values(?,?,?)";
-        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{ceob.getEvaluate(),ceob.getCar_id(),ceob.getOrder_id()});
+        String stmt_insert_remark = "insert into remark (evaluate,car_id,order_id,company_id) values(?,?,?,?)";
+        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{ceob.getEvaluate(),ceob.getCar_id(),ceob.getOrder_id(),"1"});
        return ids[0];
     }
+    
+    // 得到某车的评价
+    public List getCarRemark(IdBean carId) {
+       String stmt_select_view = "select * from xcar_remark where id=?";
+       List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt_select_view, new Object[]{carId.getId()});
+       return ret;
+    }
+    
     // 修改用户
 
     public void modifyPasswd(String username, String passwd) {

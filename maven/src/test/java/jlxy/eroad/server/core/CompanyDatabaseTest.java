@@ -12,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.yecq.baseframework.test.Base;
+import org.yecq.baseframework.web.Head;
 import org.yecq.record.SqlOperator;
 
 /**
@@ -145,7 +146,7 @@ public class CompanyDatabaseTest extends Base {
         assertThat(list2.get(0).get("flag") + "", is("invalid"));
     }
 */
-    
+    /*
     //取消运输中的订单
      @Test
      public void test_modifyPasswd() {
@@ -164,9 +165,22 @@ public class CompanyDatabaseTest extends Base {
      assertThat(list3.get(1).get("remark") + "", is("null"));
      assertThat(list3.get(1).get("car_id") + "", is("1"));
      assertThat(list3.get(1).get("order_id") + "", is("1"));
+     assertThat(list3.get(1).get("company_id") + "", is("1"));
      }
-    
-    
+   */
+    //获得司机的评价
+     @Test
+    public void testgetCarRemark() {
+
+        IdBean carId=new IdBean("1");
+        List list=cdb.getCarRemark(carId);
+        
+        assertThat(((Map)list.get(0)).get("evaluate")+"", is("2"));
+        assertThat(((Map)list.get(0)).get("remark")+"", is("good"));
+        assertThat(((Map)list.get(0)).get("username")+"", is("aaa"));
+        assertThat(((Map)list.get(0)).get("car_number")+"", is("苏E12345"));
+        assertThat(((Map)list.get(0)).get("company_name")+"", is("e路网"));
+    }
     /*
      @Test
      public void test_modifyPasswd() {

@@ -194,10 +194,12 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(head.getStatus(), is("ok"));
 
     }
-      //取消运行中的订单
+      
 */
+    /*
+    //取消运行中的订单
     @Test
-    public void do_cancel_executing_order() {
+    public void test_do_cancel_executing_order() {
 
         CancelExecutingOrderBean clob = new CancelExecutingOrderBean("1", "1", "太慢", 2);
         List list = getJsonReturn("/company/cancel_executing_order.erd", clob);
@@ -207,4 +209,22 @@ public class CompanyControllerTest extends IntegrateBase {
         int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
         assertThat(addid, is(21));
     }
+    */
+    
+    //获得司机的评价
+     @Test
+    public void test_do_get_car_remark() {
+
+        IdBean carId=new IdBean("1");
+        List list = getJsonReturn("/company/get_car_remark.erd", carId);
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok"));
+        
+        assertThat(((Map)list.get(1)).get("evaluate")+"", is("2"));
+        assertThat(((Map)list.get(1)).get("remark")+"", is("good"));
+        assertThat(((Map)list.get(1)).get("username")+"", is("aaa"));
+        assertThat(((Map)list.get(1)).get("car_number")+"", is("苏E12345"));
+        assertThat(((Map)list.get(1)).get("company_name")+"", is("e路网"));
+    }
+    
 }
