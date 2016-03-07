@@ -3,6 +3,7 @@ package jlxy.eroad.server.core;
 import java.util.List;
 import java.util.Map;
 import jlxy.eroad.server.bean.param.IdBean;
+import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
@@ -67,8 +68,10 @@ public class CompanyDatabase {
     public String getDeal(SelectBidBean sbb) {
         String stmt_update_order = "update orders set state = 'executing',finish_or_not='no' where id =?";
         Root.getInstance().getSqlOperator().update(stmt_update_order, new Object[]{sbb.getOrder_id()});
-        String stmt_update_carDetail = "update car_detail set state = '运输中' where car_id =?";
-        Root.getInstance().getSqlOperator().update(stmt_update_carDetail, new Object[]{sbb.getCar_id()});
+        String stmt_update_car_detail = "update car_detail set state = '运输中' where car_id =?";
+        Root.getInstance().getSqlOperator().update(stmt_update_car_detail, new Object[]{sbb.getCar_id()});
+        String stmt_update_launching = "update launching set flag = 'invalid' where order_id =?";
+        Root.getInstance().getSqlOperator().update(stmt_update_launching, new Object[]{sbb.getOrder_id()});
         String stmt_insert = "insert into order_relation_detail (car_id,orders_id,company_id) values(?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert, new Object[]{sbb.getCar_id(), sbb.getOrder_id(), sbb.getCompany_id()});
         return ids[0];
@@ -89,7 +92,6 @@ public class CompanyDatabase {
         Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{fob.getOrder_id()});
         String stmt_insert_remark = "insert into remark (evaluate,remark,car_id,order_id) values(?,?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{fob.getEvaluate(),fob.getRemark(),fob.getCar_id(),fob.getOrder_id()});
-        System.out.println("ids[0] is --->"+ids[0]);
         return ids[0];
     }
     
@@ -98,6 +100,19 @@ public class CompanyDatabase {
     public void cancelLaunchingOrder(CancelLaunchingOrderBean clob) {
         String stmt_update_orders = "update orders set state = 'invalid' where id=?";
         Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{clob.getOrder_id()});
+        String stmt_update_launching = "update launching set flag = 'invalid' where id=?";
+        Root.getInstance().getSqlOperator().update(stmt_update_launching, new Object[]{clob.getOrder_id()});
+    }
+    // 取消运输中的订单
+
+    public String cancelExecutingOrder(CancelExecutingOrderBean ceob) {
+        String stmt_update_orders = "update orders set state = 'invalid' where id=?";
+        Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{ceob.getOrder_id()});
+        String stmt_update_launching = "update car_detail set state = '空闲' where car_id=?";
+        Root.getInstance().getSqlOperator().update(stmt_update_launching, new Object[]{ceob.getCar_id()});
+        String stmt_insert_remark = "insert into remark (evaluate,car_id,order_id) values(?,?,?)";
+        String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{ceob.getEvaluate(),ceob.getCar_id(),ceob.getOrder_id()});
+       return ids[0];
     }
     // 修改用户
 

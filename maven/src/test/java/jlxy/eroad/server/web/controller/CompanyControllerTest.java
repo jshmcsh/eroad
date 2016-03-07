@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
+import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
@@ -98,7 +99,7 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      */
     /*
-    //得到正在发布的订单列表
+     //得到正在发布的订单列表
      @Test
      public void test_do_get_bidding_order_list() {
      IdBean companyId=new IdBean("1");
@@ -123,9 +124,9 @@ public class CompanyControllerTest extends IntegrateBase {
      }
 
      }
-    */
-    
-     /*
+     */
+
+    /*
      //订单成交
      @Test
      public void test_do_deal_order() {
@@ -182,20 +183,28 @@ public class CompanyControllerTest extends IntegrateBase {
 
      }
      */
-
-    //取消发布中的订单
     /*
-     @Test
-     public void test_do_cancel_launching_order() {
+    //取消发布中的订单
+    @Test
+    public void test_do_cancel_launching_order() {
 
-     CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean("1");
-     List list = getJsonReturn("/company/finish_order.erd", clob);
-     Head head = getHeader(list);
-     assertThat(head.getStatus(), is("ok"));
+        CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean(1, 1);
+        List list = getJsonReturn("/company/cancel_launching_order.erd", clob);
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok"));
 
-     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
-     assertThat(addid, is(1));
+    }
+      //取消运行中的订单
+*/
+    @Test
+    public void do_cancel_executing_order() {
 
-     }
-     */
+        CancelExecutingOrderBean clob = new CancelExecutingOrderBean("1", "1", "太慢", 2);
+        List list = getJsonReturn("/company/cancel_executing_order.erd", clob);
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok"));
+
+        int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+        assertThat(addid, is(21));
+    }
 }

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
+import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
+import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
@@ -112,8 +114,17 @@ public class CompanyController extends ControllerBase {
     @ResponseBody
     //@Logged
     public List do_cancel_launching_order(@RequestParam("json") String json) {
-        FinishOrderBean fobean = new Gson().fromJson(json, FinishOrderBean.class);
-        Sret sr = cs.finish_order(fobean);
+        CancelLaunchingOrderBean clob = new Gson().fromJson(json, CancelLaunchingOrderBean.class);
+        Sret sr = cs.cancel_launching_order(clob);
+        return getRetList(sr);
+    }
+    
+    @RequestMapping("cancel_executing_order.erd")
+    @ResponseBody
+    //@Logged
+    public List do_cancel_executing_order(@RequestParam("json") String json) {
+        CancelExecutingOrderBean ceob = new Gson().fromJson(json, CancelExecutingOrderBean.class);
+        Sret sr = cs.cancel_executing_order(ceob);
         return getRetList(sr);
     }
 

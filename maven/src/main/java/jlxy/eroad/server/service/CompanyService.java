@@ -8,6 +8,7 @@ import jlxy.eroad.server.bean.param.ComputeParam;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
+import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
@@ -118,14 +119,21 @@ public class CompanyService {
         sr.setData(finishOrderRet);
         return sr;
     }
-    //结束订单
+    //取消正在发布的订单
     public Sret cancel_launching_order(CancelLaunchingOrderBean clob){
         cdb.cancelLaunchingOrder(clob);
         Sret sr=new Sret();
         sr.setOk();
         return sr;
     }
-    
+     //取消正在运行的订单
+    public Sret cancel_executing_order(CancelExecutingOrderBean ceob){
+        String cancelExecutingOrderRet=cdb.cancelExecutingOrder(ceob);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(cancelExecutingOrderRet);
+        return sr;
+    }
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");
     }
