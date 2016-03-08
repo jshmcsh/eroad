@@ -11,6 +11,7 @@ import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
+import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
@@ -134,10 +135,26 @@ public class CompanyService {
         sr.setData(cancelExecutingOrderRet);
         return sr;
     }
-    
-    //得到某个司机评价
+    //得到司机评价
     public Sret get_car_remark(IdBean carId){
         List ret=cdb.getCarRemark(carId);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(ret);
+        return sr;
+    }
+    
+    //得到历史订单列表
+    public Sret get_history_order_list(IdBean companyId){
+        List ret=cdb.getHistoryOrderList(companyId);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(ret);
+        return sr;
+    }
+    //得到历史订单详情
+    public Sret get_history_order_detail(HistoryOrderDetailBean hodb){
+        List ret=cdb.getHistoryOrderDetail(hodb);
         Sret sr=new Sret();
         sr.setOk();
         sr.setData(ret);

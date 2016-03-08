@@ -6,6 +6,7 @@ import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
+import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,7 @@ public class CompanyDatabase {
     //订单成交
 
     public String getDeal(SelectBidBean sbb) {
-        String stmt_update_order = "update orders set state = 'executing',finish_or_not='no' where id =?";
+        String stmt_update_order = "update orders set state = 'executing' where id =?";
         Root.getInstance().getSqlOperator().update(stmt_update_order, new Object[]{sbb.getOrder_id()});
         String stmt_update_car_detail = "update car_detail set state = '运输中' where car_id =?";
         Root.getInstance().getSqlOperator().update(stmt_update_car_detail, new Object[]{sbb.getCar_id()});
@@ -88,7 +89,7 @@ public class CompanyDatabase {
     // 结束订单
 
     public String finishOrder(FinishOrderBean fob) {
-        String stmt_update_orders = "update orders set finish_or_not = 'yes' where id=?";
+        String stmt_update_orders = "update orders set state='completed' where id=?";
         Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{fob.getOrder_id()});
         String stmt_insert_remark = "insert into remark (evaluate,remark,car_id,order_id,company_id) values(?,?,?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{fob.getEvaluate(),fob.getRemark(),fob.getCar_id(),fob.getOrder_id(),"1"});
@@ -115,13 +116,25 @@ public class CompanyDatabase {
        return ids[0];
     }
     
+    // 得到历史订单
+    public List getHistoryOrderList(IdBean companyId) {
+       String stmt_select_view = "select order_number,last_time,start_address,destination,sketch,username,exact_fare from history_order where company_id=?";
+       List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt_select_view, new Object[]{companyId.getId()});
+       return ret;
+    }
+    // 得到历史订单详情
+    public List getHistoryOrderDetail(HistoryOrderDetailBean hodb) {
+       String stmt_select_view = "select * from history_order where order_number=?";
+       List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt_select_view, new Object[]{hodb.getOrder_number()});
+       return ret;
+    }
     // 得到某车的评价
     public List getCarRemark(IdBean carId) {
        String stmt_select_view = "select * from xcar_remark where id=?";
        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt_select_view, new Object[]{carId.getId()});
        return ret;
     }
-    
+        
     // 修改用户
 
     public void modifyPasswd(String username, String passwd) {

@@ -9,6 +9,7 @@ import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
+import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.service.CompanyService;
@@ -76,7 +77,7 @@ public class CompanyController extends ControllerBase {
 
     @RequestMapping("get_bidding_order_list.erd")
     @ResponseBody
-  //  @Logged
+    //  @Logged
     public List do_get_bidding_order_list(@RequestParam("json") String json) {
         IdBean company_id = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_bidding_order_list(company_id);
@@ -100,6 +101,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
     }
+
     //完成订单
     @RequestMapping("finish_order.erd")
     @ResponseBody
@@ -118,7 +120,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.cancel_launching_order(clob);
         return getRetList(sr);
     }
-    
+
     @RequestMapping("cancel_executing_order.erd")
     @ResponseBody
     //@Logged
@@ -127,16 +129,34 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.cancel_executing_order(ceob);
         return getRetList(sr);
     }
- 
+
     @RequestMapping("get_car_remark.erd")
     @ResponseBody
     //@Logged
     public List do_get_car_remark(@RequestParam("json") String json) {
         IdBean carId = new Gson().fromJson(json, IdBean.class);
-        Sret sr =cs.get_car_remark(carId);
+        Sret sr = cs.get_car_remark(carId);
         return getRetList(sr);
     }
-    
+
+    @RequestMapping("get_history_order_list.erd")
+    @ResponseBody
+    //@Logged
+    public List do_get_history_order_list(@RequestParam("json") String json) {
+        IdBean companyId = new Gson().fromJson(json, IdBean.class);
+        Sret sr = cs.get_history_order_list(companyId);
+        return getRetList(sr);
+    }
+
+    @RequestMapping("get_history_order_detail.erd")
+    @ResponseBody
+    //@Logged
+    public List do_get_history_order_detail(@RequestParam("json") String json) {
+        HistoryOrderDetailBean hodb= new Gson().fromJson(json, HistoryOrderDetailBean.class);
+        Sret sr = cs.get_history_order_detail(hodb);
+        return getRetList(sr);
+    }
+
     @RequestMapping("throw_exception.erd")
     @ResponseBody
     public List do_throwException() {

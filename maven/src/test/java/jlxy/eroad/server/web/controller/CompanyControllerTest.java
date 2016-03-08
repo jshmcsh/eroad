@@ -8,6 +8,7 @@ import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
+import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
@@ -184,47 +185,93 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      */
     /*
-    //取消发布中的订单
-    @Test
-    public void test_do_cancel_launching_order() {
-
-        CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean(1, 1);
-        List list = getJsonReturn("/company/cancel_launching_order.erd", clob);
-        Head head = getHeader(list);
-        assertThat(head.getStatus(), is("ok"));
-
-    }
-      
-*/
-    /*
-    //取消运行中的订单
-    @Test
-    public void test_do_cancel_executing_order() {
-
-        CancelExecutingOrderBean clob = new CancelExecutingOrderBean("1", "1", "太慢", 2);
-        List list = getJsonReturn("/company/cancel_executing_order.erd", clob);
-        Head head = getHeader(list);
-        assertThat(head.getStatus(), is("ok"));
-
-        int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
-        assertThat(addid, is(21));
-    }
-    */
-    
-    //获得司机的评价
+     //取消发布中的订单
      @Test
-    public void test_do_get_car_remark() {
+     public void test_do_cancel_launching_order() {
 
-        IdBean carId=new IdBean("1");
-        List list = getJsonReturn("/company/get_car_remark.erd", carId);
+     CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean(1, 1);
+     List list = getJsonReturn("/company/cancel_launching_order.erd", clob);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+
+     }
+      
+     */
+    /*
+     //取消运行中的订单
+     @Test
+     public void test_do_cancel_executing_order() {
+
+     CancelExecutingOrderBean clob = new CancelExecutingOrderBean("1", "1", "太慢", 2);
+     List list = getJsonReturn("/company/cancel_executing_order.erd", clob);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+
+     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+     assertThat(addid, is(21));
+     }
+     */
+    /*
+     //获得历史订单列表
+     @Test
+     public void test_do_get_history_order_list() {
+
+     IdBean companyId=new IdBean("1");
+     List list = getJsonReturn("/company/get_history_order_list.erd", companyId);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+        
+     assertThat(list.size(), is(2));
+     assertThat(((Map)list.get(1)).get("order_number")+"", is("111"));
+     assertThat(((Map)list.get(1)).get("last_time")+"", is("31.0"));
+     assertThat(((Map)list.get(1)).get("start_address")+"", is("北京"));
+     assertThat(((Map)list.get(1)).get("destination")+"", is("上海"));
+     assertThat(((Map)list.get(1)).get("sketch")+"", is("车"));
+     assertThat(((Map)list.get(1)).get("username")+"", is("aaa"));
+     assertThat(((Map)list.get(1)).get("exact_fare")+"", is("111.0"));
+     }
+     */
+    @Test
+    public void test_do_get_history_order_detail() {
+
+        HistoryOrderDetailBean hodb = new HistoryOrderDetailBean("111");
+        List list = getJsonReturn("/company/get_history_order_detail.erd", hodb);
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok"));
-        
-        assertThat(((Map)list.get(1)).get("evaluate")+"", is("2"));
-        assertThat(((Map)list.get(1)).get("remark")+"", is("good"));
-        assertThat(((Map)list.get(1)).get("username")+"", is("aaa"));
-        assertThat(((Map)list.get(1)).get("car_number")+"", is("苏E12345"));
-        assertThat(((Map)list.get(1)).get("company_name")+"", is("e路网"));
+
+        assertThat(list.size(), is(2));
+
+        assertThat(((Map) list.get(1)).size() + "", is("14"));
+        assertThat(((Map) list.get(1)).get("company_id") + "", is("1.0"));
+        assertThat(((Map) list.get(1)).get("order_number") + "", is("111"));
+        assertThat(((Map) list.get(1)).get("last_time") + "", is("31.0"));
+        assertThat(((Map) list.get(1)).get("exact_fare") + "", is("111.0"));
+        assertThat(((Map) list.get(1)).get("expect_fare") + "", is("111.0"));
+        assertThat(((Map) list.get(1)).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(((Map) list.get(1)).get("exact_end_time") + "", is("2012-02-01"));
+        assertThat(((Map) list.get(1)).get("start_time") + "", is("2012-01-01"));
+        assertThat(((Map) list.get(1)).get("start_address") + "", is("北京"));
+        assertThat(((Map) list.get(1)).get("destination") + "", is("上海"));
+        assertThat(((Map) list.get(1)).get("sketch") + "", is("车"));
+        assertThat(((Map) list.get(1)).get("description") + "", is("来自北方的车"));
+        assertThat(((Map) list.get(1)).get("username") + "", is("aaa"));
+
     }
-    
+    /*
+     //获得司机的评价
+     @Test
+     public void test_do_get_car_remark() {
+
+     IdBean carId=new IdBean("1");
+     List list = getJsonReturn("/company/get_car_remark.erd", carId);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+        
+     assertThat(((Map)list.get(1)).get("evaluate")+"", is("2"));
+     assertThat(((Map)list.get(1)).get("remark")+"", is("good"));
+     assertThat(((Map)list.get(1)).get("username")+"", is("aaa"));
+     assertThat(((Map)list.get(1)).get("car_number")+"", is("苏E12345"));
+     assertThat(((Map)list.get(1)).get("company_name")+"", is("e路网"));
+     }
+     */
 }

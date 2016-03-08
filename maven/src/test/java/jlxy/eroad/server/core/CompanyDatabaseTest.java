@@ -6,6 +6,7 @@ import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
+import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -110,17 +111,17 @@ public class CompanyDatabaseTest extends Base {
      public void test_finishOrder() {
      FinishOrderBean fob = new FinishOrderBean("1", "1", 2, "非常好");
      cdb.finishOrder(fob);
-     List<Map<String, Object>> list = sql.query("select finish_or_not from orders where id=? ", new Object[]{1});
+     List<Map<String, Object>> list = sql.query("select state from orders where id=? ", new Object[]{1});
      List<Map<String, Object>> list2 = sql.query("select * from remark");
      assertThat(list.size(), is(1));
-     assertThat(list.get(0).get("finish_or_not") + "", is("yes"));
-     assertThat(list2.size(), is(1));
+     assertThat(list.get(0).get("state") + "", is("completed"));
+     assertThat(list2.size(), is(2));
      System.out.println("list2.size--->"+list2.size());
-     assertThat(list2.get(0).get("id") + "", is("17"));
-     assertThat(list2.get(0).get("evaluate") + "", is("2"));
-     assertThat(list2.get(0).get("remark") + "", is("非常好"));
-     assertThat(list2.get(0).get("car_id") + "", is("1"));
-     assertThat(list2.get(0).get("order_id") + "", is("1"));
+     // assertThat(list2.get(0).get("id") + "", is("17"));
+     assertThat(list2.get(1).get("evaluate") + "", is("2"));
+     assertThat(list2.get(1).get("remark") + "", is("非常好"));
+     assertThat(list2.get(1).get("car_id") + "", is("1"));
+     assertThat(list2.get(1).get("order_id") + "", is("1"));
      }
      */
     /*
@@ -133,21 +134,21 @@ public class CompanyDatabaseTest extends Base {
      }
      */
     /*
-    //取消正在发布的订单
-    @Test
-    public void test_cancelLaunchingOrder() {
-        CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean(1, 1);
-        cdb.cancelLaunchingOrder(clob);
-        List<Map<String, Object>> list1 = sql.query("select state from orders where id=? ", new Object[]{1});
-        List<Map<String, Object>> list2 = sql.query("select flag from launching where order_id=?" , new Object[]{1});
-        assertThat(list1.size(), is(1));
-        assertThat(list1.get(0).get("state") + "", is("invalid"));
-        assertThat(list2.size(), is(1));
-        assertThat(list2.get(0).get("flag") + "", is("invalid"));
-    }
-*/
+     //取消正在发布的订单
+     @Test
+     public void test_cancelLaunchingOrder() {
+     CancelLaunchingOrderBean clob = new CancelLaunchingOrderBean(1, 1);
+     cdb.cancelLaunchingOrder(clob);
+     List<Map<String, Object>> list1 = sql.query("select state from orders where id=? ", new Object[]{1});
+     List<Map<String, Object>> list2 = sql.query("select flag from launching where order_id=?" , new Object[]{1});
+     assertThat(list1.size(), is(1));
+     assertThat(list1.get(0).get("state") + "", is("invalid"));
+     assertThat(list2.size(), is(1));
+     assertThat(list2.get(0).get("flag") + "", is("invalid"));
+     }
+     */
     /*
-    //取消运输中的订单
+     //取消运输中的订单
      @Test
      public void test_modifyPasswd() {
      CancelExecutingOrderBean clob = new CancelExecutingOrderBean("1", "1", "太慢", 2);
@@ -167,20 +168,59 @@ public class CompanyDatabaseTest extends Base {
      assertThat(list3.get(1).get("order_id") + "", is("1"));
      assertThat(list3.get(1).get("company_id") + "", is("1"));
      }
-   */
-    //获得司机的评价
-     @Test
-    public void testgetCarRemark() {
-
-        IdBean carId=new IdBean("1");
-        List list=cdb.getCarRemark(carId);
-        
-        assertThat(((Map)list.get(0)).get("evaluate")+"", is("2"));
-        assertThat(((Map)list.get(0)).get("remark")+"", is("good"));
-        assertThat(((Map)list.get(0)).get("username")+"", is("aaa"));
-        assertThat(((Map)list.get(0)).get("car_number")+"", is("苏E12345"));
-        assertThat(((Map)list.get(0)).get("company_name")+"", is("e路网"));
+     */
+    /*
+    //得到历史订单列表
+    @Test
+    public void test_getHistoryOrderList() {
+        IdBean companyId = new IdBean("1");
+        List<Map<String, Object>> list = cdb.getHistoryOrderList(companyId);
+        assertThat(list.size(), is(1));
+        assertThat((list.get(0)).get("order_number") + "", is("111"));
+        assertThat((list.get(0)).get("last_time") + "", is("31"));
+        assertThat((list.get(0)).get("start_address") + "", is("北京"));
+        assertThat((list.get(0)).get("destination") + "", is("上海"));
+        assertThat((list.get(0)).get("sketch") + "", is("车"));
+        assertThat((list.get(0)).get("username") + "", is("aaa"));
+        assertThat((list.get(0)).get("exact_fare") + "", is("111.00"));
     }
+*/
+    //得到历史订单详情
+    @Test
+    public void test_getHistoryOrderList() {
+         HistoryOrderDetailBean hodb = new HistoryOrderDetailBean("111");
+        List<Map<String, Object>> list = cdb.getHistoryOrderDetail(hodb);
+
+         assertThat(((Map) list.get(0)).size() + "", is("14"));
+        assertThat(((Map) list.get(0)).get("company_id") + "", is("1"));
+        assertThat(((Map) list.get(0)).get("order_number") + "", is("111"));
+        assertThat(((Map) list.get(0)).get("last_time") + "", is("31"));
+        assertThat(((Map) list.get(0)).get("exact_fare") + "", is("111.00"));
+        assertThat(((Map) list.get(0)).get("expect_fare") + "", is("111.00"));
+        assertThat(((Map) list.get(0)).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(((Map) list.get(0)).get("exact_end_time") + "", is("2012-02-01"));
+        assertThat(((Map) list.get(0)).get("start_time") + "", is("2012-01-01"));
+        assertThat(((Map) list.get(0)).get("start_address") + "", is("北京"));
+        assertThat(((Map) list.get(0)).get("destination") + "", is("上海"));
+        assertThat(((Map) list.get(0)).get("sketch") + "", is("车"));
+        assertThat(((Map) list.get(0)).get("description") + "", is("来自北方的车"));
+        assertThat(((Map) list.get(0)).get("username") + "", is("aaa"));
+    }
+    /*
+     //获得司机的评价
+     @Test
+     public void testgetCarRemark() {
+
+     IdBean carId=new IdBean("1");
+     List list=cdb.getCarRemark(carId);
+        
+     assertThat(((Map)list.get(0)).get("evaluate")+"", is("2"));
+     assertThat(((Map)list.get(0)).get("remark")+"", is("good"));
+     assertThat(((Map)list.get(0)).get("username")+"", is("aaa"));
+     assertThat(((Map)list.get(0)).get("car_number")+"", is("苏E12345"));
+     assertThat(((Map)list.get(0)).get("company_name")+"", is("e路网"));
+     }
+     */
     /*
      @Test
      public void test_modifyPasswd() {
