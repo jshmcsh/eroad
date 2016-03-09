@@ -25,6 +25,7 @@ import org.yecq.baseframework.web.MakeLogged;
  */
 public class CompanyControllerTest extends IntegrateBase {
     /*
+     //登录
      @Test
      public void test_do_login() {
      LoginBean param = new LoginBean("abcd", "123456");
@@ -43,7 +44,9 @@ public class CompanyControllerTest extends IntegrateBase {
      assertThat(head3.getStatus(), is("fail"));
                 
      }
-   
+     */
+    /*
+     //注册
      @Test
      public void test_do_regist() {
         
@@ -56,7 +59,9 @@ public class CompanyControllerTest extends IntegrateBase {
         
      }
     
-    
+     */
+    /*
+     //注销
      @Test
      public void test_do_logout() {
   
@@ -65,6 +70,9 @@ public class CompanyControllerTest extends IntegrateBase {
      assertThat(head.getStatus(), is("ok")); 
         
      }
+     */
+    /*
+     //查看周围车辆
      @Test
      public void test_show_car_around() {
   
@@ -72,8 +80,10 @@ public class CompanyControllerTest extends IntegrateBase {
      Head head = getHeader(list);
      assertThat(head.getStatus(), is("ok")); 
         
-     }*/
+     }
+     */
     /*
+    
      @Test
      public void test_throwException() {
      List list = getJsonReturn("/test/throw_exception.erd");
@@ -169,21 +179,20 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      }
      */
-    /*
-     //结束订单
-     @Test
-     public void test_do_finish_order() {
+    //结束订单
+    @Test
+    public void test_do_finish_order() {
 
-     FinishOrderBean fob = new FinishOrderBean("1", "1", 5, "非常好");
-     List list = getJsonReturn("/company/finish_order.erd", fob);
-     Head head = getHeader(list);
-     assertThat(head.getStatus(), is("ok"));
-        
-     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
-     assertThat(addid, is(1));
+        FinishOrderBean foBean = new FinishOrderBean("1", "1", 2, "非常好", "2012-02-03", "2012-01-03");
+        List list = getJsonReturn("/company/finish_order.erd", foBean);
+        Head head = getHeader(list);
+        assertThat(head.getStatus(), is("ok"));
 
-     }
-     */
+        int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+        assertThat(addid, is(1));
+
+    }
+
     /*
      //取消发布中的订单
      @Test
@@ -231,32 +240,35 @@ public class CompanyControllerTest extends IntegrateBase {
      assertThat(((Map)list.get(1)).get("exact_fare")+"", is("111.0"));
      }
      */
-    @Test
-    public void test_do_get_history_order_detail() {
+    /*
+     //得到历史订单详情
+     @Test
+     public void test_do_get_history_order_detail() {
 
-        HistoryOrderDetailBean hodb = new HistoryOrderDetailBean("111");
-        List list = getJsonReturn("/company/get_history_order_detail.erd", hodb);
-        Head head = getHeader(list);
-        assertThat(head.getStatus(), is("ok"));
+     HistoryOrderDetailBean hodb = new HistoryOrderDetailBean("111");
+     List list = getJsonReturn("/company/get_history_order_detail.erd", hodb);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
 
-        assertThat(list.size(), is(2));
+     assertThat(list.size(), is(2));
 
-        assertThat(((Map) list.get(1)).size() + "", is("14"));
-        assertThat(((Map) list.get(1)).get("company_id") + "", is("1.0"));
-        assertThat(((Map) list.get(1)).get("order_number") + "", is("111"));
-        assertThat(((Map) list.get(1)).get("last_time") + "", is("31.0"));
-        assertThat(((Map) list.get(1)).get("exact_fare") + "", is("111.0"));
-        assertThat(((Map) list.get(1)).get("expect_fare") + "", is("111.0"));
-        assertThat(((Map) list.get(1)).get("expect_end_time") + "", is("2012-02-01"));
-        assertThat(((Map) list.get(1)).get("exact_end_time") + "", is("2012-02-01"));
-        assertThat(((Map) list.get(1)).get("start_time") + "", is("2012-01-01"));
-        assertThat(((Map) list.get(1)).get("start_address") + "", is("北京"));
-        assertThat(((Map) list.get(1)).get("destination") + "", is("上海"));
-        assertThat(((Map) list.get(1)).get("sketch") + "", is("车"));
-        assertThat(((Map) list.get(1)).get("description") + "", is("来自北方的车"));
-        assertThat(((Map) list.get(1)).get("username") + "", is("aaa"));
+     assertThat(((Map) list.get(1)).size() + "", is("14"));
+     assertThat(((Map) list.get(1)).get("company_id") + "", is("1.0"));
+     assertThat(((Map) list.get(1)).get("order_number") + "", is("111"));
+     assertThat(((Map) list.get(1)).get("last_time") + "", is("31.0"));
+     assertThat(((Map) list.get(1)).get("exact_fare") + "", is("111.0"));
+     assertThat(((Map) list.get(1)).get("expect_fare") + "", is("111.0"));
+     assertThat(((Map) list.get(1)).get("expect_end_time") + "", is("2012-02-01"));
+     assertThat(((Map) list.get(1)).get("exact_end_time") + "", is("2012-02-01"));
+     assertThat(((Map) list.get(1)).get("start_time") + "", is("2012-01-01"));
+     assertThat(((Map) list.get(1)).get("start_address") + "", is("北京"));
+     assertThat(((Map) list.get(1)).get("destination") + "", is("上海"));
+     assertThat(((Map) list.get(1)).get("sketch") + "", is("车"));
+     assertThat(((Map) list.get(1)).get("description") + "", is("来自北方的车"));
+     assertThat(((Map) list.get(1)).get("username") + "", is("aaa"));
 
-    }
+     }
+     */
     /*
      //获得司机的评价
      @Test

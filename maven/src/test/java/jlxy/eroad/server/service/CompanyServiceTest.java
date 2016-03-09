@@ -30,7 +30,7 @@ public class CompanyServiceTest extends Base {
 */
     @Test
     public void test_finish_order() {
-        FinishOrderBean foBean = new FinishOrderBean("1", "1", 2, "非常好");
+        FinishOrderBean foBean = new FinishOrderBean("1", "1", 2, "非常好","2012-02-03","2012-01-03");
         Sret sr = cs.finish_order(foBean);
         assertThat(sr.isOk(), is(true));
         

@@ -5,15 +5,21 @@
         <user id="1" username="abcd" passwd="123456" />
         <user id="2" username="zxcv" passwd="654321" />
     -->
-    <orders id="1" order_number="111" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="北京" destination="上海" finish_or_not="no" sketch="车" description="来自北方的车" state="completed"/>
-    <orders id="2" order_number="222" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="南京" destination="苏州" sketch="狗" description="来自南方的狗"  finish_or_not="no" state="displaying"/>
-    <orders id="3" order_number="333" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="广州" destination="厦门" sketch="猪" description="来自东方的猪"  finish_or_not="no" state="executing"/>
+    <orders id="1" order_number="111" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="北京" destination="上海" sketch="车" description="来自北方的车" state="displaying"/>
+    <orders id="2" order_number="222" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="南京" destination="苏州" sketch="狗" description="来自南方的狗"   state="displaying"/>
+    <orders id="3" order_number="333" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="广州" destination="厦门" sketch="猪" description="来自东方的猪"  state="executing"/>
  
     <company id="1" username="aaa" passwd="fdsa" state="正常" company_name="e路网" phone_number="11111111111" company_represent="chris"/>
     <car_account id="1" username="aaa" passwd="fdsa" />
     <car_detail id="1" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="123" car_number="苏E12345" onlineflag="在线" state="空闲" car_id="1" phone_number="11111111111" latitude="120.11" longtitude="130.11"/>
+    <car_account id="2" username="bbb" passwd="fdsa" />
+    <car_detail id="2" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="1234" car_number="苏A12345" onlineflag="在线" state="空闲" car_id="2" phone_number="22222222222" latitude="121.11" longtitude="131.11"/>
+    
     
     <order_relation_detail id="1" car_id="1" company_id="1" orders_id="1"/>
+    <order_relation_detail id="2" car_id="1" company_id="1" orders_id="3"/>
+    
+    <bidding id="1" price="111" car_id="1" order_id="1"/>
     <launching id="1" flag="valid" company_id="1" order_id="1"/>
     <remark id="1" evaluate="2" remark="good" car_id="1" order_id="1" company_id="1"/>
 </dataset>

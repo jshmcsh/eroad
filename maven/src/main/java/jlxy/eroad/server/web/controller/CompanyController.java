@@ -112,6 +112,7 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
+    //取消发布中的订单
     @RequestMapping("cancel_launching_order.erd")
     @ResponseBody
     //@Logged
@@ -120,6 +121,8 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.cancel_launching_order(clob);
         return getRetList(sr);
     }
+
+    //取消正在运行的订单
 
     @RequestMapping("cancel_executing_order.erd")
     @ResponseBody
@@ -130,6 +133,8 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
+    //得到某车评价
+
     @RequestMapping("get_car_remark.erd")
     @ResponseBody
     //@Logged
@@ -138,6 +143,8 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_car_remark(carId);
         return getRetList(sr);
     }
+
+    //得到历史订单列表
 
     @RequestMapping("get_history_order_list.erd")
     @ResponseBody
@@ -148,11 +155,13 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
+    //得到历史订单详情
+
     @RequestMapping("get_history_order_detail.erd")
     @ResponseBody
     //@Logged
     public List do_get_history_order_detail(@RequestParam("json") String json) {
-        HistoryOrderDetailBean hodb= new Gson().fromJson(json, HistoryOrderDetailBean.class);
+        HistoryOrderDetailBean hodb = new Gson().fromJson(json, HistoryOrderDetailBean.class);
         Sret sr = cs.get_history_order_detail(hodb);
         return getRetList(sr);
     }

@@ -19,25 +19,10 @@ import org.yecq.baseframework.plain.core.Root;
  */
 @Component
 public class CompanyDatabase {
-
-    // 查询数据库
-    public List<Map<String, Object>> getUserList() {
-        String stmt = "select * from user";
-
-        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt);
-        return ret;
-    }
-
     public List<Map<String, Object>> getUserList(String username) {
         String stmt = "select * from user where username = ?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{username});
         return ret;
-    }
-
-    // 删除记录
-    public void removeUser(String username) {
-        String stmt = "delete from user where username = ?";
-        Root.getInstance().getSqlOperator().delete(stmt, new Object[]{username});
     }
 
     // 增加用户，返回增加的用户的id
@@ -47,7 +32,7 @@ public class CompanyDatabase {
         return ids[0];
     }
 
-    // 插入一条订单到数据库
+    // 发布订单
     public String addSendOrder(OrderBean order) {
         String stmt_insert_orders = "insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,sketch,state) values (?,?,?,?,?,?,?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_orders, new Object[]{order.getOrder_number(), order.getStart_time(), order.getExpect_end_time(), order.getExpect_fare(), order.getStart_address(), order.getDestination(), order.getDescription(),order.getSketch(), "displaying"});
@@ -59,7 +44,7 @@ public class CompanyDatabase {
 
     //得到所有正在发布的订单
     public List getBiddingOrderList(IdBean companyId) {
-        String stmt = "select * from orders where id in(select launching.order_id from company join launching on company.id=launching.company_id where company.id=?) and state='displaying'";
+        String stmt = "select * from bidding_order_list where company_id=?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }
@@ -67,8 +52,8 @@ public class CompanyDatabase {
     //订单成交
 
     public String getDeal(SelectBidBean sbb) {
-        String stmt_update_order = "update orders set state = 'executing' where id =?";
-        Root.getInstance().getSqlOperator().update(stmt_update_order, new Object[]{sbb.getOrder_id()});
+        String stmt_update_order = "update orders set state = 'executing',exact_fare=? where id =?";
+        Root.getInstance().getSqlOperator().update(stmt_update_order, new Object[]{sbb.getPrice(),sbb.getOrder_id()});
         String stmt_update_car_detail = "update car_detail set state = '运输中' where car_id =?";
         Root.getInstance().getSqlOperator().update(stmt_update_car_detail, new Object[]{sbb.getCar_id()});
         String stmt_update_launching = "update launching set flag = 'invalid' where order_id =?";
@@ -89,8 +74,8 @@ public class CompanyDatabase {
     // 结束订单
 
     public String finishOrder(FinishOrderBean fob) {
-        String stmt_update_orders = "update orders set state='completed' where id=?";
-        Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{fob.getOrder_id()});
+        String stmt_update_orders = "update orders set state='completed',exact_end_time=?,exact_start_time=? where id=?";
+        Root.getInstance().getSqlOperator().update(stmt_update_orders, new Object[]{fob.getExact_end_time(),fob.getExact_start_time(),fob.getOrder_id()});
         String stmt_insert_remark = "insert into remark (evaluate,remark,car_id,order_id,company_id) values(?,?,?,?,?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt_insert_remark, new Object[]{fob.getEvaluate(),fob.getRemark(),fob.getCar_id(),fob.getOrder_id(),"1"});
         return ids[0];
