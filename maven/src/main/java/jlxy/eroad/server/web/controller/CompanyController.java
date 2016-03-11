@@ -102,6 +102,15 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
+    
+    @RequestMapping("get_executing_order_detail.erd")
+    @ResponseBody
+    //@Logged
+    public List do_get_executing_order_detail(@RequestParam("json") String json) {
+        IdBean orderId = new Gson().fromJson(json, IdBean.class);
+        Sret sr = cs.get_executing_order_detail(orderId);
+        return getRetList(sr);
+    }
     //完成订单
     @RequestMapping("finish_order.erd")
     @ResponseBody

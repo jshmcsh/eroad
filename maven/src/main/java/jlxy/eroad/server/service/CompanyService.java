@@ -36,8 +36,9 @@ public class CompanyService {
         Sret sr = new Sret();
         String username = param.getUsername();
         String password = param.getPassword();
-        List loginRet = cdb.getUserList(username);
+        List loginRet = cdb.getUserPasswd(username);
         if (loginRet.isEmpty()) {
+            
             sr.setFail("用户不存在");
         }
         //迭代，比对信息
@@ -48,8 +49,8 @@ public class CompanyService {
             if (compareMap.get("passwd") != null) {
 
                 if (compareMap.get("passwd").equals(password)) {
-                    // sr.setOk("登录成功");
-                    System.out.println("登录成功");
+                     sr.setOk("登录成功");
+                   // System.out.println("登录成功");
 
                 } else {
                     sr.setFail("密码错误");
@@ -107,6 +108,14 @@ public class CompanyService {
     //正在运行的订单信息列表
     public Sret get_executing_order(IdBean companyId){
         List ExecutingOrderListRet=cdb.getExecutingOrderList(companyId);
+        Sret sr=new Sret();
+        sr.setOk();
+        sr.setData(ExecutingOrderListRet);
+        return sr;
+    }
+    //正在运行的订单详细信息
+    public Sret get_executing_order_detail(IdBean orderId){
+        List ExecutingOrderListRet=cdb.getExecutingOrderDetail(orderId);
         Sret sr=new Sret();
         sr.setOk();
         sr.setData(ExecutingOrderListRet);

@@ -28,20 +28,23 @@ public class CompanyControllerTest extends IntegrateBase {
      //登录
      @Test
      public void test_do_login() {
-     LoginBean param = new LoginBean("abcd", "123456");
+     LoginBean param = new LoginBean("aaa", "fdsa");
      List list = getJsonReturn("/company/login.erd", param);
      Head head = getHeader(list);
      assertThat(head.getStatus(), is("ok"));
+     assertThat(head.getMessage(), is("登录成功"));
       
-     LoginBean param2 = new LoginBean("abcd", "12345");
+     LoginBean param2 = new LoginBean("aaa", "fds");
      List list2 = getJsonReturn("/company/login.erd", param2);
      Head head2 = getHeader(list2);
      assertThat(head2.getStatus(), is("fail"));
+     assertThat(head2.getMessage(), is("密码错误"));
         
-     LoginBean param3 = new LoginBean("aaa", "aaa");
+     LoginBean param3 = new LoginBean("ccc", "aaa");
      List list3 = getJsonReturn("/company/login.erd", param3);
      Head head3 = getHeader(list3);
      assertThat(head3.getStatus(), is("fail"));
+     assertThat(head3.getMessage(), is("用户不存在"));
                 
      }
      */
@@ -179,20 +182,43 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      }
      */
-    //结束订单
+    //得到正在运行的订单的列表
     @Test
-    public void test_do_finish_order() {
+    public void test_do_get_executing_order_detail() {
 
-        FinishOrderBean foBean = new FinishOrderBean("1", "1", 2, "非常好", "2012-02-03", "2012-01-03");
-        List list = getJsonReturn("/company/finish_order.erd", foBean);
+        IdBean orderId = new IdBean("1");
+        List list = getJsonReturn("/company/get_executing_order_detail.erd", orderId);
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok"));
+        assertThat(list.size() + "", is("5"));
 
-        int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
-        assertThat(addid, is(1));
+        assertThat(((Map) list.get(1)).get("latitude") + "", is("134.11"));
+        assertThat(((Map) list.get(1)).get("longtitude") + "", is("124.11"));
+        assertThat(((Map) list.get(2)).get("latitude") + "", is("133.11"));
+        assertThat(((Map) list.get(2)).get("longtitude") + "", is("123.11"));
+        assertThat(((Map) list.get(3)).get("latitude") + "", is("132.11"));
+        assertThat(((Map) list.get(3)).get("longtitude") + "", is("122.11"));
+        assertThat(((Map) list.get(4)).get("latitude") + "", is("131.11"));
+        assertThat(((Map) list.get(4)).get("longtitude") + "", is("121.11"));
 
+     //如果是多个数据就是getlistObject()方法
     }
 
+    /*
+     //结束订单
+     @Test
+     public void test_do_finish_order() {
+
+     FinishOrderBean foBean = new FinishOrderBean("1", "1", 2, "非常好", "2012-02-03", "2012-01-03");
+     List list = getJsonReturn("/company/finish_order.erd", foBean);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+
+     int addid = Integer.parseInt(getSingleObject(list, String.class));//如果是多个数据就是getlistObject()方法
+     assertThat(addid, is(1));
+
+     }
+     */
     /*
      //取消发布中的订单
      @Test

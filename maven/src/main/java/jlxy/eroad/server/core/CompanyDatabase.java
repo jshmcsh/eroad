@@ -19,8 +19,9 @@ import org.yecq.baseframework.plain.core.Root;
  */
 @Component
 public class CompanyDatabase {
-    public List<Map<String, Object>> getUserList(String username) {
-        String stmt = "select * from user where username = ?";
+    //登录
+    public List<Map<String, Object>> getUserPasswd(String username) {
+        String stmt = "select passwd from company where username = ?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{username});
         return ret;
     }
@@ -70,6 +71,13 @@ public class CompanyDatabase {
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }
+    //显示正在运行订单的详细信息
+    public List<Map<String, Object>> getExecutingOrderDetail(IdBean orderId) {
+        String stmt = "select * from executing_order_detail where order_id = ?";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{orderId.getId()});
+        return ret;
+    }
+    
 
     // 结束订单
 

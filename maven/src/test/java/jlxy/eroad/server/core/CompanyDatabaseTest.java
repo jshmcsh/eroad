@@ -29,6 +29,14 @@ public class CompanyDatabaseTest extends Base {
     @Autowired
     private SqlOperator sql;
 
+    //登录
+    @Test
+    public void test_getUserPasswd() {
+        List<Map<String, Object>> list = cdb.getUserPasswd("aaa");
+        assertThat(list.size(), is(1));
+        assertThat(list.get(0).get("passwd") + "", is("fdsa"));
+
+    }
     /*
      //发布一条订单
      @Test 
@@ -99,22 +107,46 @@ public class CompanyDatabaseTest extends Base {
 
      }
      */
-    
+    /*
      //显示正在运行的订单信息列表
      @Test
      public void test_getExecutingOrderList() {
      IdBean companyId = new IdBean("1");
      List<Map<String, Object>> list = cdb.getExecutingOrderList(companyId);
         
-     assertThat(list.get(0).get("id") + "", is("1"));
-     assertThat(list.get(0).get("username") + "", is("aaa"));
-     assertThat(list.get(0).get("car_number") + "", is("苏E12345"));
-     assertThat(list.get(0).get("phone_number") + "", is("11111111111"));
-     assertThat(list.get(0).get("sketch") + "", is("猪"));
-     assertThat(list.get(0).get("start_address") + "", is("广州"));
-     assertThat(list.get(0).get("destination") + "", is("厦门"));
-     }
+     assertThat(list.size() + "", is("2"));
+     assertThat(list.get(1).get("id") + "", is("1"));
+     assertThat(list.get(1).get("username") + "", is("aaa"));
+     assertThat(list.get(1).get("car_number") + "", is("苏E12345"));
+     assertThat(list.get(1).get("phone_number") + "", is("11111111111"));
+     assertThat(list.get(1).get("sketch") + "", is("猪"));
+     assertThat(list.get(1).get("start_address") + "", is("广州"));
+     assertThat(list.get(1).get("destination") + "", is("厦门"));
+     assertThat(list.get(1).get("longtitude") + "", is("120.11"));
+     assertThat(list.get(1).get("latitude") + "", is("130.11"));
      
+     }
+     */
+    //显示正在运行的订单信息列表
+     @Test
+     public void test_getExecutingOrderDetail() {
+     IdBean orderId = new IdBean("1");
+     List<Map<String, Object>> list = cdb.getExecutingOrderDetail(orderId);
+     assertThat(list.size() + "", is("4"));
+     
+//     assertThat(list.size() + "", is("2"));
+//     assertThat(list.get(1).get("id") + "", is("1"));
+//     assertThat(list.get(1).get("username") + "", is("aaa"));
+//     assertThat(list.get(1).get("car_number") + "", is("苏E12345"));
+//     assertThat(list.get(1).get("phone_number") + "", is("11111111111"));
+//     assertThat(list.get(1).get("sketch") + "", is("猪"));
+//     assertThat(list.get(1).get("start_address") + "", is("广州"));
+//     assertThat(list.get(1).get("destination") + "", is("厦门"));
+//     assertThat(list.get(1).get("longtitude") + "", is("120.11"));
+//     assertThat(list.get(1).get("latitude") + "", is("130.11"));
+     
+     }
+    
    /*
      //结束一条订单
      @Test
