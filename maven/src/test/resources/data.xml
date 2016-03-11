@@ -5,7 +5,7 @@
         <user id="1" username="abcd" passwd="123456" />
         <user id="2" username="zxcv" passwd="654321" />
     -->
-    <orders id="1" order_number="111" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="北京" destination="上海" sketch="车" description="来自北方的车" state="displaying"/>
+    <orders id="1" order_number="111" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="北京" destination="上海" sketch="车" description="来自北方的车" state="executing"/>
     <orders id="2" order_number="222" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="南京" destination="苏州" sketch="狗" description="来自南方的狗"   state="displaying"/>
     <orders id="3" order_number="333" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="广州" destination="厦门" sketch="猪" description="来自东方的猪"  state="executing"/>
  
@@ -22,4 +22,5 @@
     <bidding id="1" price="111" car_id="1" order_id="1"/>
     <launching id="1" flag="valid" company_id="1" order_id="1"/>
     <remark id="1" evaluate="2" remark="good" car_id="1" order_id="1" company_id="1"/>
+    <track id="1" longtitude="120.11" latitude="130.11" orders_id="1" car_id="1"/>
 </dataset>

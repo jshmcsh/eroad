@@ -71,10 +71,10 @@ public class CompanyDatabaseTest extends Base {
         assertThat(list.get(0).get("expect_end_time") + "", is("2012-02-01"));
 
         assertThat(list.get(0).get("sketch") + "", is("车"));
-        assertThat(list.get(0).get("price") + "", is("111"));
+        assertThat(list.get(0).get("price") + "", is("111.00"));
         assertThat(list.get(0).get("username") + "", is("aaa"));
-        assertThat(list.get(0).get("phone_numer") + "", is("11111111111"));
-        assertThat(list.get(0).get("car_numer") + "", is("苏E12345"));
+        assertThat(list.get(0).get("phone_number") + "", is("11111111111"));
+        assertThat(list.get(0).get("car_number") + "", is("苏E12345"));
 
     }
 */
@@ -99,7 +99,7 @@ public class CompanyDatabaseTest extends Base {
 
      }
      */
-    /*
+    
      //显示正在运行的订单信息列表
      @Test
      public void test_getExecutingOrderList() {
@@ -114,7 +114,7 @@ public class CompanyDatabaseTest extends Base {
      assertThat(list.get(0).get("start_address") + "", is("广州"));
      assertThat(list.get(0).get("destination") + "", is("厦门"));
      }
-     */
+     
    /*
      //结束一条订单
      @Test
