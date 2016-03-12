@@ -1,0 +1,17 @@
+* { overflow-x: hidden; }
+body { background: url(../image/5.jpg) no-repeat; background-size: 100% 100%; }
+.container { width: 100%; height: 100%; }
+.row { width: 100%; height: 100%; }
+#content { background: rgba(0, 0, 0, 0.5); font-family: "microsoft YaHei"; }
+.logo-box{position: absolute; top:10%; height:20%;width: 100%; text-align: center;}
+.logo-box img{
+	height: 100%;
+}
+.form-box { position: absolute; top: 40%; width: 100%; z-index: 1111; }
+form { max-width: 50%; margin: 0 auto; display: table; }
+form .table-head { display: table-caption; color: white; text-align: center; font-weight: bold; font-size: 2rem; padding-bottom: .5em; }
+form .inputfield { display: table-row; }
+form label { display: table-cell; text-align: right; color: white; margin: 0; padding: 0; height: 2rem; }
+form input { display: table-cell; }
+form input[type="submit"] { display: table-cell; width: 100%; }
+form .btn_reg { text-align: right; color: blue; display: table-cell; }

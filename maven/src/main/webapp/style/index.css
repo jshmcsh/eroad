@@ -1,0 +1,52 @@
+* {    /*overflow: hidden;*/ }
+html { font-size: 16px; width: 100%; height: 100%; }
+body { width: 100%; height: 100%; }
+
+/*容器*/
+.container { width: 100%; height: 100%; padding: 0; }
+.row { max-width: 100%; width: 100%; height: 100%; margin: 0; }
+#header_box { height: 12%; }
+#content_box { height: 83%; }
+#footer_box { height: 5%; }
+#header_box .logo { height: 100%; }
+#header_box .nav { height: 100%; }
+
+/*内容 #header_box*/
+#header_box .logo img { height: 100%; width: 100%; }
+#header_box .nav nav { height: 40%; }
+#header_box .nav nav ul { font-size: 0; position: relative; padding: 0; width: 30%; height: 100%; user-select: none; }
+#header_box .nav nav ul li { display: inline-block; width: 20%; height: 100%; background: #fff; font-size: .8rem; text-align: center; color: #000; text-transform: uppercase; position: relative; overflow: hidden; cursor: pointer; }
+#header_box .nav nav ul li label { position: absolute; bottom: 5px; display: block; width: 100%; padding: auto 0; cursor: pointer; }
+#header_box .nav nav ul li.slider { display: block; position: absolute; bottom: 0; left: 0; height: 3px; background: #E41819; transition: all 0.5s; }
+#header_box .nav nav ul .ripple { width: 0; height: 0; border-radius: 50%; background: rgba(228, 24, 25, 0.4); -webkit-transform: scale(0); -ms-transform: scale(0); transform: scale(0); position: absolute; opacity: 1; }
+.rippleEffect { -webkit-animation: rippleDrop .4s linear; animation: rippleDrop .4s linear; }
+@-webkit-keyframes rippleDrop {
+	100% { -webkit-transform: scale(2); transform: scale(2); opacity: 0; }
+}
+@keyframes rippleDrop {
+	100% { -webkit-transform: scale(2); transform: scale(2); opacity: 0; }
+}
+#header_box .search { width: 40%; height: 60%; padding-top: 5px; }
+#header_box .search input { width: 75%; height: 40%; margin-top: 0px; padding: .1%; border: 1px solid #eee; font-size: .8rem; }
+#header_box .search button { width: 20%; height: 40%; min-height: 1.5rem; background-color: #E41819; border: 0; font-size: .5rem; font-weight: bold; border-radius: 5px; padding: 3px .1%; }
+
+/*内容 #content_box*/
+#content_box .box_left, .box_right { height: 99%; padding-top: 5px; }
+#content_box .box_left .selector { width: 100%; height: 5%; }
+#content_box .box_left .selector select { width: 30%;font-size: .8rem; }
+#content_box .box_left .selector option{
+	font-size: .8rem;
+}
+#content_box .box_left .listView { width: 100%; height: 95%; }
+#content_box .box_left .listView ul { width: 98%; margin-right: 2%; height: 100%; overflow-y: scroll; list-style: none; }
+#content_box .box_left .listView ul li { width: 100%; height: auto; }
+#content_box .box_left .listView ul li.li_car .img_car { float: left; width: 10%; margin: 0 auto; padding: 5% 5%; }
+#content_box .box_left .listView ul li.li_car .img_car img { width: 100%; height: auto; }
+#content_box .box_left .listView ul li.li_car .labels { float: left; width: 80%; }
+#content_box .box_left .listView ul li.li_car .labels label { display: block; width: 100%; line-height: 1.5; font-size: .8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+#content_box .box_left .listView ul li.li_car .labels label.title { color: #00CC00; }
+#content_box .box_right iframe { width: 100%; height: 100%; }
+
+/*内容 #footer_box*/
+#footer_box .labels { width: 100%; text-align: center; position: absolute; bottom: 1px; }
+#footer_box .labels label { font-size: .5rem; }

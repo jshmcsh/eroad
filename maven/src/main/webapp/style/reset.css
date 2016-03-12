@@ -1,0 +1,230 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; outline: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+body { line-height: 1; }
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
+nav ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+a { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+del { text-decoration: line-through; }
+abbr[title], dfn[title] { border-bottom: 1px dotted #000; cursor: help; }
+table { border-collapse: collapse; border-spacing: 0; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #cccccc; margin: 1em 0; padding: 0; }
+input, select { vertical-align: middle; }
+
+/****************************
+****************************/
+
+/*overflow样式*/::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #fff; box-shadow: inset 0 0 6px #d1cfcf; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #000; border-radius: 12px;  -webkit-box-shadow: inset 0 0 6px #d1cfcf; }
+::-webkit-scrollbar-thumb:window-inactive { background: rgba(245, 245, 245, 0.4); }
+::-moz-scrollbar { width: 5px; }
+::-moz-scrollbar-track { background: #fff; box-shadow: inset 0 0 6px #d1cfcf; border-radius: 10px; }
+::-moz-scrollbar-thumb { background: #000; border-radius: 12px;  -webkit-box-shadow: inset 0 0 6px #d1cfcf; }
+::-moz-scrollbar-thumb:window-inactive { background: rgba(245, 245, 245, 0.4); }
+
+/*通用*/
+* { font-size: 15px; }
+html { height: 100% !important; }
+body { font-size: 15px !important; height: 100% !important; }
+
+/*我的通用input输入框样式*/
+input[type="text"], input[type="password"] { background-color: #fff !important; border: none; outline: none; box-shadow: none; padding: 5px; height: 100%; font-size: 1em; }
+input:-webkit-autofill {/*浏览器自动填充样式*/
+background-color: #fff !important; -webkit-box-shadow: 0 0 0px 1000px white inset !important; }
+
+/*我的通用按钮样式*/
+input[type="submit"], button { border: 1px solid rgba(0, 0, 0, 0.4); background: #000; color: #fff; padding: 5px; border-radius: 1em; }
+input[type="submit"]:focus, button:focus { outline: none; }
+input[type="submit"]:hover, button:hover { background: #4fe268; color: #fff; cursor: pointer; }
+
+/*我的通用超链接样式*/
+a { background: #C11B0B; color: #fff !important; font-size: .5em; text-align: center !important; border-radius: 1em; padding: 0; text-decoration: none; }
+a:hover { background: #4fe268; color: #fff !important; text-decoration: none; }
+
+/*通用样式类*/
+.img_auto { height: 100%; width: auto; }
+.float_left { float: left; }
+.float_right { float: right; }
+.display_none { display: none; }
+.display_block { display: block !important; }
+.display_inlineBlock { display: inline-block !important; }
+.font_weight_normal { font-weight: normal !important; }
+.font_weight_bold { font-weight: bold !important; }
+.font_half { font-size: .5em !important; }
+.font_size_75 { font-size: .75em !important; }
+.font_color_orange { color: #E2A10E !important; }
+.font_color_white { color: #fff !important; }
+.font_gray { color: #A8A8A8 !important; }
+.font_black { color: #000 !important; }
+.bkg_white { background: #fff; }
+.bkg_orange { background: #E3A10F !important; }
+.bkg_red { background: #EF566B !important; }
+.bkg_seaBlue { background: #4CCEDB !important; }
+.bkg_skyBlue { background: #5DA8E2 !important; }
+.pos_fixed { position: fixed; }
+.pos_relative { position: relative; }
+.pos_right { display: inline-block; position: absolute; right: 0; }
+.pos_bottom { display: block; position: absolute; bottom: 0; }
+.min_width_320px { min-width: 320px; }
+.width_auto { width: auto !important; }
+.width_1 { width: 1px !important; }
+.width_5 { width: 5%; }
+.width_25 { width: 25%; }
+.width_33 { width: 33.333%; }
+.width_45 { width: 45%; }
+.width_50 { width: 50%; }
+.width_90 { width: 90%; }
+.width_100 { width: 100% }
+.width_99 { width: 99%; }
+.min_width_80 { min-width: 80%; }
+
+/*效果图中的相对字体大小 相对15px*/
+.font_size0 { font-size: 0.5rem !important; }
+.font_size1 { /*20px*/ font-size: 0.6666666rem !important; }
+.font_size2 { /*24px*/ font-size: 0.8000000rem !important; }
+.font_size3 { /*26px*/ font-size: 0.8666666rem !important; }
+.font_size4 { /*28px*/ font-size: 0.9333333rem !important; }
+.font_size5 { font-size: 1.2333333rem !important; }
+.font_size6 { font-size: 1.4rem !important; }
+.font_size7 { font-size: 2rem !important; }
+
+/*效果图中的字体颜色*/
+.color_gray_cfcfcf { color: #cfcfcf !important; }
+.color_blue_5da8e2 { color: #5da8e2 !important; }
+.color_white_ffffff { color: #ffffff !important; }
+.color_black_333333 { color: #333333 !important; }
+.color_red_ef566a { color: #ef566a !important; }
+.color_green_68ae29 { color: #68ae29 !important; }
+
+/*height 0 ~ 20%(+1%) 20% ~ 100%(+5%)*/
+.height_auto { height: auto !important; }
+.height_1rem { height: 1rem !important; }
+.height_2rem { height: 2rem !important; }
+.height_3rem { height: 3rem !important; }
+.height_4rem { height: 4rem !important; }
+.height_5rem { height: 5rem !important; }
+.height_6rem { height: 6rem !important; }
+.height_7rem { height: 7rem !important; }
+.height_8rem { height: 8rem !important; }
+.height_9rem { height: 9rem !important; }
+.height_10rem { height: 10rem !important; }
+.height_15rem { height: 15rem !important; }
+.height_0 { height: 0 !important; }
+.height_1 { height: 1% !important; }
+.height_2 { height: 2% !important; }
+.height_3 { height: 3% !important; }
+.height_4 { height: 4% !important; }
+.height_5 { height: 5% !important; }
+.height_6 { height: 6% !important; }
+.height_7 { height: 7% !important; }
+.height_8 { height: 8% !important; }
+.height_9 { height: 9% !important; }
+.height_10 { height: 10% !important; }
+.height_11 { height: 11% !important; }
+.height_12 { height: 12% !important; }
+.height_13 { height: 13% !important; }
+.height_14 { height: 14% !important; }
+.height_15 { height: 15% !important; }
+.height_16 { height: 16% !important; }
+.height_17 { height: 17% !important; }
+.height_18 { height: 18% !important; }
+.height_19 { height: 19% !important; }
+.height_20 { height: 20% !important; }
+.height_25 { height: 25% !important; }
+.height_26 { height: 26% !important; }
+.height_30 { height: 30% !important; }
+.height_33 { height: 33.3333332% !important; }
+.height_35 { height: 35% !important; }
+.height_40 { height: 40% !important; }
+.height_45 { height: 45% !important; }
+.height_50 { height: 50% !important; }
+.height_55 { height: 55% !important; }
+.height_60 { height: 60% !important; }
+.height_65 { height: 65% !important; }
+.height_69 { height: 69% !important; }
+.height_70 { height: 70% !important; }
+.height_72 { height: 72% !important; }
+.height_75 { height: 75% !important; }
+.height_80 { height: 80% !important; }
+.height_85 { height: 85% !important; }
+.height_90 { height: 90% !important; }
+.height_93 { height: 93% !important; }
+.height_95 { height: 95% !important; }
+.height_99 { height: 99% !important; }
+.height_100 { height: 100% !important; }
+.max_height_1 { max-height: 1% !important; }
+.max_height_2 { max-height: 2% !important; }
+.max_height_3 { max-height: 3% !important; }
+.max_height_4 { max-height: 4% !important; }
+.max_height_5 { max-height: 5% !important; }
+.max_height_6 { max-height: 6% !important; }
+.max_height_7 { max-height: 7% !important; }
+.max_height_8 { max-height: 8% !important; }
+.max_height_9 { max-height: 9% !important; }
+.max_height_10 { max-height: 10% !important; }
+.max_height_11 { max-height: 11% !important; }
+.max_height_12 { max-height: 12% !important; }
+.max_height_13 { max-height: 13% !important; }
+.max_height_14 { max-height: 14% !important; }
+.max_height_15 { max-height: 15% !important; }
+.max_height_16 { max-height: 16% !important; }
+.max_height_17 { max-height: 17% !important; }
+.max_height_18 { max-height: 18% !important; }
+.max_height_19 { max-height: 19% !important; }
+.max_height_20 { max-height: 20% !important; }
+.max_height_25 { max-height: 25% !important; }
+.max_height_30 { max-height: 30% !important; }
+.max_height_35 { max-height: 35% !important; }
+.max_height_40 { max-height: 40% !important; }
+.max_height_45 { max-height: 45% !important; }
+.max_height_50 { max-height: 50% !important; }
+.max_height_55 { max-height: 55% !important; }
+.max_height_60 { max-height: 60% !important; }
+.max_height_65 { max-height: 65% !important; }
+.max_height_70 { max-height: 70% !important; }
+.max_height_75 { max-height: 75% !important; }
+.max_height_80 { max-height: 80% !important; }
+.max_height_85 { max-height: 85% !important; }
+.max_height_90 { max-height: 90% !important; }
+.max_height_95 { max-height: 95% !important; }
+.max_height_100 { max-height: 100% !important; }
+.left_6em { left: 6em; }
+.left_9em { left: 9em; }
+.left_10em { left: 10em; }
+.border_0 { border: none !important; }
+.border_top_0 { border-top: 0 !important; }
+.border_bottom_0 { border-bottom: 0 !important; }
+.border_top_1 { border-top: 1px solid #D4D4D4 !important; }
+.border_bottom_1 { border-bottom: 1px solid #D4D4D4 !important; }
+.border_divider { border-bottom: 1px dashed #D4D4D4 !important; }
+.border_radius { border-radius: 15px; }
+
+/*字体响应视口变化*/
+
+/*240x320 - 320x480*/
+@media screen and (min-width:240px) and (min-height:320px) {
+
+/*html { font-size: 10px!important;}*/ }
+
+/*320x480 - 480x800*/
+@media screen and (min-width:320px) and (min-height:480px) {
+
+/*html { font-size: 15px !important; }*/ }
+
+/*480x800 - 720x1280*/
+@media screen and (min-width:480px) and (min-height:800px) {
+
+/*html { font-size: 30px !important; }*/ }
+
+/*720x1280 - 1080x1920*/
+@media screen and (min-width:720px) and (min-height:1280px) {
+
+/*html { font-size: 36px !important; }*/ }
+
+/*竖屏最小兼容到240x320 最大兼容到1080x1920*/
+@media screen and (max-width:239px), screen and (min-width:1081px), screen and (max-height:319px), screen and (min-height:1921px) {
+
+/** { background: #000 !important;  position: absolute !important; }*/ }

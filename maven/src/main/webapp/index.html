@@ -1,37 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Eroad</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="js/jquery.min.js"></script>
-    <script>
-    $(function() {
-        var prefix = "http://eroadautobuilder.applinzi.com";
-        $("#compute").click(function() {
-            var a = $("#a").val();
-            var b = $("#b").val();
-
-            var o = {};
-            o.a = a;
-            o.b = b;
-            $.post(prefix + "/test/compute.erd", {
-                    json: JSON.stringify(o)
-                }, 
-                function(data) {
-                    alert("返回状态：" + data[0].status + ", 结果：" + data[1].result);
-                },
-                "json");
-        });
-    });
-    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
+    <link rel="stylesheet" href="style/columnal.css">
+    <link rel="stylesheet" href="style/reset.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style/index.css">
+    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </head>
 
 <body>
-    <div>
-        <input type="text" id="a" />&nbsp;+&nbsp;
-        <input type="text" id="b" />&nbsp;
-        <input type="button" id="compute" value="计算" />
+    <div class="container">
+        <div class="row">
+            <header id="header_box" class="col_12">
+                <div class="col_2 logo">
+                    <img src="img/logo.png" alt="">
+                </div>
+                <div class="col_10 omega nav">
+                    <nav>
+                        <ul>
+                            <li class="checked">
+                                <label>首页</label>
+                            </li>
+                            <li>
+                                <label>新闻</label>
+                            </li>
+                            <li>
+                                <label>投诉</label>
+                            </li>
+                            <li>
+                                <label>客服</label>
+                            </li>
+                            <li>
+                                <label>通知</label>
+                            </li>
+                            <li class="slider"></li>
+                        </ul>
+                    </nav>
+                    <div class="search">
+                        <input type="text" placeholder="请输入车牌号码或运单号">
+                        <button>查询</button>
+                    </div>
+                </div>
+            </header>
+            <section id="content_box" class="col_12">
+                <div class="col_3 noRmargin box_left">
+                    <div class="selector">
+                        <select class="" name="" id="">
+                            <option value="">车长</option>
+                            <option value="">5m</option>
+                            <option value="">6m</option>
+                        </select>
+                        <select class="" name="" id="">
+                            <option value="">载重</option>
+                            <option value="">1t</option>
+                            <option value="">2t</option>
+                        </select>
+                        <select class="" name="" id="">
+                            <option value="">状态</option>
+                            <option value="">busy</option>
+                            <option value="">free</option>
+                        </select>
+                    </div>
+                    <div class="listView">
+                        <ul>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                            <li class="li_car">
+                                <div class="img_car">
+                                    <img src="img/icon_greencar.png" height="48" width="48" alt="car">
+                                </div>
+                                <div class="labels">
+                                    <label class="title" for="">1.苏E792B0(空闲)</label>
+                                    <label for="">司机:陆**(133****39999)</label>
+                                    <label for="">车辆情况：13.5米/35吨</label>
+                                    <label for="">信用等级：</label>
+                                    <label for="">更新时间：2016/3/4 17:28:16</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col_9 omega box_right">
+                    <iframe src="map/hello_world.html"></iframe>
+                </div>
+            </section>
+            <footer id="footer_box" class="col_12">
+                <div class="labels">
+                    <label for="">上海优路网络科技有限公司</label>
+                    <label for="">Copyright © 2015 </label>
+                    <label for="">联系电话：021-88888888 </label>
+                    <label for="">苏ICP备888888888 </label>
+                </div>
+            </footer>
+        </div>
     </div>
 </body>
 
