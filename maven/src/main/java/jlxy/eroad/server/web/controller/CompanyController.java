@@ -60,10 +60,11 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("show_car_around.erd")
     @ResponseBody
     //@Logged
-    public List do_show_car_around(@RequestParam("json") String json) {
-        Position param = new Gson().fromJson(json, Position.class);
-        Sret sr = cs.ShowCarAround(param);
+    public List do_show_car_around(HttpServletRequest req) {
+         Sret sr;
+        sr=cs.ShowCarAround(req);
         return getRetList(sr);
+        
     }
 
     @RequestMapping("send_order.erd")

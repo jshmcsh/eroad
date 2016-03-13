@@ -32,7 +32,14 @@ public class CompanyDatabase {
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{username, passwd});
         return ids[0];
     }
-
+    //显示周围5公里车辆
+    /*
+    public List showCarAround(OrderBean order) {
+         String stmt = "select * from bidding_order_list where company_id=?";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
+        return ret;
+    }
+*/
     // 发布订单
     public String addSendOrder(OrderBean order) {
         String stmt_insert_orders = "insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,sketch,state) values (?,?,?,?,?,?,?,?,?)";

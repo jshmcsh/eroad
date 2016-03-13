@@ -3,6 +3,7 @@ package jlxy.eroad.server.service;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import jlxy.eroad.server.bean.param.ComputeParam;
 import jlxy.eroad.server.bean.param.IdBean;
@@ -16,6 +17,7 @@ import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
 import jlxy.eroad.server.core.CompanyDatabase;
+import jlxy.eroad.server.core.GetCity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yecq.baseframework.plain.service.Sret;
@@ -30,7 +32,7 @@ public class CompanyService {
 
     @Autowired
     private CompanyDatabase cdb;
-
+    private GetCity gc;
     public Sret login(LoginBean param) {
         //取用户名、密码，调用访问数据库函数，并接受返回的list
         Sret sr = new Sret();
@@ -71,11 +73,13 @@ public class CompanyService {
         return sr;
     }
 
-    public Sret ShowCarAround(Position param) {
-        int longtitude=param.getLongitude();
-        int latitude=param.getLatitude();
-        //数据库查询实时车辆经纬
-        //循环比对
+    public Sret ShowCarAround(HttpServletRequest req) {
+        //获取ip
+        String ipAddr=gc.getIpAddr(req);
+        //解析出地址
+        
+        //与数据库数据比对
+        //返回符合的经纬度
         Sret sr = new Sret();
         sr.setOk();
         return sr;
