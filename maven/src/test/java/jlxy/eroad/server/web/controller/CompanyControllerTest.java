@@ -74,17 +74,27 @@ public class CompanyControllerTest extends IntegrateBase {
         
      }
      */
-    /*
-     //查看周围车辆
-     @Test
-     public void test_show_car_around() {
-  
-     List list = getJsonReturn("/company/show_car_around.erd");
-     Head head = getHeader(list);
-     assertThat(head.getStatus(), is("ok")); 
+
+    //查看周围车辆
+    @Test
+    public void test_show_car_around() {
         
-     }
-     */
+        List list = getJsonReturn("/company/show_car_around.erd");
+        Head head = getHeader(list);
+
+        assertThat(head.getStatus(), is("ok"));
+        assertThat(list.size(), is(2));
+
+        assertThat(((Map)list.get(1)).get("id") + "", is("6"));
+        assertThat(((Map)list.get(1)).get("username") + "", is("fff"));
+        assertThat(((Map)list.get(1)).get("car_number") + "", is("苏A123459"));
+        assertThat(((Map)list.get(1)).get("phone_number") + "", is("6"));
+        assertThat(((Map)list.get(1)).get("latitude") + "", is("32.04"));
+        assertThat(((Map)list.get(1)).get("longtitude") + "", is("118.77"));
+        assertThat(((Map)list.get(1)).get("province") + "", is("江苏省"));
+        assertThat(((Map)list.get(1)).get("city") + "", is("南京市"));
+    }
+
     /*
     
      @Test
@@ -182,28 +192,29 @@ public class CompanyControllerTest extends IntegrateBase {
      }
      }
      */
-    //得到正在运行的订单的列表
-    @Test
-    public void test_do_get_executing_order_detail() {
+    /*
+     //得到正在运行的订单的列表
+     @Test
+     public void test_do_get_executing_order_detail() {
 
-        IdBean orderId = new IdBean("1");
-        List list = getJsonReturn("/company/get_executing_order_detail.erd", orderId);
-        Head head = getHeader(list);
-        assertThat(head.getStatus(), is("ok"));
-        assertThat(list.size() + "", is("5"));
+     IdBean orderId = new IdBean("1");
+     List list = getJsonReturn("/company/get_executing_order_detail.erd", orderId);
+     Head head = getHeader(list);
+     assertThat(head.getStatus(), is("ok"));
+     assertThat(list.size() + "", is("5"));
 
-        assertThat(((Map) list.get(1)).get("latitude") + "", is("134.11"));
-        assertThat(((Map) list.get(1)).get("longtitude") + "", is("124.11"));
-        assertThat(((Map) list.get(2)).get("latitude") + "", is("133.11"));
-        assertThat(((Map) list.get(2)).get("longtitude") + "", is("123.11"));
-        assertThat(((Map) list.get(3)).get("latitude") + "", is("132.11"));
-        assertThat(((Map) list.get(3)).get("longtitude") + "", is("122.11"));
-        assertThat(((Map) list.get(4)).get("latitude") + "", is("131.11"));
-        assertThat(((Map) list.get(4)).get("longtitude") + "", is("121.11"));
+     assertThat(((Map) list.get(1)).get("latitude") + "", is("134.11"));
+     assertThat(((Map) list.get(1)).get("longtitude") + "", is("124.11"));
+     assertThat(((Map) list.get(2)).get("latitude") + "", is("133.11"));
+     assertThat(((Map) list.get(2)).get("longtitude") + "", is("123.11"));
+     assertThat(((Map) list.get(3)).get("latitude") + "", is("132.11"));
+     assertThat(((Map) list.get(3)).get("longtitude") + "", is("122.11"));
+     assertThat(((Map) list.get(4)).get("latitude") + "", is("131.11"));
+     assertThat(((Map) list.get(4)).get("longtitude") + "", is("121.11"));
 
      //如果是多个数据就是getlistObject()方法
-    }
-
+     }
+     */
     /*
      //结束订单
      @Test

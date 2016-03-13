@@ -1,6 +1,7 @@
 package jlxy.eroad.server.web.controller;
 
 import com.google.gson.Gson;
+import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import jlxy.eroad.server.bean.param.IdBean;
@@ -60,11 +61,10 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("show_car_around.erd")
     @ResponseBody
     //@Logged
-    public List do_show_car_around(HttpServletRequest req) {
-         Sret sr;
-        sr=cs.ShowCarAround(req);
+    public List do_show_car_around(HttpServletRequest req) throws IOException {
+        Sret sr;
+        sr=cs.show_car_around(req);
         return getRetList(sr);
-        
     }
 
     @RequestMapping("send_order.erd")

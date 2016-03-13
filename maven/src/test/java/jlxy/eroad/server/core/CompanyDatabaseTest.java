@@ -7,6 +7,7 @@ import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
+import jlxy.eroad.server.bean.param.company.LocationBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,13 +29,34 @@ public class CompanyDatabaseTest extends Base {
 
     @Autowired
     private SqlOperator sql;
-
+/*
     //登录
     @Test
     public void test_getUserPasswd() {
         List<Map<String, Object>> list = cdb.getUserPasswd("aaa");
         assertThat(list.size(), is(1));
         assertThat(list.get(0).get("passwd") + "", is("fdsa"));
+
+    }
+*/
+    //获取周围5公里车辆
+
+    @Test
+    public void test_showCarAround() {
+        LocationBean lb = new LocationBean("江苏省", "南京市", "32.05723550", "118.77807441");
+        List<Map<String, Object>> list = cdb.showCarAround(lb);
+        
+        assertThat(list.size(), is(1));
+        
+        assertThat(list.get(0).get("id") + "", is("6"));
+        assertThat(list.get(0).get("username") + "", is("fff"));
+        assertThat(list.get(0).get("car_number") + "", is("苏A123459"));
+        assertThat(list.get(0).get("phone_number") + "", is("6"));
+        assertThat(list.get(0).get("latitude") + "", is("32.04"));
+        assertThat(list.get(0).get("longtitude") + "", is("118.77"));
+        assertThat(list.get(0).get("province") + "", is("江苏省"));
+        assertThat(list.get(0).get("city") + "", is("南京市"));
+        
 
     }
     /*
@@ -64,28 +86,28 @@ public class CompanyDatabaseTest extends Base {
      }
      */
     /*
-    //得到所有正在发布的订单
-    @Test
-    public void test_getBiddingOrderList() {
-        IdBean companyId = new IdBean("1");
-        List<Map<String, Object>> list = cdb.getBiddingOrderList(companyId);
+     //得到所有正在发布的订单
+     @Test
+     public void test_getBiddingOrderList() {
+     IdBean companyId = new IdBean("1");
+     List<Map<String, Object>> list = cdb.getBiddingOrderList(companyId);
 
-        assertThat(list.size(), is(1));
-        assertThat(list.get(0).get("company_id") + "", is("1"));
-        assertThat(list.get(0).get("destination") + "", is("上海"));
-        assertThat(list.get(0).get("start_address") + "", is("北京"));
-        assertThat(list.get(0).get("expect_fare") + "", is("111.00"));
-        assertThat(list.get(0).get("start_time") + "", is("2012-01-01"));
-        assertThat(list.get(0).get("expect_end_time") + "", is("2012-02-01"));
+     assertThat(list.size(), is(1));
+     assertThat(list.get(0).get("company_id") + "", is("1"));
+     assertThat(list.get(0).get("destination") + "", is("上海"));
+     assertThat(list.get(0).get("start_address") + "", is("北京"));
+     assertThat(list.get(0).get("expect_fare") + "", is("111.00"));
+     assertThat(list.get(0).get("start_time") + "", is("2012-01-01"));
+     assertThat(list.get(0).get("expect_end_time") + "", is("2012-02-01"));
 
-        assertThat(list.get(0).get("sketch") + "", is("车"));
-        assertThat(list.get(0).get("price") + "", is("111.00"));
-        assertThat(list.get(0).get("username") + "", is("aaa"));
-        assertThat(list.get(0).get("phone_number") + "", is("11111111111"));
-        assertThat(list.get(0).get("car_number") + "", is("苏E12345"));
+     assertThat(list.get(0).get("sketch") + "", is("车"));
+     assertThat(list.get(0).get("price") + "", is("111.00"));
+     assertThat(list.get(0).get("username") + "", is("aaa"));
+     assertThat(list.get(0).get("phone_number") + "", is("11111111111"));
+     assertThat(list.get(0).get("car_number") + "", is("苏E12345"));
 
-    }
-*/
+     }
+     */
     /*
      //订单成交
      @Test
@@ -127,13 +149,15 @@ public class CompanyDatabaseTest extends Base {
      
      }
      */
+/*
     //显示正在运行的订单信息列表
-     @Test
-     public void test_getExecutingOrderDetail() {
-     IdBean orderId = new IdBean("1");
-     List<Map<String, Object>> list = cdb.getExecutingOrderDetail(orderId);
-     assertThat(list.size() + "", is("4"));
-     
+
+    @Test
+    public void test_getExecutingOrderDetail() {
+        IdBean orderId = new IdBean("1");
+        List<Map<String, Object>> list = cdb.getExecutingOrderDetail(orderId);
+        assertThat(list.size() + "", is("4"));
+
 //     assertThat(list.size() + "", is("2"));
 //     assertThat(list.get(1).get("id") + "", is("1"));
 //     assertThat(list.get(1).get("username") + "", is("aaa"));
@@ -144,10 +168,9 @@ public class CompanyDatabaseTest extends Base {
 //     assertThat(list.get(1).get("destination") + "", is("厦门"));
 //     assertThat(list.get(1).get("longtitude") + "", is("120.11"));
 //     assertThat(list.get(1).get("latitude") + "", is("130.11"));
-     
-     }
-    
-   /*
+    }
+*/
+    /*
      //结束一条订单
      @Test
      public void test_finishOrder() {

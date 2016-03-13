@@ -7,6 +7,7 @@ import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
+import jlxy.eroad.server.bean.param.company.LocationBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import org.springframework.stereotype.Component;
@@ -33,13 +34,13 @@ public class CompanyDatabase {
         return ids[0];
     }
     //显示周围5公里车辆
-    /*
-    public List showCarAround(OrderBean order) {
-         String stmt = "select * from bidding_order_list where company_id=?";
-        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
+    
+    public List showCarAround(LocationBean lb) {
+        String stmt = "select * from v_show_car_around where province=? and city=?";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{lb.getProvince(),lb.getCity()});
         return ret;
     }
-*/
+
     // 发布订单
     public String addSendOrder(OrderBean order) {
         String stmt_insert_orders = "insert into orders (order_number,start_time,expect_end_time,expect_fare,start_address,destination,description,sketch,state) values (?,?,?,?,?,?,?,?,?)";
