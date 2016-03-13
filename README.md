@@ -19,5 +19,8 @@ target/*
 /maven/src/test/resources/jdbc.properties
 /maven/src/test/webapp/WEB-INF/jdbc.properties
 
+#项目展示地址
+http://eroadpage.applinzi.com
+
 
 
