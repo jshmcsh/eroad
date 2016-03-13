@@ -18,11 +18,11 @@ input, select { vertical-align: middle; }
 
 /*overflow样式*/::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #fff; box-shadow: inset 0 0 6px #d1cfcf; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #000; border-radius: 12px;  -webkit-box-shadow: inset 0 0 6px #000; }
+::-webkit-scrollbar-thumb { background: #000; border-radius: 12px; -webkit-box-shadow: inset 0 0 6px #000; }
 ::-webkit-scrollbar-thumb:window-inactive { background: rgba(245, 245, 245, 0.4); }
 ::-moz-scrollbar { width: 5px; }
 ::-moz-scrollbar-track { background: #fff; box-shadow: inset 0 0 6px #d1cfcf; border-radius: 10px; }
-::-moz-scrollbar-thumb { background: #000; border-radius: 12px;  -webkit-box-shadow: inset 0 0 6px #d1cfcf; }
+::-moz-scrollbar-thumb { background: #000; border-radius: 12px; -webkit-box-shadow: inset 0 0 6px #d1cfcf; }
 ::-moz-scrollbar-thumb:window-inactive { background: rgba(245, 245, 245, 0.4); }
 
 /*通用*/
@@ -30,19 +30,24 @@ input, select { vertical-align: middle; }
 html { height: 100% !important; }
 body { font-size: 15px !important; height: 100% !important; }
 
-/*我的通用input输入框样式*/
+/*我的默认input输入框样式*/
 input[type="text"], input[type="password"] { background-color: #fff !important; border: none; outline: none; box-shadow: none; padding: 5px; height: 100%; font-size: 1em; }
 input:-webkit-autofill {/*浏览器自动填充样式*/
 background-color: #fff !important; -webkit-box-shadow: 0 0 0px 1000px white inset !important; }
 
-/*我的通用按钮样式*/
+/*我的默认按钮样式*/
 input[type="submit"], button { border: 1px solid rgba(0, 0, 0, 0.4); background: #000; color: #fff; padding: 5px; border-radius: 1em; }
 input[type="submit"]:focus, button:focus { outline: none; }
 input[type="submit"]:hover, button:hover { background: #4fe268; color: #fff; cursor: pointer; }
 
-/*我的通用超链接样式*/
-a { background: #C11B0B; color: #fff !important; font-size: .5em; text-align: center !important; border-radius: 1em; padding: 0; text-decoration: none; }
-a:hover { background: #4fe268; color: #fff !important; text-decoration: none; }
+/*我的默认超链接样式*/
+a { background: #C11B0B; color: #fff; font-size: .5em; text-align: center !important; border-radius: 1em; padding: 0; text-decoration: none; }
+a:hover { background: #4fe268; color: #fff; text-decoration: none; }
+
+/*我的默认table样式*/
+table { }
+table tr { }
+table tr td { text-align: center; }
 
 /*通用样式类*/
 .img_auto { height: 100%; width: auto; }
