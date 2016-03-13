@@ -7,6 +7,7 @@ $(document).ready(function() {
  */
 function pageInit() {
     navAnimation();
+    listViewAnimation();
     $(window).resize(function(event) {
     	$("nav ul li.checked").click();
     });
@@ -59,4 +60,17 @@ function navAnimation() {
         }).addClass("rippleEffect");
 
     });
+}
+/**
+ * 列表效果
+ * @return {[type]} [description]
+ */
+function listViewAnimation(){
+    // $(".listView ul li.li_car").hover(function() {
+    //     /* Stuff to do when the mouse enters the element */
+    //     $(this).css('background', 'rgba(0,204,0,.2)');
+    // }, function() {
+    //     /* Stuff to do when the mouse leaves the element */
+    //     $(this).css('background', 'rgb(255,255,255)');
+    // });
 }
