@@ -9,5 +9,18 @@
 *{overflow-x:hidden;}
 html { height: 100%; margin-top: 10px; }
 body { height: 100%; margin: 0px; padding: 0px; }
-#code_close { display: none; background: url(../img/result.png) no-repeat 0 -142px; width: 14px; height: 90px; position: absolute; left: 0; z-index: 9999; top: 50%; margin-top: -45px; }
-#container { height: 100%; }
+#code_close {
+    display: none;
+    background: url(../img/result.png) no-repeat 0 -242px;
+    width: 14px;
+    height: 90px;
+    position: absolute;
+    left: 14;
+    z-index: 9999;
+    top: 50%;
+    margin-top: -45px;
+}
+
+#container {
+    height: 100%;
+}
