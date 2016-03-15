@@ -53,7 +53,7 @@ public class CompanyDatabase {
 
     //得到所有正在发布的订单
     public List getBiddingOrderList(IdBean companyId) {
-        String stmt = "select * from bidding_order_list where company_id=?";
+        String stmt = "select * from bidding_order_list where id=?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }
@@ -75,7 +75,8 @@ public class CompanyDatabase {
     //正在运行的订单信息列表
 
     public List<Map<String, Object>> getExecutingOrderList(IdBean companyId) {
-        String stmt = "select * from executing_order_list where id = ?";
+        
+        String stmt = "select * from executing_order_list where id=? group by order_id ";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }

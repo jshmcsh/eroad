@@ -22,7 +22,7 @@ import org.apache.http.util.EntityUtils;
  *
  * @author CP
  */
-public class Util {
+public class Corefunc {
 
     public String getIpAddr(HttpServletRequest request) {
 
@@ -62,7 +62,7 @@ public class Util {
         return ipAddress;
     }
 
-    public LocationBean getCityNameByIp(String ip) throws ClientProtocolException,
+    public static LocationBean getCityNameByIp(String ip) throws ClientProtocolException,
             IOException {
         System.out.println("**********************3********************");
         String url = "http://api.map.baidu.com/location/ip?ak=r3gBlVMFlVD33uNirMBDmmvl&ip=" + ip + "&coor=bd09ll";
@@ -91,8 +91,8 @@ public class Util {
             province = addressDetailObj.getString("province");
             city = addressDetailObj.getString("city");
 
-            longtitude = pointObj.getString("y");
-            latitude = pointObj.getString("x");
+            longtitude = pointObj.getString("x");
+            latitude = pointObj.getString("y");
             lb.setProvince(province);
             lb.setCity(city);
             lb.setLongtitude(longtitude);
@@ -110,8 +110,9 @@ public class Util {
      * @param lat2 第二点纬度
      * @return 返回距离 单位：米
      */
-    public double Distance(double long1, double lat1, double long2,
+    public static double Distance(double long1, double lat1, double long2,
             double lat2) {
+        System.out.println("long1+lat1+long2+lat2--->"+long1+"  "+lat1+"  "+long2+"  "+lat2);
         double a, b, R;
         R = 6378137; // 地球半径  
         lat1 = lat1 * Math.PI / 180.0;

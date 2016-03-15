@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <dataset>
-    <!--
-        <user id="1" username="abcd" passwd="123456" />
-        <user id="2" username="zxcv" passwd="654321" />
-    -->
     <orders id="1" order_number="111" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="北京" destination="上海" sketch="车" description="来自北方的车" state="executing"/>
     <orders id="2" order_number="222" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="南京" destination="苏州" sketch="狗" description="来自南方的狗"   state="displaying"/>
     <orders id="3" order_number="333" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="广州" destination="厦门" sketch="猪" description="来自东方的猪"  state="executing"/>
- 
+    <orders id="4" order_number="555" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="香港" destination="广州" sketch="猫" description="来自西方的猫"  state="completed"/>
+    <orders id="5" order_number="666" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="常州" destination="镇江" sketch="材料" description="来自常州的材料"  state="executing"/>
+    <orders id="6" order_number="777" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="深圳" destination="南昌" sketch="生鲜" description="来自深圳的生鲜"  state="executing"/>
+  
+    
     <company id="1" username="aaa" passwd="fdsa" state="正常" company_name="e路网" phone_number="11111111111" company_represent="chris"/>
     <company id="2" username="bbb" passwd="fdsa" state="正常" company_name="chri" phone_number="22222222222" company_represent="chris"/>
-    <car_account id="1" username="aaa" passwd="fdsa" state="pass"/>
-    <car_detail id="1" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="123" car_number="苏E12345" onlineflag="离线" state="空闲" car_id="1" phone_number="11111111111" />
-   
-    <car_account id="2" username="bbb" passwd="fdsa" state="pass" />
-    <car_detail id="2" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="1234" car_number="苏A12345" onlineflag="在线" state="空闲" car_id="2" phone_number="22222222222" />
     
+    <car_account id="1" username="aaa" passwd="fdsa" state="pass"/>
+    <car_detail id="1" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="123" car_number="苏E12345" onlineflag="在线" state="运输中" car_id="1" phone_number="11111111111" />  
+    <car_account id="2" username="bbb" passwd="fdsa" state="pass" />
+    <car_detail id="2" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="1234" car_number="苏A12345" onlineflag="在线" state="空闲" car_id="2" phone_number="22222222222" />   
     <car_account id="3" username="ccc" passwd="fdsa" state="pass"/>
     <car_detail id="3" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="ffa" car_number="苏E123456" onlineflag="离线" state="空闲" car_id="3" phone_number="3" />
     <car_account id="4" username="ddd" passwd="fdsa" state="pass"/>
@@ -25,23 +24,38 @@
     <car_detail id="5" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="hgdf" car_number="苏E123458" onlineflag="在线" state="空闲" car_id="5" phone_number="5"/>
     <car_account id="6" username="fff" passwd="fdsa" state="pass"/>
     <car_detail id="6" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="ddd" car_number="苏A123459" onlineflag="在线" state="空闲" car_id="6" phone_number="6"/>
-    
-    
-    <order_relation_detail id="1" car_id="1" company_id="1" orders_id="1"/>
-    <order_relation_detail id="2" car_id="1" company_id="1" orders_id="3"/>
-    
+    <car_account id="7" username="ggg" passwd="fdsa" state="pass"/>
+    <car_detail id="7" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="777" car_number="苏E7777" onlineflag="在线" state="运输中" car_id="7" phone_number="7" />  
+    <car_account id="8" username="hhh" passwd="fdsa" state="pass"/>
+    <car_detail id="8" driver_licence_path="/Users/CP/Pictures/linus.jpg" driver_licence_number="888" car_number="苏E8888" onlineflag="在线" state="运输中" car_id="8" phone_number="8" />  
    
-    <bidding id="2" price="111" car_id="1" order_id="3"/>
+    
+    <order_relation_detail id="1" car_id="1" company_id="1" orders_id="3"/>
+    <order_relation_detail id="2" car_id="1" company_id="1" orders_id="1"/>
+    <order_relation_detail id="3" car_id="1" company_id="1" orders_id="4"/>
+    <order_relation_detail id="4" car_id="8" company_id="2" orders_id="5"/>
+    <order_relation_detail id="5" car_id="7" company_id="2" orders_id="6"/>
+    
+    <bidding id="1" price="111" car_id="1" order_id="1"/>
+    <bidding id="2" price="111" car_id="1" order_id="2"/>
     
     <launching id="1" flag="valid" company_id="1" order_id="1"/>
+    <launching id="2" flag="valid" company_id="1" order_id="2"/>
     <remark id="1" evaluate="2" remark="good" car_id="1" order_id="1" company_id="1"/>
     
-   
+     
+    <track id="1" longtitude="118.78" latitude="32.04"  car_id="3"  time="2016-03-11 21:45:10" province="江苏省" city="南京市" orders_id="0"/>
+    <track id="2" longtitude="116.61" latitude="28.23"  car_id="4" time="2016-03-11 21:45:20" province="江西省" city="东乡县" />
+    <track id="3" longtitude="120.62" latitude="31.32"  car_id="5" time="2016-03-11 21:45:30" province="江苏省" city="苏州市" />
+    <track id="4" longtitude="118.77" latitude="32.04"  car_id="6" time="2016-03-11 21:45:40" province="江苏省" city="南京市" />
+    <track id="5" longtitude="120.11" latitude="130.11"  orders_id="3" car_id="1" />
+    <track id="6" longtitude="120.11" latitude="130.11"  orders_id="1" car_id="1" />
     
-    <track id="1" longtitude="118.78" latitude="32.04" car_id="3" time="2016-03-11 21:45:10" province="江苏省" city="南京市"/>
-    <track id="2" longtitude="116.61" latitude="28.23" car_id="4" time="2016-03-11 21:45:20" province="江西省" city="东乡县"/>
-    <track id="3" longtitude="120.62" latitude="31.32" car_id="5" time="2016-03-11 21:45:30" province="江苏省" city="苏州市"/>
-    <track id="4" longtitude="118.77" latitude="32.04" car_id="6" time="2016-03-11 21:45:40" province="江苏省" city="南京市"/>
-
-    <track id="5" longtitude="120.11" latitude="130.11" orders_id="3" car_id="1"/>
+    <track id="7" longtitude="120.11" latitude="130.11"  orders_id="5" car_id="8"  time="2016-03-11 21:30:40"/>
+    <track id="8" longtitude="121.11" latitude="131.11"  orders_id="5" car_id="8" time="2016-03-11 21:40:40"/>
+    <track id="9" longtitude="122.11" latitude="132.11"  orders_id="5" car_id="8" time="2016-03-11 21:50:40"/>
+   <track id="10" longtitude="120.11" latitude="130.11"  orders_id="6" car_id="7"  time="2016-03-11 21:30:40"/>
+    <track id="11" longtitude="121.11" latitude="131.11"  orders_id="6" car_id="7" time="2016-03-11 21:40:40"/>
+    <track id="12" longtitude="122.11" latitude="132.11"  orders_id="6" car_id="7" time="2016-03-11 21:50:40"/>
+    
 </dataset>

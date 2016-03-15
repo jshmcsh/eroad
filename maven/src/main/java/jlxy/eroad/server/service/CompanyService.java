@@ -2,6 +2,7 @@ package jlxy.eroad.server.service;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.bean.result.ComputeResult;
 import jlxy.eroad.server.core.CompanyDatabase;
-import jlxy.eroad.server.core.Util;
+import jlxy.eroad.server.core.Corefunc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yecq.baseframework.plain.service.Sret;
@@ -34,7 +35,7 @@ public class CompanyService {
 
     @Autowired
     private CompanyDatabase cdb;
-    private Util ul;
+    // private Corefunc cf;
 
     public Sret login(LoginBean param) {
         //取用户名、密码，调用访问数据库函数，并接受返回的list
@@ -77,26 +78,33 @@ public class CompanyService {
     }
 
     public Sret show_car_around(HttpServletRequest req) throws IOException {
-        System.out.println("**********************1********************");
         Sret sr = new Sret();
         //用来等会setData()传过去的。
-        List<Map<String, Object>> nextRet = null;
+        List<Map<String, Object>> nextRet = new LinkedList();
         double distance;
         //获取ip
         //String ipAddr = ul.getIpAddr(req);
         //解析出地址
-        System.out.println("**********************2********************");
-        LocationBean lb = ul.getCityNameByIp("112.86.170.43");
+        LocationBean lb = Corefunc.getCityNameByIp("112.86.170.43");
         //与数据库数据比对
-        List showCarAroundRet = cdb.showCarAround(lb);
+        List<Map<String, Object>> showCarAroundRet = cdb.showCarAround(lb);
+        for(int i=0;i<showCarAroundRet.size();i++){
+            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) showCarAroundRet.get(i).get("longtitude")), Double.parseDouble((String) showCarAroundRet.get(i).get("latitude")));
+            if (distance <= 5000) {
+                nextRet.add(showCarAroundRet.get(i));
+            }
+        }
+        /*
         Iterator<Map<String, Object>> it = showCarAroundRet.iterator();
         for (; it.hasNext();) {
             Map<String, Object> compareMap = it.next();
-            distance = ul.Distance(Double.parseDouble(lb.getLongtitude()), Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) compareMap.get("longtitude")), Double.parseDouble((String) compareMap.get("latitude")));
+            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) compareMap.get("longtitude")), Double.parseDouble((String) compareMap.get("latitude")));
+            System.out.println("distance---》" + distance);
             if (distance <= 5000) {
                 nextRet.add(compareMap);
             }
         }
+                */
         //返回符合的经纬度
 
         sr.setOk();
@@ -130,7 +138,6 @@ public class CompanyService {
     }
 
     //正在运行的订单信息列表
-
     public Sret get_executing_order(IdBean companyId) {
         List ExecutingOrderListRet = cdb.getExecutingOrderList(companyId);
         Sret sr = new Sret();
@@ -140,7 +147,6 @@ public class CompanyService {
     }
 
     //正在运行的订单详细信息
-
     public Sret get_executing_order_detail(IdBean orderId) {
         List ExecutingOrderListRet = cdb.getExecutingOrderDetail(orderId);
         Sret sr = new Sret();
@@ -150,7 +156,6 @@ public class CompanyService {
     }
 
     //结束订单
-
     public Sret finish_order(FinishOrderBean fobean) {
         String finishOrderRet = cdb.finishOrder(fobean);
         Sret sr = new Sret();
@@ -160,7 +165,6 @@ public class CompanyService {
     }
 
     //取消正在发布的订单
-
     public Sret cancel_launching_order(CancelLaunchingOrderBean clob) {
         cdb.cancelLaunchingOrder(clob);
         Sret sr = new Sret();
@@ -169,7 +173,6 @@ public class CompanyService {
     }
 
     //取消正在运行的订单
-
     public Sret cancel_executing_order(CancelExecutingOrderBean ceob) {
         String cancelExecutingOrderRet = cdb.cancelExecutingOrder(ceob);
         Sret sr = new Sret();
@@ -179,7 +182,6 @@ public class CompanyService {
     }
 
     //得到司机评价
-
     public Sret get_car_remark(IdBean carId) {
         List ret = cdb.getCarRemark(carId);
         Sret sr = new Sret();
@@ -198,7 +200,6 @@ public class CompanyService {
     }
 
     //得到历史订单详情
-
     public Sret get_history_order_detail(HistoryOrderDetailBean hodb) {
         List ret = cdb.getHistoryOrderDetail(hodb);
         Sret sr = new Sret();
