@@ -11,7 +11,7 @@
  Target Server Version : 50163
  File Encoding         : utf-8
 
- Date: 03/11/2016 09:26:51 AM
+ Date: 03/15/2016 15:28:05 PM
 */
 
 SET NAMES utf8;
@@ -29,7 +29,7 @@ CREATE TABLE `bidding` (
   PRIMARY KEY (`id`),
   KEY `car_id` (`car_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `car_account`
@@ -42,7 +42,7 @@ CREATE TABLE `car_account` (
   `state` set('pass','rejected','check') NOT NULL DEFAULT 'check' COMMENT '审核',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `car_detail`
@@ -57,13 +57,11 @@ CREATE TABLE `car_detail` (
   `state` set('运输中','空闲') NOT NULL DEFAULT '空闲' COMMENT '车辆状态',
   `car_id` int(10) unsigned NOT NULL COMMENT '车id,外键',
   `phone_number` varchar(11) NOT NULL COMMENT '司机手机号',
-  `latitude` varchar(50) DEFAULT NULL COMMENT '纬度',
-  `longtitude` varchar(50) DEFAULT NULL COMMENT '经度',
   PRIMARY KEY (`id`),
   UNIQUE KEY `driver_licence_number` (`driver_licence_number`),
   UNIQUE KEY `car_number` (`car_number`),
   KEY `car_id` (`car_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `company`
@@ -83,7 +81,7 @@ CREATE TABLE `company` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `company_name` (`company_name`),
   UNIQUE KEY `company_license` (`company_license`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `launching`
@@ -98,7 +96,7 @@ CREATE TABLE `launching` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `order_relation_detail`
@@ -113,7 +111,7 @@ CREATE TABLE `order_relation_detail` (
   KEY `car_id` (`car_id`),
   KEY `orders_id` (`orders_id`),
   KEY `company_id` (`company_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `orders`
@@ -136,7 +134,7 @@ CREATE TABLE `orders` (
   `exact_start_time` date DEFAULT NULL COMMENT '期望开始时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_number` (`order_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `platform`
@@ -165,7 +163,7 @@ CREATE TABLE `remark` (
   PRIMARY KEY (`id`),
   KEY `car_id` (`car_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `track`
@@ -176,12 +174,15 @@ CREATE TABLE `track` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '时间点',
   `longtitude` varchar(50) NOT NULL COMMENT '经度',
   `latitude` varchar(50) NOT NULL COMMENT '纬度',
-  `orders_id` int(10) unsigned NOT NULL COMMENT '订单编号，外键',
+  `orders_id` int(10) unsigned DEFAULT NULL COMMENT '订单编号，外键',
   `car_id` int(10) unsigned NOT NULL COMMENT '车的id，外键',
+  `province` varchar(20) DEFAULT NULL COMMENT '省',
+  `city` varchar(20) DEFAULT NULL,
+  `district` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `car_id` (`car_id`),
   KEY `orders_id` (`orders_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 --  Table structure for `verify`
@@ -203,19 +204,31 @@ CREATE TABLE `verify` (
 --  View structure for `bidding_order_list`
 -- ----------------------------
 DROP VIEW IF EXISTS `bidding_order_list`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `bidding_order_list` AS select `car_detail`.`car_id` AS `car_id`,`launching`.`company_id` AS `company_id`,`orders`.`create_time` AS `create_time`,`orders`.`destination` AS `destination`,`orders`.`start_address` AS `start_address`,`orders`.`expect_fare` AS `expect_fare`,`orders`.`start_time` AS `start_time`,`orders`.`expect_end_time` AS `expect_end_time`,`orders`.`sketch` AS `sketch`,`bidding`.`price` AS `price`,`car_account`.`username` AS `username`,`car_detail`.`phone_number` AS `phone_number`,`car_detail`.`car_number` AS `car_number` from ((((`bidding` join `orders` on((`bidding`.`order_id` = `orders`.`id`))) join `car_account` on((`bidding`.`car_id` = `car_account`.`id`))) join `car_detail` on((`bidding`.`car_id` = `car_detail`.`car_id`))) join `launching` on((`bidding`.`order_id` = `launching`.`order_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `bidding_order_list` AS select `launching`.`company_id` AS `id`,`orders`.`create_time` AS `create_time`,`orders`.`destination` AS `destination`,`orders`.`start_address` AS `start_address`,`orders`.`expect_fare` AS `expect_fare`,`orders`.`start_time` AS `start_time`,`orders`.`expect_end_time` AS `expect_end_time`,`orders`.`sketch` AS `sketch`,`bidding`.`price` AS `price`,`car_account`.`username` AS `username`,`car_detail`.`phone_number` AS `phone_number`,`car_detail`.`car_number` AS `car_number` from ((((`bidding` join `orders` on((`bidding`.`order_id` = `orders`.`id`))) join `car_account` on((`bidding`.`car_id` = `car_account`.`id`))) join `car_detail` on((`bidding`.`car_id` = `car_detail`.`car_id`))) join `launching` on((`bidding`.`order_id` = `launching`.`order_id`))) where (`orders`.`state` = 'displaying');
+
+-- ----------------------------
+--  View structure for `executing_order_detail`
+-- ----------------------------
+DROP VIEW IF EXISTS `executing_order_detail`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `executing_order_detail` AS select `orders`.`id` AS `order_id`,`orders`.`order_number` AS `order_number`,`orders`.`start_time` AS `start_time`,`orders`.`exact_start_time` AS `exact_start_time`,`orders`.`expect_end_time` AS `expect_end_time`,`orders`.`description` AS `description`,`orders`.`create_time` AS `create_time`,`orders`.`sketch` AS `sketch`,`orders`.`start_address` AS `start_address`,`orders`.`destination` AS `destination`,`car_account`.`username` AS `username`,`car_detail`.`car_number` AS `car_number`,`car_detail`.`phone_number` AS `phone_number`,`track`.`latitude` AS `latitude`,`track`.`longtitude` AS `longtitude` from (((((`order_relation_detail` `o` join `company` on((`o`.`company_id` = `company`.`id`))) join `car_detail` on((`o`.`car_id` = `car_detail`.`car_id`))) join `car_account` on((`o`.`car_id` = `car_account`.`id`))) join `orders` on((`o`.`orders_id` = `orders`.`id`))) join `track` on((`o`.`orders_id` = `track`.`orders_id`))) where (`orders`.`state` = 'executing') order by `track`.`time` desc;
 
 -- ----------------------------
 --  View structure for `executing_order_list`
 -- ----------------------------
 DROP VIEW IF EXISTS `executing_order_list`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `executing_order_list` AS select `company`.`id` AS `id`,`car_account`.`username` AS `username`,`car_detail`.`car_number` AS `car_number`,`car_detail`.`phone_number` AS `phone_number`,`orders`.`sketch` AS `sketch`,`orders`.`start_address` AS `start_address`,`orders`.`destination` AS `destination`,`track`.`latitude` AS `latitude`,`track`.`longtitude` AS `longtitude` from (((((`order_relation_detail` `o` join `company` on((`o`.`company_id` = `company`.`id`))) join `car_detail` on((`o`.`car_id` = `car_detail`.`car_id`))) join `car_account` on((`o`.`car_id` = `car_account`.`id`))) join `orders` on((`o`.`orders_id` = `orders`.`id`))) join `track` on((`o`.`orders_id` = `track`.`orders_id`))) where (`orders`.`state` = 'executing');
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `executing_order_list` AS select `company`.`id` AS `id`,`orders`.`id` AS `order_id`,`car_account`.`username` AS `username`,`car_detail`.`car_number` AS `car_number`,`car_detail`.`phone_number` AS `phone_number`,`orders`.`sketch` AS `sketch`,`orders`.`start_address` AS `start_address`,`orders`.`destination` AS `destination`,`track`.`latitude` AS `latitude`,`track`.`longtitude` AS `longtitude`,`track`.`time` AS `track_time` from (((((`order_relation_detail` `o` join `company` on((`o`.`company_id` = `company`.`id`))) join `car_detail` on((`o`.`car_id` = `car_detail`.`car_id`))) join `car_account` on((`o`.`car_id` = `car_account`.`id`))) join `orders` on((`o`.`orders_id` = `orders`.`id`))) join `track` on((`o`.`orders_id` = `track`.`orders_id`))) where (`orders`.`state` = 'executing') group by `orders`.`id`,`track`.`time` order by `track`.`orders_id`,`track`.`time` desc;
 
 -- ----------------------------
 --  View structure for `history_order`
 -- ----------------------------
 DROP VIEW IF EXISTS `history_order`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `history_order` AS select `order_relation_detail`.`company_id` AS `company_id`,`orders`.`order_number` AS `order_number`,timestampdiff(DAY,`orders`.`start_time`,`orders`.`exact_end_time`) AS `last_time`,`orders`.`exact_fare` AS `exact_fare`,`orders`.`expect_fare` AS `expect_fare`,`orders`.`expect_end_time` AS `expect_end_time`,`orders`.`exact_end_time` AS `exact_end_time`,`orders`.`start_time` AS `start_time`,`orders`.`start_address` AS `start_address`,`orders`.`destination` AS `destination`,`orders`.`sketch` AS `sketch`,`orders`.`description` AS `description`,`orders`.`create_time` AS `create_time`,`car_account`.`username` AS `username` from ((`order_relation_detail` join `orders` on((`orders`.`id` = `order_relation_detail`.`orders_id`))) join `car_account` on((`order_relation_detail`.`car_id` = `car_account`.`id`))) where (`orders`.`state` = 'completed');
+
+-- ----------------------------
+--  View structure for `v_show_car_around`
+-- ----------------------------
+DROP VIEW IF EXISTS `v_show_car_around`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER VIEW `v_show_car_around` AS select `car_account`.`id` AS `id`,`car_account`.`username` AS `username`,`car_detail`.`car_number` AS `car_number`,`car_detail`.`phone_number` AS `phone_number`,`track`.`latitude` AS `latitude`,`track`.`longtitude` AS `longtitude`,`track`.`time` AS `time`,`track`.`province` AS `province`,`track`.`city` AS `city` from ((`track` join `car_account` on((`car_account`.`id` = `track`.`car_id`))) join `car_detail` on((`car_detail`.`car_id` = `track`.`car_id`))) where ((`car_account`.`state` = 'pass') and (`car_detail`.`onlineflag` = '在线') and (`car_detail`.`state` = '空闲'));
 
 -- ----------------------------
 --  View structure for `xcar_remark`
