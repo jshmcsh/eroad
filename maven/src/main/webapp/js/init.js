@@ -5,4 +5,3 @@ function goback() {
 $(document).ready(function() {
 	
 });
-
