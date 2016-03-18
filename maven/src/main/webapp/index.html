@@ -53,8 +53,8 @@
                 <div class="nav_right">
                     <div class="sign">
                         <div class="sign_group">
-                            <a id="btn_signin" href="#">登录</a>
-                            <a id="btn_signup" href="#">注册</a>
+                            <a id="btn_signinbox" href="#">登录</a>
+                            <a id="btn_signupbox" href="#">注册</a>
                         </div>
                     </div>
                     <div class="statistics">
@@ -181,6 +181,7 @@
             </footer>
         </div>
     </div>
+    <!-- start 注册 start -->
     <div id="signup_box" class="display_none">
         <div class="height_20"></div>
         <div class="content">
@@ -191,19 +192,18 @@
                 <span class="3"></span>
                 <span class="4"></span>
             </div>
-            
             <div class="signupblock">
                 <div class="signup_0 active">
-                    
+                    first step
                 </div>
                 <div class="signup_1">
-                    
+                    second step
                 </div>
                 <div class="signup_2">
-                    
+                    third step
                 </div>
                 <div class="signup_3">
-                    
+                    fourth step
                 </div>
             </div>
             <div class="switch">
@@ -215,6 +215,44 @@
             </div>
         </div>
     </div>
+    <!-- end 注册 end -->
+    <!-- start 登录 start -->
+    <div id="signin_box" class="display_none">
+        <div class="height_20"></div>
+        <div class="content">
+            <header>
+                货运公司登录
+            </header>
+            <table class="form_signin">
+                <tr>
+                    <td>
+                        <label for="input_un">用户名：</label>
+                    </td>
+                    <td>
+                        <input id="input_un" type="text" placeholder="请输入用户名">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="input_pw">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                    </td>
+                    <td>
+                        <input id="input_pw" type="text" placeholder="请输入密码">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="btn_signin">登录</button>
+                    </td>
+                </tr>
+            </table>
+            <div class="close">
+                <button id="btn_closeSignin">close</button>
+            </div>
+        </div>
+    </div>
+    <!-- end 登录 end -->
+    <input type="text" id="hidden_check" style="position:absolute;z-index:-10000;width:0;padding:0;margin:0;" value="">
 </body>
 
 </html>

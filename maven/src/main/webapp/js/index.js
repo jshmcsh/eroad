@@ -1,103 +1,180 @@
+//页面全局对象
+AllGlobal = (function global() {
+    //0未登录，1登录
+    var pageStatus = 0;
+    //绑定一个html元素，通过change事件的触发检测页面状态
+    var pageCheckHelper = null;
+    //dom映射数组，偶数值为容器，偶数的右相邻奇数值为dom内容
+    var unloginArray = null;
+    return {
+        setPageStatus: function(newStatus) {
+            pageStatus = newStatus;
+            pageCheckHelper.change();
+        },
+        getPageStatus: function() {
+            return pageStatus;
+        },
+        setPageCheckHelper: function(newHelper) {
+            pageCheckHelper = newHelper;
+        },
+        getPageCheckHelper: function() {
+            return pageCheckHelper;
+        },
+        setUnloginArray: function(newArray) {
+            //设置dom保存到数组
+            unloginArray = newArray;
+        },
+        loadUnloginArray: function() {
+            if (unloginArray === null)
+                return;
+            //从数组还原到dom
+            for (var i = 0; i < unloginArray.length; i += 2) {
+                unloginArray[i].html(unloginArray[i + 1]);
+            }
+            unloginArray = null;
+        },
+        getUnloginArray: function() {
+            return unloginArray;
+        }
+    };
+})();
 $(document).ready(function() {
+    //页面初始化
     pageInit();
-    pageListener();
 });
 /**
  * 页面初始化
  * @return {[type]} [description]
  */
 function pageInit() {
-    navAnimation();
-    listViewAnimation();
+    //固定dom初始化
+    effect_nav();
     $(window).resize(function(event) {
         $("nav ul li.checked").click();
     });
+
+    //实时监测页面状态
+    var pageCheckHelper = $("#hidden_check");
+    pageCheckHelper.change(function(event) {
+        //登录页面初始化
+        if (AllGlobal.getPageStatus() === 1) {
+            /*保存原内容*/
+            $("#btn_closeSignin").click();
+            var domArray = new Array();
+            var content_unlogin = $("#header_box .nav_right").children();
+            domArray.push($("#header_box .nav_right"));
+            domArray.push(content_unlogin);
+            var content_map = $("#content_box").children();
+            domArray.push($("#content_box"));
+            domArray.push(content_map);
+            AllGlobal.setUnloginArray(domArray);
+            /*清除原内容*/
+            content_unlogin.remove();
+            content_map.remove();
+            /*更新当前内容*/
+            var str1 = '';
+            str1 += '<div class="logined_top">';
+            str1 += '    <span>UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
+            str1 += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
+            str1 += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
+            str1 += '</div>';
+            str1 += '<div class="logined_bottom">';
+            str1 += '    <div id="btn_kzt" class="ctrl_kzt"><img src="img/kzt_01.png" height="83" width="235" alt=""></div>';
+            str1 += '    <div id="btn_hy" class="ctrl_hy"><img src="img/hy_01.png" height="82" width="209" alt=""></div>';
+            str1 += '    <div id="btn_yd" class="ctrl_yd"><img src="img/yd_01.png" height="83" width="209" alt=""></div>';
+            str1 += '    <div id="btn_gs" class="ctrl_gs"><img src="img/gs_01.png" height="82" width="209" alt=""></div>';
+            str1 += '    <div id="btn_sj" class="ctrl_sj"><img src="img/si_01.png" height="82" width="209" alt=""></div>';
+            str1 += '</div>';
+            $("#header_box .nav_right").html(str1);
+            /*绑定新内容监听*/
+            loginedPageTogglesInit();
+        } else { //未登录页面初始化
+            /*还原原有内容*/
+            AllGlobal.loadUnloginArray();
+            //未登录页面监听
+            pageTogglesInit();
+        }
+    });
+    //绑定页面状态监测对象到全局对象
+    AllGlobal.setPageCheckHelper(pageCheckHelper);
+    AllGlobal.setPageStatus(0); //初始化未登录页面
 }
 /**
- * 页面事件监听
+ * 未登录页面监听
  * @return {[type]} [description]
  */
-function pageListener() {
-    $("#btn_signup").click(function(event) {
+function pageTogglesInit() {
+    //注册
+    $("#btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
     });
-    $("#btn_closeSignup").click(function(event) {
+    //注册块内效果
+    effect_signupBox();
+    // 关闭注册
+    $("#btn_closeSignup").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
     });
-    //注册步骤指示切换
-    var prevStep = "";
-    var img = $(".step img");
-    var hoverDone = false; //控制hover与Click顺序
-    $(".step span").hover(function() {
-        prevStep = img.attr('src').split(".png")[0].split("step")[1];
-        // if (parseInt(prevStep) + 1 != parseInt($(this).attr('class')))
-        //     return;
-        img.attr('src', "img/step" + $(this).attr('class') + ".png");
-    }, function() {
-        if (!hoverDone)
-            img.attr('src', "img/step" + prevStep + ".png");
-        else
-            hoverDone = false;
+    // 登录
+    $("#btn_signinbox").off('click').click(function(event) {
+        $("#signin_box").toggleClass('display_none');
     });
-    $(".step span").click(function(event) {
-        prevStep = parseInt(prevStep);
-        var crtStep = parseInt($(this).attr('class'));
-        // //禁止向前越步
-        // console.log(prevStep + " " + crtStep+" "+(crtStep - prevStep > 1 || (crtStep - prevStep !=1 &&crtStep - prevStep >=0)));
-        // if (crtStep - prevStep > 1 || (crtStep - prevStep !=1 &&crtStep - prevStep >=0))
-        //      return;
-        //  console.log(prevStep + " " + crtStep);
-        img.attr('src', "img/step" + crtStep + ".png");
-        hoverDone = true;
-        // 触发左右切换
-        var changeStep = crtStep - prevStep;
-        var changeNumber = Math.abs(changeStep);
-        console.log(changeStep + " " + changeNumber);
-        if (changeStep > 0) { //右跳
-            while (changeNumber-- != 0) {
-                $(".switch .right").click();
-            }
-        } else { //左跳
-            while (changeNumber-- != 0) {
-                $(".switch .left").click();
-            }
-        }
+    //登录块内效果
+    effect_signinBox();
+    // 登录逻辑
+    logic_signinBox();
+    // 关闭登录块
+    $("#btn_closeSignin").off('click').on('click', function(event) {
+        event.preventDefault();
+        $("#signin_box").toggleClass('display_none');
     });
-    //注册步骤切换
-    $(".switch .left,.right").click(function(event) {
-        console.log();
-        if ($(this).hasClass('left') && $(".signupblock .active").hasClass("signup_0"))
-            return;
+}
+/**
+ * 登录页面监听
+ * @return {[type]} [description]
+ */
+function loginedPageTogglesInit() {
 
-        if ($(this).hasClass('right') && $(".signupblock .active").hasClass("signup_3"))
-            return;
-        var crt = $(".signupblock .active");
-        var prevAll = crt.prevAll();
-        var nextAll = crt.nextAll();
-        var active = $(this).hasClass('left') ? crt.prev() : crt.next();
-        var changeStr = $(this).hasClass('left') ? "+=100%" : "-=100%";
-        var Fun = function(element) {
-            element.animate({
-                    left: changeStr
-                },
-                200,
-                function() {});
-        }
-        Fun(prevAll);
-        Fun(crt);
-        Fun(nextAll);
-
-        active.css('opacity', '1');
-        crt.toggleClass('active');
-        active.toggleClass('active');
+    // 通知按钮
+    $("#btn_notification").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">通知</h1>';
+        $("#content_box").html(str);
     });
-    $("#btn_signin").click(function(event) {});
+    // 注销按钮
+    $("#btn_logout").click(function(event) {
+        AllGlobal.setPageStatus(0);
+    });
+    // 控制台按钮
+    $("#btn_kzt").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">控制台</h1>';
+        $("#content_box").html(str);
+    });
+    // 货源按钮
+    $("#btn_hy").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">货源</h1>';
+        $("#content_box").html(str);
+    });
+    // 运单按钮
+    $("#btn_yd").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">运单</h1>';
+        $("#content_box").html(str);
+    });
+    // 公司按钮
+    $("#btn_gs").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">公司</h1>';
+        $("#content_box").html(str);
+    });
+    // 司机按钮
+    $("#btn_sj").click(function(event) {
+        var str = '<h1 style="font-size:10rem;">司机</h1>';
+        $("#content_box").html(str);
+    });
 }
 /**
  * 导航效果
  * @return {[type]} [description]
  */
-function navAnimation() {
+function effect_nav() {
+
     $("nav ul li").click(function(e) {
 
         if ($(this).hasClass('slider')) {
@@ -142,16 +219,95 @@ function navAnimation() {
 
     });
 }
+
 /**
- * 列表效果
+ * 注册块内效果
  * @return {[type]} [description]
  */
-function listViewAnimation() {
-    // $(".listView ul li.li_car").hover(function() {
-    //     /* Stuff to do when the mouse enters the element */
-    //     $(this).css('background', 'rgba(0,204,0,.2)');
-    // }, function() {
-    //     /* Stuff to do when the mouse leaves the element */
-    //     $(this).css('background', 'rgb(255,255,255)');
-    // });
+function effect_signupBox() {
+    //注册步骤指示切换
+    var prevStep = "";
+    var img = $(".step img");
+    var hoverDone = false; //控制hover与Click顺序
+    $(".step span").hover(function() {
+        prevStep = img.attr('src').split(".png")[0].split("step")[1];
+
+        img.attr('src', "img/step" + $(this).attr('class') + ".png");
+    }, function() {
+        if (!hoverDone)
+            img.attr('src', "img/step" + prevStep + ".png");
+        else
+            hoverDone = false;
+    });
+    $(".step span").click(function(event) {
+        prevStep = parseInt(prevStep);
+        var crtStep = parseInt($(this).attr('class'));
+
+        img.attr('src', "img/step" + crtStep + ".png");
+        hoverDone = true;
+        // 触发左右切换
+        var changeStep = crtStep - prevStep;
+        var changeNumber = Math.abs(changeStep);
+        console.log(changeStep + " " + changeNumber);
+        if (changeStep > 0) { //右跳
+            while (changeNumber-- != 0) {
+                $(".switch .right").click();
+            }
+        } else { //左跳
+            while (changeNumber-- != 0) {
+                $(".switch .left").click();
+            }
+        }
+    });
+    //注册步骤切换
+    $(".switch .left,.right").click(function(event) {
+        console.log();
+        if ($(this).hasClass('left') && $(".signupblock .active").hasClass("signup_0"))
+            return;
+
+        if ($(this).hasClass('right') && $(".signupblock .active").hasClass("signup_3"))
+            return;
+        var crt = $(".signupblock .active");
+        var prevAll = crt.prevAll();
+        var nextAll = crt.nextAll();
+        var active = $(this).hasClass('left') ? crt.prev() : crt.next();
+        var changeStr = $(this).hasClass('left') ? "+=100%" : "-=100%";
+        var Fun = function(element) {
+            element.animate({
+                    left: changeStr
+                },
+                200,
+                function() {});
+        }
+        Fun(prevAll);
+        Fun(crt);
+        Fun(nextAll);
+
+        active.css('opacity', '1');
+        crt.toggleClass('active');
+        active.toggleClass('active');
+    });
+}
+/**
+ * 注册块内逻辑
+ * @return {[type]} [description]
+ */
+function logic_signupBox() {
+
+}
+/**
+ * 登录块内效果
+ * @return {[type]} [description]
+ */
+function effect_signinBox() {
+
+}
+/**
+ * 登录块内逻辑
+ * @return {[type]} [description]
+ */
+function logic_signinBox() {
+    $("#btn_signin").off('click').click(function(event) {
+        AllGlobal.setPageStatus(1);
+    });
 }
