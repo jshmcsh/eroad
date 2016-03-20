@@ -19,5 +19,4 @@ function ajaxPost(url, params, callback) {
     }, "json");
 }
 $(document).ready(function() {
-
 });

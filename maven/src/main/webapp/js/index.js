@@ -24,6 +24,9 @@ AllGlobal = (function global() {
             //设置dom保存到数组
             unloginArray = newArray;
         },
+        getUnloginArray: function() {
+            return unloginArray;
+        },
         loadUnloginArray: function() {
             if (unloginArray === null)
                 return;
@@ -32,9 +35,6 @@ AllGlobal = (function global() {
                 unloginArray[i].html(unloginArray[i + 1]);
             }
             unloginArray = null;
-        },
-        getUnloginArray: function() {
-            return unloginArray;
         }
     };
 })();
@@ -67,27 +67,34 @@ function pageInit() {
             var content_map = $("#content_box").children();
             domArray.push($("#content_box"));
             domArray.push(content_map);
+            //保存未登录时的dom
             AllGlobal.setUnloginArray(domArray);
             /*清除原内容*/
             content_unlogin.remove();
             content_map.remove();
             /*更新当前内容*/
-            var str1 = '';
-            str1 += '<div class="logined_top">';
-            str1 += '    <span>UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
-            str1 += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
-            str1 += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
-            str1 += '</div>';
-            str1 += '<div class="logined_bottom">';
-            str1 += '    <div id="btn_kzt" class="ctrl_kzt"><img src="img/kzt_01.png" height="83" width="235" alt=""></div>';
-            str1 += '    <div id="btn_hy" class="ctrl_hy"><img src="img/hy_01.png" height="82" width="209" alt=""></div>';
-            str1 += '    <div id="btn_yd" class="ctrl_yd"><img src="img/yd_01.png" height="83" width="209" alt=""></div>';
-            str1 += '    <div id="btn_gs" class="ctrl_gs"><img src="img/gs_01.png" height="82" width="209" alt=""></div>';
-            str1 += '    <div id="btn_sj" class="ctrl_sj"><img src="img/si_01.png" height="82" width="209" alt=""></div>';
-            str1 += '</div>';
-            $("#header_box .nav_right").html(str1);
+            var domStr = '';
+            domStr += '<div class="logined_top">';
+            domStr += '    <span>UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
+            domStr += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
+            domStr += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
+            domStr += '</div>';
+            domStr += '<div class="logined_bottom">';
+            domStr += '    <div id="btn_kzt" class="ctrl_kzt"><img src="img/kzt_01.png" height="83" width="235" alt=""></div>';
+            domStr += '    <div id="btn_hy" class="ctrl_hy"><img src="img/hy_01.png" height="82" width="209" alt=""></div>';
+            domStr += '    <div id="btn_yd" class="ctrl_yd"><img src="img/yd_01.png" height="83" width="209" alt=""></div>';
+            domStr += '    <div id="btn_gs" class="ctrl_gs"><img src="img/gs_01.png" height="82" width="209" alt=""></div>';
+            domStr += '    <div id="btn_sj" class="ctrl_sj"><img src="img/si_01.png" height="82" width="209" alt=""></div>';
+            domStr += '</div>';
+            $("#header_box .nav_right").html(domStr);
             /*绑定新内容监听*/
             loginedPageTogglesInit();
+            //插入新的内容框
+            domStr = '';
+            domStr += '<div id="loginedContent" class="col_12">';
+            domStr += '<iframe src="./l_kzt.html"></iframe>';
+            domStr += '</div>';
+            $("#content_box").html(domStr);
         } else { //未登录页面初始化
             /*还原原有内容*/
             AllGlobal.loadUnloginArray();
@@ -133,40 +140,38 @@ function pageTogglesInit() {
  * @return {[type]} [description]
  */
 function loginedPageTogglesInit() {
-
-    // 通知按钮
-    $("#btn_notification").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">通知</h1>';
-        $("#content_box").html(str);
-    });
     // 注销按钮
     $("#btn_logout").click(function(event) {
         AllGlobal.setPageStatus(0);
     });
+    // 通知按钮
+    $("#btn_notification").click(function(event) {
+        $('#loginedContent iframe').attr('src', './l_notification.html');
+    });
     // 控制台按钮
     $("#btn_kzt").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">控制台</h1>';
-        $("#content_box").html(str);
+        $('#loginedContent iframe').attr('src', './l_kzt.html');
+
     });
     // 货源按钮
     $("#btn_hy").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">货源</h1>';
-        $("#content_box").html(str);
+        $('#loginedContent iframe').attr('src', './l_hy.html');
+
     });
     // 运单按钮
     $("#btn_yd").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">运单</h1>';
-        $("#content_box").html(str);
+        $('#loginedContent iframe').attr('src', './l_yd.html');
+
     });
     // 公司按钮
     $("#btn_gs").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">公司</h1>';
-        $("#content_box").html(str);
+        $('#loginedContent iframe').attr('src', './l_gs.html');
+
     });
     // 司机按钮
     $("#btn_sj").click(function(event) {
-        var str = '<h1 style="font-size:10rem;">司机</h1>';
-        $("#content_box").html(str);
+        $('#loginedContent iframe').attr('src', './l_sj.html');
+
     });
 }
 /**
