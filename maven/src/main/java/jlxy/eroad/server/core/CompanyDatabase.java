@@ -9,6 +9,7 @@ import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.LocationBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
+import jlxy.eroad.server.bean.param.company.RegistBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import org.springframework.stereotype.Component;
 import org.yecq.baseframework.plain.core.Root;
@@ -28,13 +29,13 @@ public class CompanyDatabase {
     }
 
     // 增加用户，返回增加的用户的id
-    /*
-    public String addUser(String username, String passwd) {
-        String stmt = "insert into user (username,passwd) values(? , ?)";
-        String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{username, passwd});
+    
+    public String regist(RegistBean rb){
+        String stmt = "insert into company (username,passwd,company_name,company_license,phone_number,company_licence_path,company_represent) values(?,?,?,?,?,?,?)";
+        String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{rb.getUsername(),rb.getPasswd(),rb.getCompany_name(),rb.getCompany_license(),rb.getPhone_number(),rb.getCompany_licence_path(),rb.getCompany_represent()});
         return ids[0];
     }
-    */
+    
     //显示周围5公里车辆
     
     public List showCarAround(LocationBean lb) {

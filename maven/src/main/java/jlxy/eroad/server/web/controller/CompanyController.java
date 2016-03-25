@@ -1,6 +1,7 @@
 package jlxy.eroad.server.web.controller;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
+import jlxy.eroad.server.bean.param.company.RegistBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.yecq.baseframework.plain.service.Sret;
 import org.yecq.baseframework.web.ControllerBase;
 import org.yecq.baseframework.web.Logged;
@@ -30,18 +33,18 @@ import org.yecq.baseframework.web.Logged;
 @Controller
 @RequestMapping("/company/")
 public class CompanyController extends ControllerBase {
-
+    private HttpServletRequest request;
     @Autowired
     private CompanyService cs;
-/*
+
     @RequestMapping("regist.erd")
     @ResponseBody
-    public List do_regist(@RequestParam("json") String json) {
-        LoginBean param = new Gson().fromJson(json, LoginBean.class);
-        Sret sr = cs.regist(param);
+    public List do_regist(@RequestParam("json") String json, @RequestParam("file") MultipartFile file) {
+        RegistBean param = new Gson().fromJson(json, RegistBean.class);
+        Sret sr = cs.regist(param,file);
         return getRetList(sr);
     }
-*/
+
     @RequestMapping("login.erd")
     @ResponseBody
     public List do_login(@RequestParam("json") String json) {
@@ -63,7 +66,7 @@ public class CompanyController extends ControllerBase {
     //@Logged
     public List do_show_car_around(HttpServletRequest req) throws IOException {
         Sret sr;
-        sr=cs.show_car_around(req);
+        sr = cs.show_car_around(req);
         return getRetList(sr);
     }
 
@@ -103,7 +106,6 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
-    
     @RequestMapping("get_executing_order_detail.erd")
     @ResponseBody
     //@Logged
@@ -112,7 +114,9 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_executing_order_detail(orderId);
         return getRetList(sr);
     }
+
     //完成订单
+
     @RequestMapping("finish_order.erd")
     @ResponseBody
     //@Logged
@@ -133,7 +137,6 @@ public class CompanyController extends ControllerBase {
     }
 
     //取消正在运行的订单
-
     @RequestMapping("cancel_executing_order.erd")
     @ResponseBody
     //@Logged
@@ -144,7 +147,6 @@ public class CompanyController extends ControllerBase {
     }
 
     //得到某车评价
-
     @RequestMapping("get_car_remark.erd")
     @ResponseBody
     //@Logged
@@ -153,11 +155,10 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.get_car_remark(carId);
         System.out.println(sr.toString());
         return getRetList(sr);
-        
+
     }
 
     //得到历史订单列表
-
     @RequestMapping("get_history_order_list.erd")
     @ResponseBody
     //@Logged
@@ -168,7 +169,6 @@ public class CompanyController extends ControllerBase {
     }
 
     //得到历史订单详情
-
     @RequestMapping("get_history_order_detail.erd")
     @ResponseBody
     //@Logged
