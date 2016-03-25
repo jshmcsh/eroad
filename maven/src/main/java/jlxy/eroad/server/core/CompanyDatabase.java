@@ -28,11 +28,13 @@ public class CompanyDatabase {
     }
 
     // 增加用户，返回增加的用户的id
+    /*
     public String addUser(String username, String passwd) {
         String stmt = "insert into user (username,passwd) values(? , ?)";
         String[] ids = Root.getInstance().getSqlOperator().insert(stmt, new Object[]{username, passwd});
         return ids[0];
     }
+    */
     //显示周围5公里车辆
     
     public List showCarAround(LocationBean lb) {
@@ -137,11 +139,5 @@ public class CompanyDatabase {
        return ret;
     }
         
-    // 修改用户
-
-    public void modifyPasswd(String username, String passwd) {
-        String stmt = "update user set passwd = ? where username = ?";
-        Root.getInstance().getSqlOperator().update(stmt, new Object[]{passwd, username});
-
-    }
+   
 }

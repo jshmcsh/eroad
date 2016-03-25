@@ -33,7 +33,7 @@ public class CompanyController extends ControllerBase {
 
     @Autowired
     private CompanyService cs;
-
+/*
     @RequestMapping("regist.erd")
     @ResponseBody
     public List do_regist(@RequestParam("json") String json) {
@@ -41,7 +41,7 @@ public class CompanyController extends ControllerBase {
         Sret sr = cs.regist(param);
         return getRetList(sr);
     }
-
+*/
     @RequestMapping("login.erd")
     @ResponseBody
     public List do_login(@RequestParam("json") String json) {
@@ -151,7 +151,9 @@ public class CompanyController extends ControllerBase {
     public List do_get_car_remark(@RequestParam("json") String json) {
         IdBean carId = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_car_remark(carId);
+        System.out.println(sr.toString());
         return getRetList(sr);
+        
     }
 
     //得到历史订单列表

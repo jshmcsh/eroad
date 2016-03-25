@@ -306,6 +306,8 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(((Map) list.get(1)).get("username") + "", is("aaa"));
         assertThat(((Map) list.get(1)).get("car_number") + "", is("苏E12345"));
         assertThat(((Map) list.get(1)).get("company_name") + "", is("e路网"));
+        
+        System.out.println(list.toString());
     }
 
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50163
  File Encoding         : utf-8
 
- Date: 03/15/2016 15:28:05 PM
+ Date: 03/25/2016 21:47:15 PM
 */
 
 SET NAMES utf8;
@@ -32,6 +32,13 @@ CREATE TABLE `bidding` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+--  Records of `bidding`
+-- ----------------------------
+BEGIN;
+INSERT INTO `bidding` VALUES ('1', '111.00', '1', '1'), ('2', '111.00', '1', '2');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `car_account`
 -- ----------------------------
 DROP TABLE IF EXISTS `car_account`;
@@ -43,6 +50,13 @@ CREATE TABLE `car_account` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `car_account`
+-- ----------------------------
+BEGIN;
+INSERT INTO `car_account` VALUES ('1', 'aaa', 'fdsa', 'pass'), ('2', 'bbb', 'fdsa', 'pass'), ('3', 'ccc', 'fdsa', 'pass'), ('4', 'ddd', 'fdsa', 'pass'), ('5', 'eee', 'fdsa', 'pass'), ('6', 'fff', 'fdsa', 'pass'), ('7', 'ggg', 'fdsa', 'pass'), ('8', 'hhh', 'fdsa', 'pass');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `car_detail`
@@ -62,6 +76,13 @@ CREATE TABLE `car_detail` (
   UNIQUE KEY `car_number` (`car_number`),
   KEY `car_id` (`car_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `car_detail`
+-- ----------------------------
+BEGIN;
+INSERT INTO `car_detail` VALUES ('1', '/Users/CP/Pictures/linus.jpg', '123', '苏E12345', '在线', '运输中', '1', '11111111111'), ('2', '/Users/CP/Pictures/linus.jpg', '1234', '苏A12345', '在线', '空闲', '2', '22222222222'), ('3', '/Users/CP/Pictures/linus.jpg', 'ffa', '苏E123456', '离线', '空闲', '3', '3'), ('4', '/Users/CP/Pictures/linus.jpg', 'fdsa', '苏A123457', '在线', '空闲', '4', '4'), ('5', '/Users/CP/Pictures/linus.jpg', 'hgdf', '苏E123458', '在线', '空闲', '5', '5'), ('6', '/Users/CP/Pictures/linus.jpg', 'ddd', '苏A123459', '在线', '空闲', '6', '6'), ('7', '/Users/CP/Pictures/linus.jpg', '777', '苏E7777', '在线', '运输中', '7', '7'), ('8', '/Users/CP/Pictures/linus.jpg', '888', '苏E8888', '在线', '运输中', '8', '8');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `company`
@@ -84,6 +105,13 @@ CREATE TABLE `company` (
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+--  Records of `company`
+-- ----------------------------
+BEGIN;
+INSERT INTO `company` VALUES ('1', 'aaa', 'fdsa', '正常', 'e路网', null, '11111111111', null, 'chris'), ('2', 'bbb', 'fdsa', '正常', 'chri', null, '22222222222', null, 'chris');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `launching`
 -- ----------------------------
 DROP TABLE IF EXISTS `launching`;
@@ -96,7 +124,14 @@ CREATE TABLE `launching` (
   PRIMARY KEY (`id`),
   KEY `company_id` (`company_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=141 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `launching`
+-- ----------------------------
+BEGIN;
+INSERT INTO `launching` VALUES ('1', '2016-03-25 21:46:10', 'valid', '1', '1'), ('2', '2016-03-25 21:46:10', 'valid', '1', '2');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `order_relation_detail`
@@ -111,7 +146,14 @@ CREATE TABLE `order_relation_detail` (
   KEY `car_id` (`car_id`),
   KEY `orders_id` (`orders_id`),
   KEY `company_id` (`company_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `order_relation_detail`
+-- ----------------------------
+BEGIN;
+INSERT INTO `order_relation_detail` VALUES ('1', '1', '3', '1'), ('2', '1', '1', '1'), ('3', '1', '4', '1'), ('4', '8', '5', '2'), ('5', '7', '6', '2');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `orders`
@@ -134,7 +176,14 @@ CREATE TABLE `orders` (
   `exact_start_time` date DEFAULT NULL COMMENT '期望开始时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_number` (`order_number`)
-) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=168 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `orders`
+-- ----------------------------
+BEGIN;
+INSERT INTO `orders` VALUES ('1', '111', '2012-01-01', '2012-02-01', '2012-02-01', '111.00', '111.00', '北京', '上海', '来自北方的车', 'executing', '车', '2016-03-25 21:46:10', null), ('2', '222', '2012-01-01', null, '2012-02-01', '111.00', null, '南京', '苏州', '来自南方的狗', 'displaying', '狗', '2016-03-25 21:46:10', null), ('3', '333', '2012-01-01', null, '2012-02-01', '111.00', null, '广州', '厦门', '来自东方的猪', 'executing', '猪', '2016-03-25 21:46:10', null), ('4', '555', '2012-01-01', '2012-02-01', '2012-02-01', '111.00', '111.00', '香港', '广州', '来自西方的猫', 'completed', '猫', '2016-03-25 21:46:10', null), ('5', '666', '2012-01-01', null, '2012-02-01', '111.00', null, '常州', '镇江', '来自常州的材料', 'executing', '材料', '2016-03-25 21:46:10', null), ('6', '777', '2012-01-01', null, '2012-02-01', '111.00', null, '深圳', '南昌', '来自深圳的生鲜', 'executing', '生鲜', '2016-03-25 21:46:10', null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `platform`
@@ -163,7 +212,14 @@ CREATE TABLE `remark` (
   PRIMARY KEY (`id`),
   KEY `car_id` (`car_id`),
   KEY `order_id` (`order_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `remark`
+-- ----------------------------
+BEGIN;
+INSERT INTO `remark` VALUES ('1', '2', 'good', '1', '1', '1', '2016-03-25 21:46:10');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `track`
@@ -183,6 +239,13 @@ CREATE TABLE `track` (
   KEY `car_id` (`car_id`),
   KEY `orders_id` (`orders_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+--  Records of `track`
+-- ----------------------------
+BEGIN;
+INSERT INTO `track` VALUES ('1', '2016-03-11 21:45:10', '118.78', '32.04', '0', '3', '江苏省', '南京市', null), ('2', '2016-03-11 21:45:20', '116.61', '28.23', null, '4', '江西省', '东乡县', null), ('3', '2016-03-11 21:45:30', '120.62', '31.32', null, '5', '江苏省', '苏州市', null), ('4', '2016-03-11 21:45:40', '118.77', '32.04', null, '6', '江苏省', '南京市', null), ('5', '2016-03-25 21:46:10', '120.11', '130.11', '3', '1', null, null, null), ('6', '2016-03-25 21:46:10', '120.11', '130.11', '1', '1', null, null, null), ('7', '2016-03-11 21:30:40', '120.11', '130.11', '5', '8', null, null, null), ('8', '2016-03-11 21:40:40', '121.11', '131.11', '5', '8', null, null, null), ('9', '2016-03-11 21:50:40', '122.11', '132.11', '5', '8', null, null, null), ('10', '2016-03-11 21:30:40', '120.11', '130.11', '6', '7', null, null, null), ('11', '2016-03-11 21:40:40', '121.11', '131.11', '6', '7', null, null, null), ('12', '2016-03-11 21:50:40', '122.11', '132.11', '6', '7', null, null, null);
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `verify`

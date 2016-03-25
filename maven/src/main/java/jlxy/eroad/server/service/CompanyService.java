@@ -66,7 +66,7 @@ public class CompanyService {
         }
         return sr;
     }
-
+/*
     public Sret regist(LoginBean param) {
         //注册，返回用户uid
         String username = param.getUsername();
@@ -76,7 +76,7 @@ public class CompanyService {
         sr.setData(registRet);
         return sr;
     }
-
+*/
     public Sret show_car_around(HttpServletRequest req) throws IOException {
         Sret sr = new Sret();
         //用来等会setData()传过去的。
