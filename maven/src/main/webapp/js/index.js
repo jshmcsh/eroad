@@ -1,5 +1,6 @@
 //页面全局对象
 AllGlobal = (function global() {
+    var prefix = "http://219.219.117.164/eroad-1.0/";
     //0未登录，1登录
     var pageStatus = 0;
     //绑定一个html元素，通过change事件的触发检测页面状态
@@ -7,6 +8,9 @@ AllGlobal = (function global() {
     //dom映射数组，偶数值为容器，偶数的右相邻奇数值为dom内容
     var unloginArray = null;
     return {
+        getPrefix: function() {
+            return prefix;
+        },
         setPageStatus: function(newStatus) {
             pageStatus = newStatus;
             pageCheckHelper.change();
@@ -27,6 +31,7 @@ AllGlobal = (function global() {
         getUnloginArray: function() {
             return unloginArray;
         },
+        //装载dom
         loadUnloginArray: function() {
             if (unloginArray === null)
                 return;
@@ -38,6 +43,11 @@ AllGlobal = (function global() {
         }
     };
 })();
+/**
+ * 脚本入口
+ * @param  {[type]}   [description]
+ * @return {[type]}   [description]
+ */
 $(document).ready(function() {
     //页面初始化
     pageInit();
@@ -47,8 +57,8 @@ $(document).ready(function() {
  * @return {[type]} [description]
  */
 function pageInit() {
-    //固定dom初始化
-    effect_nav();
+    //全局初始化
+    logic_nav(); //导航条效果
     $(window).resize(function(event) {
         $("nav ul li.checked").click();
     });
@@ -80,11 +90,11 @@ function pageInit() {
             domStr += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
             domStr += '</div>';
             domStr += '<div class="logined_bottom">';
-            domStr += '    <div id="btn_kzt" class="ctrl_kzt"><img src="img/kzt_01.png" height="83" width="235" alt=""></div>';
-            domStr += '    <div id="btn_hy" class="ctrl_hy"><img src="img/hy_01.png" height="82" width="209" alt=""></div>';
-            domStr += '    <div id="btn_yd" class="ctrl_yd"><img src="img/yd_01.png" height="83" width="209" alt=""></div>';
-            domStr += '    <div id="btn_gs" class="ctrl_gs"><img src="img/gs_01.png" height="82" width="209" alt=""></div>';
-            domStr += '    <div id="btn_sj" class="ctrl_sj"><img src="img/si_01.png" height="82" width="209" alt=""></div>';
+            domStr += '    <div id="btn_kzt" class="active ctrl"></div>';
+            domStr += '    <div id="btn_hy" class="ctrl"></div>';
+            domStr += '    <div id="btn_yd" class="ctrl"></div>';
+            domStr += '    <div id="btn_gs" class="ctrl"></div>';
+            domStr += '    <div id="btn_sj" class="ctrl"></div>';
             domStr += '</div>';
             $("#header_box .nav_right").html(domStr);
             /*绑定新内容监听*/
@@ -106,27 +116,26 @@ function pageInit() {
     AllGlobal.setPageCheckHelper(pageCheckHelper);
     AllGlobal.setPageStatus(0); //初始化未登录页面
 }
+
 /**
  * 未登录页面监听
  * @return {[type]} [description]
  */
 function pageTogglesInit() {
-    //注册
+    //显示注册快
     $("#btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
     });
     //注册块内效果
-    effect_signupBox();
+    logic_signupBox();
     // 关闭注册
     $("#btn_closeSignup").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
     });
-    // 登录
+    // 显示登录块
     $("#btn_signinbox").off('click').click(function(event) {
         $("#signin_box").toggleClass('display_none');
     });
-    //登录块内效果
-    effect_signinBox();
     // 登录逻辑
     logic_signinBox();
     // 关闭登录块
@@ -148,38 +157,46 @@ function loginedPageTogglesInit() {
     $("#btn_notification").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_notification.html');
     });
+    ////所有控制按钮样式变化
+    $('.logined_bottom .ctrl').click(function(event) {
+        $('.logined_bottom .ctrl').removeClass('active');
+        $(this).toggleClass('active');
+    });
     // 控制台按钮
     $("#btn_kzt").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_kzt.html');
-
     });
     // 货源按钮
     $("#btn_hy").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_hy.html');
-
     });
     // 运单按钮
     $("#btn_yd").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_yd.html');
-
     });
     // 公司按钮
     $("#btn_gs").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_gs.html');
-
     });
     // 司机按钮
     $("#btn_sj").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_sj.html');
-
     });
 }
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
 /**
- * 导航效果
+ * 导航逻辑
  * @return {[type]} [description]
  */
-function effect_nav() {
-
+function logic_nav() {
+    //每个导航按钮点击的效果
     $("nav ul li").click(function(e) {
 
         if ($(this).hasClass('slider')) {
@@ -226,11 +243,11 @@ function effect_nav() {
 }
 
 /**
- * 注册块内效果
+ * 注册块内逻辑
  * @return {[type]} [description]
  */
-function effect_signupBox() {
-    //注册步骤指示切换
+function logic_signupBox() {
+    //注册步骤缩略图切换
     var prevStep = "";
     var img = $(".step img");
     var hoverDone = false; //控制hover与Click顺序
@@ -293,26 +310,71 @@ function effect_signupBox() {
         active.toggleClass('active');
     });
 }
-/**
- * 注册块内逻辑
- * @return {[type]} [description]
- */
-function logic_signupBox() {
 
-}
-/**
- * 登录块内效果
- * @return {[type]} [description]
- */
-function effect_signinBox() {
-
-}
 /**
  * 登录块内逻辑
  * @return {[type]} [description]
  */
 function logic_signinBox() {
+    var prefix = AllGlobal.getPrefix();
     $("#btn_signin").off('click').click(function(event) {
-        AllGlobal.setPageStatus(1);
+        var url = prefix + 'company/login.erd';
+        var o = {};
+        o.username = $("#input_un").val();
+        o.password = $("#input_pw").val();
+
+        $("iframe")
+
+        crossDomainPost();
+
+        // var callback = function(data, textStatus, xhr){
+        //     console.log(data);
+        // }
+        // ajaxPost(url,JSON.stringify(o),callback);
+
+        // AllGlobal.setPageStatus(1);
     });
+}
+
+function crossDomainPost() {
+    //Add the iframe with a unique name
+    var uniqueString = "loginifm";
+    var iframe = document.createElement("iframe");
+    document.body.appendChild(iframe);
+    iframe.style.display = "none";
+    iframe.contentWindow.name = uniqueString;
+    var flag = 0;
+
+    iframe.onload = function() {
+        if (flag === 1) {
+            var data = iframe.contentWindow.name;
+            console.log(data);
+        } else if (flag === 0) {
+            flag = 1;
+            iframe.contentWindow.location = "./crossDomain.html";
+        }
+
+    }
+
+
+    //construct a form with hidden inputs, targeting the iframe
+    var form = document.createElement("form");
+    form.target = uniqueString;
+    form.action = "http://219.219.117.164/eroad-1.0/company/login.erd";
+    form.method = "post";
+
+    var o = {};
+    o.username = $("#input_un").val();
+    o.password = $("#input_pw").val();
+
+    //repeat for each parameter
+    var input_un = document.createElement("input");
+    input_un.type = "hidden";
+    input_un.name = "json";
+    input_un.value = JSON.stringify(o);
+    form.appendChild(input_un);
+
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
 }

@@ -14,9 +14,35 @@ function goback() {
  * @return {[type]}        		[description]
  */
 function ajaxPost(url, params, callback) {
-    $.post(url, params, function(data, textStatus, xhr) {
-        callback(data, textStatus, xhr);
-    }, "json");
+    $.ajax({
+        url: url,
+        type: 'post',
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonpCallback: 'loginCallback',
+        data: { json: params },
+        success: function(data, textStatus, xhr) {
+            console.log("success");
+            console.log(data + " " + textStatus + " " + xhr);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            console.log("error");
+            console.log(xhr + " " + textStatus + " " + errorThrown);
+        },
+        complete:function(){
+        	console.log("complete");
+        }
+    });
+    // .done(function(data, textStatus, xhr) {
+    // 	console.log("success");
+    // })
+    // .fail(function(data, textStatus, xhr) {
+    //     console.log("error");
+    //     console.log(data+" "+textStatus+" "+xhr);
+    // })
+    // .always(function(data, textStatus, xhr) {
+    //     console.log("complete");
+    //     console.log(data.status+" "+textStatus+" "+xhr);
+    // });
 }
-$(document).ready(function() {
-});
+$(document).ready(function() {});

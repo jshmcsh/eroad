@@ -1,5 +1,5 @@
 * { color: #666;   /*overflow: hidden;*/ }
-html { font-size: 16px; width: 100%; height: 100%;  }
+html { font-size: 16px; width: 100%; height: 100%; }
 body { width: 100%; height: 100%; }
 .template {	/*红*/
 color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
@@ -51,7 +51,21 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #header_box .nav_right .logined_bottom { height: 50%; }
 #header_box .nav_right .logined_bottom div { display: block; background: #fff; min-width: 7rem; height: 100%; float: left; }
 #header_box .nav_right .logined_bottom div:hover { cursor: pointer; }
-#header_box .nav_right .logined_bottom div img { width: auto; height: 100%; }
+#header_box .nav_right .logined_bottom #btn_kzt { background: url(../img/kzt_01.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_kzt:hover { background: url(../img/kzt_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_kzt.active { background: url(../img/kzt_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_hy { background: url(../img/hy_01.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_hy:hover { background: url(../img/hy_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_hy.active { background: url(../img/hy_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_yd { background: url(../img/yd_01.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_yd:hover { background: url(../img/yd_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_yd.active { background: url(../img/yd_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_gs { background: url(../img/gs_01.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_gs:hover { background: url(../img/gs_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_gs.active { background: url(../img/gs_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_sj { background: url(../img/si_01.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_sj:hover { background: url(../img/si_11.png) no-repeat; background-size: 100% 100%; }
+#header_box .nav_right .logined_bottom #btn_sj.active { background: url(../img/si_11.png) no-repeat; background-size: 100% 100%; }
 
 /*未登录内容框 #content_box*/
 #content_box .box_left, .box_right { height: 99%; padding-top: 5px; }
