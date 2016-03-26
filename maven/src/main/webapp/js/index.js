@@ -343,6 +343,7 @@ function crossDomainPost() {
     document.body.appendChild(iframe);
     iframe.style.display = "none";
     iframe.contentWindow.name = uniqueString;
+    iframe.src="./crossDomain";
     var flag = 0;
 
     iframe.onload = function() {
