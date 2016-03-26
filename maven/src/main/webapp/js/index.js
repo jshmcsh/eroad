@@ -347,7 +347,7 @@ function crossDomainPost() {
 
     iframe.onload = function() {
         if (flag === 1) {
-            var data = iframe.contentWindow.name;
+            var data = iframe.contentWindow.document;
             console.log(data);
         } else if (flag === 0) {
             flag = 1;
