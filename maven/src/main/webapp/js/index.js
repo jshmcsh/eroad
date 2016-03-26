@@ -351,6 +351,8 @@ function crossDomainPost() {
             console.log(data);
         } else if (flag === 0) {
             flag = 1;
+            var data = iframe.contentWindow.document;
+            console.log(data);
             iframe.contentWindow.location = "./crossDomain.html";
         }
 
