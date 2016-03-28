@@ -23,7 +23,7 @@ import org.yecq.baseframework.plain.core.Root;
 public class CompanyDatabase {
     //登录
     public List<Map<String, Object>> getUserPasswd(String username) {
-        String stmt = "select passwd from company where username = ?";
+        String stmt = "select id,username,passwd,state,company_name,company_license,phone_number,companylicence_pic_path,company_represent from company where username = ?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{username});
         return ret;
     }

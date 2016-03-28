@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
+import jlxy.eroad.server.bean.param.company.CompanyBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
@@ -33,6 +35,7 @@ import org.yecq.baseframework.web.Logged;
 @Controller
 @RequestMapping("/company/")
 public class CompanyController extends ControllerBase {
+
     private HttpServletRequest request;
     @Autowired
     private CompanyService cs;
@@ -41,15 +44,16 @@ public class CompanyController extends ControllerBase {
     @ResponseBody
     public List do_regist(@RequestParam("json") String json, @RequestParam("file") MultipartFile file) {
         RegistBean param = new Gson().fromJson(json, RegistBean.class);
-        Sret sr = cs.regist(param,file);
+        Sret sr = cs.regist(param, file);
         return getRetList(sr);
     }
 
     @RequestMapping("login.erd")
     @ResponseBody
-    public List do_login(@RequestParam("json") String json) {
+    public List do_login(@RequestParam("json") String json, HttpServletResponse resp, HttpServletRequest req) {
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         LoginBean param = new Gson().fromJson(json, LoginBean.class);
-        Sret sr = cs.login(param);
+        Sret sr = cs.login(param, req);
         return getRetList(sr);
     }
 
@@ -116,7 +120,6 @@ public class CompanyController extends ControllerBase {
     }
 
     //完成订单
-
     @RequestMapping("finish_order.erd")
     @ResponseBody
     //@Logged

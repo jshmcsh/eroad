@@ -13,6 +13,7 @@ import jlxy.eroad.server.bean.param.LoginBean;
 import jlxy.eroad.server.bean.param.Position;
 import jlxy.eroad.server.bean.param.company.CancelExecutingOrderBean;
 import jlxy.eroad.server.bean.param.company.CancelLaunchingOrderBean;
+import jlxy.eroad.server.bean.param.company.CompanyBean;
 import jlxy.eroad.server.bean.param.company.FinishOrderBean;
 import jlxy.eroad.server.bean.param.company.HistoryOrderDetailBean;
 import jlxy.eroad.server.bean.param.company.LocationBean;
@@ -35,37 +36,43 @@ import org.yecq.baseframework.plain.service.Sret;
 public class CompanyService {
 
     private HttpServletRequest request;
+    private CompanyBean cb;
     @Autowired
     private CompanyDatabase cdb;
     // private Corefunc cf;
 
-    public Sret login(LoginBean param) {
+    public Sret login(LoginBean param, HttpServletRequest req) {
         //取用户名、密码，调用访问数据库函数，并接受返回的list
         Sret sr = new Sret();
         String username = param.getUsername();
         String password = param.getPassword();
-        List loginRet = cdb.getUserPasswd(username);
+        List<Map<String, Object>> loginRet = cdb.getUserPasswd(username);
         if (loginRet.isEmpty()) {
-
             sr.setFail("用户不存在");
+        } else if (loginRet.get(0).get("passwd").equals(password)) {
+            sr.setOk("登录成功");
+            cb = new CompanyBean(loginRet.get(0).get("id") + "", loginRet.get(0).get("username") + "", loginRet.get(0).get("state") + "", loginRet.get(0).get("company_name") + "", loginRet.get(0).get("company_license") + "", loginRet.get(0).get("phone_number") + "", loginRet.get(0).get("companylicence_pic_path") + "", loginRet.get(0).get("company_represent") + "");
+            req.getSession().setAttribute("companyInfo", cb);
+        } else {
+            sr.setFail("密码错误");
         }
-        //迭代，比对信息
+        /*
+         //迭代，比对信息
+         Iterator<Map<String, Object>> it = loginRet.iterator();
+         for (; it.hasNext();) {
+         Map<String, Object> compareMap = it.next();
+         if (compareMap.get("passwd") != null) {
 
-        Iterator<Map<String, Object>> it = loginRet.iterator();
-        for (; it.hasNext();) {
-            Map<String, Object> compareMap = it.next();
-            if (compareMap.get("passwd") != null) {
+         if (compareMap.get("passwd").equals(password)) {
+         sr.setOk("登录成功");
+         // System.out.println("登录成功");
+                    
+         } else {
+         sr.setFail("密码错误");
 
-                if (compareMap.get("passwd").equals(password)) {
-                    sr.setOk("登录成功");
-                    // System.out.println("登录成功");
-
-                } else {
-                    sr.setFail("密码错误");
-
-                }
-            }
-        }
+         }
+         }
+         */
         return sr;
     }
 

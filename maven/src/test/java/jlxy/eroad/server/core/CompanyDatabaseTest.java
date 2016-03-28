@@ -35,8 +35,15 @@ public class CompanyDatabaseTest extends Base {
     public void test_getUserPasswd() {
         List<Map<String, Object>> list = cdb.getUserPasswd("aaa");
         assertThat(list.size(), is(1));
+        assertThat(list.get(0).get("id") + "", is("1"));
+        assertThat(list.get(0).get("username") + "", is("aaa"));
         assertThat(list.get(0).get("passwd") + "", is("fdsa"));
+        assertThat(list.get(0).get("state") + "", is("正常"));
+        assertThat(list.get(0).get("company_name") + "", is("e路网"));
+        assertThat(list.get(0).get("phone_number") + "", is("11111111111"));
+        assertThat(list.get(0).get("company_represent") + "", is("chris")); 
 
+       
     }
 
     //获取周围5公里车辆
