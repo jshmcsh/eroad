@@ -65,7 +65,7 @@ function delCookie(name) {
 }
 
 $(document).ready(function() {
-    // setCookie("noneExpires", "noneExpires", 0);
-    var cookie = getCookie("testRevolyw");
+    setCookie("noneExpires", "noneExpires", 0);
+    var cookie = getCookie("noneExpires");
     console.log(cookie);
 });
