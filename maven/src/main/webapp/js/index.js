@@ -340,9 +340,8 @@ function logic_signinBox() {
             var ret = data[0];
             if (ret.status === "ok") {
                 // setCookie("JSESSIONID");
-                var cookies = xhr.getResponseHeader("Set-Coolie");
+                var cookies = xhr.getAllResponseHeaders();
                 console.log(cookies);
-                console.log(getCookie("JSESSIONID"));
                 console.log(xhr);
                 AllGlobal.setPageStatus(1);
             } else {
