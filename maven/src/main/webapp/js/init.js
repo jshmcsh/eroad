@@ -18,7 +18,7 @@ function ajaxPost(url, params, callback) {
             url: url,
             type: 'post',
             dataType: 'json',
-            data: { json: JSON.stringify(params) },
+            data: params === null ? {} : { json: JSON.stringify(params) },
         })
         .done(function(data, textStatus, xhr) {
             // console.log(data);
@@ -41,7 +41,7 @@ function ajaxPost(url, params, callback) {
 function setCookie(name, value, days) {
     var exp = new Date();
     exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
 /**
  * 读取cookie
@@ -56,16 +56,18 @@ function getCookie(name) {
         return null;
 }
 /**
- * 
+ * 删除cookie并重新演示
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
 function delCookie(name) {
-
+    // 该函数检查下cookie是否设置，如果设置了则将过期时间调到过去的时间;
+    // 剩下就交给操作系统适当时间清理cookie啦
+    if (getCookie(name)) {
+        document.cookie = name + "=" + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+    }
 }
 
 $(document).ready(function() {
-    setCookie("noneExpires", "noneExpires");
-    var cookie = getCookie("noneExpires");
-    console.log(cookie);
+    // console.log(getCookie("JSESSIONID"));
 });

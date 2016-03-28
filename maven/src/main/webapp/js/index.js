@@ -116,21 +116,18 @@ function pageInit() {
     AllGlobal.setPageCheckHelper(pageCheckHelper);
 
     /*监测用户是否已经登录*/
-
-    // var prefix = AllGlobal.getPrefix();
-    // var url = prefix + 'company/login.erd';
-    // var o = {};
-    // o.username = $("#input_un").val();
-    // o.password = $("#input_pw").val();
-    // ajaxPost(url, o, function(data, textStatus, xhr) {
-    //     var ret = data[0];
-    //     if (ret.status === "ok") {
-    //         AllGlobal.setPageStatus(1);
-    //     } else {
-    //         alert(ret.message);
-    //     }
-    // });
-    AllGlobal.setPageStatus(0); //初始化未登录页面
+    var prefix = AllGlobal.getPrefix();
+    var url = prefix + 'company/test_cookie.erd';
+    ajaxPost(url, null, function(data, textStatus, xhr) {
+        var ret = data[0];
+        if (ret.status === "ok") {
+            AllGlobal.setPageStatus(1);//通过登录检测
+            // console.log(data[1]);
+        }
+        else
+            AllGlobal.setPageStatus(0); //初始化未登录页面
+    });
+    
 }
 
 /**
@@ -342,6 +339,9 @@ function logic_signinBox() {
         ajaxPost(url, o, function(data, textStatus, xhr) {
             var ret = data[0];
             if (ret.status === "ok") {
+                // setCookie("JSESSIONID");
+                var cookies = xhr.getResponseHeader("Set-Cookie");
+                console.log(cookies);
                 AllGlobal.setPageStatus(1);
             } else {
                 alert(ret.message);
