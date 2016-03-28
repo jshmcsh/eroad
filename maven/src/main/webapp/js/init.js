@@ -19,7 +19,10 @@ function ajaxPost(url, params, callback) {
             type: 'post',
             dataType: 'json',
             data: params === null ? {} : { json: JSON.stringify(params) },
-            crossDomain:true
+            crossDomain:true,
+            beforeSend:function(xhr){
+                xhr.withCredentials=true;
+            }
         })
         .done(function(data, textStatus, xhr) {
             // console.log(data);
