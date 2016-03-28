@@ -33,6 +33,7 @@ function ajaxPost(url, params, callback) {
             console.log(xhr + " " + textStatus + " " + errorThrown);
         })
         .always(function() {
+            console.log(getCookie("MYSESSIONID"));
             console.log("complete");
         });
 }
