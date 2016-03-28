@@ -342,6 +342,7 @@ function logic_signinBox() {
                 // setCookie("JSESSIONID");
                 var cookies = xhr.getResponseHeader("Set-Coolie");
                 console.log(cookies);
+                console.log(getCookie("JSESSIONID"));
                 console.log(xhr);
                 AllGlobal.setPageStatus(1);
             } else {
