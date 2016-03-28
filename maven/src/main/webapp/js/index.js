@@ -342,6 +342,7 @@ function logic_signinBox() {
                 // setCookie("JSESSIONID");
                 var cookies = xhr.getResponseHeader("Set-Cookie");
                 console.log(cookies);
+                console.log(xhr);
                 AllGlobal.setPageStatus(1);
             } else {
                 alert(ret.message);
