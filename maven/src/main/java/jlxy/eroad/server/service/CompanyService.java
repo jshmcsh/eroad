@@ -6,7 +6,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import jlxy.eroad.server.bean.param.IdBean;
 import jlxy.eroad.server.bean.param.LoginBean;
@@ -22,6 +25,7 @@ import jlxy.eroad.server.bean.param.company.RegistBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
 import jlxy.eroad.server.core.CompanyDatabase;
 import jlxy.eroad.server.core.Corefunc;
+import jlxy.eroad.server.core.Md5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,20 +43,35 @@ public class CompanyService {
     private CompanyBean cb;
     @Autowired
     private CompanyDatabase cdb;
-    // private Corefunc cf;
 
-    public Sret login(LoginBean param, HttpServletRequest req) {
-        //取用户名、密码，调用访问数据库函数，并接受返回的list
+    // private Corefunc cf;
+    public Sret login(LoginBean param, HttpServletRequest req,  HttpServletResponse resp) {
+        //取用户名、密码，
         Sret sr = new Sret();
         String username = param.getUsername();
         String password = param.getPassword();
+        //密码加密
+        password = Md5.convertToMD5(password);
+
+        //调用访问数据库函数，并接受返回的list
         List<Map<String, Object>> loginRet = cdb.getUserPasswd(username);
         if (loginRet.isEmpty()) {
             sr.setFail("用户不存在");
         } else if (loginRet.get(0).get("passwd").equals(password)) {
             sr.setOk("登录成功");
             cb = new CompanyBean(loginRet.get(0).get("id") + "", loginRet.get(0).get("username") + "", loginRet.get(0).get("state") + "", loginRet.get(0).get("company_name") + "", loginRet.get(0).get("company_license") + "", loginRet.get(0).get("phone_number") + "", loginRet.get(0).get("companylicence_pic_path") + "", loginRet.get(0).get("company_represent") + "");
-            req.getSession().setAttribute("companyInfo", cb);
+
+            //保存用户登录状态
+            int TIME_OUT=20*60;
+            HttpSession session = req.getSession();
+            session.setAttribute("companyInfo", cb);
+            session.setMaxInactiveInterval(TIME_OUT);  // Session保存两小时
+            System.out.println("sessionid---->"+session.getId());
+            Cookie cookie = new Cookie("JSESSIONID", session.getId());
+            cookie.setMaxAge(TIME_OUT);  // 客户端的JSESSIONID也保存两小时
+            cookie.setPath("/");
+            resp.addCookie(cookie);
+
         } else {
             sr.setFail("密码错误");
         }

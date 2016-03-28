@@ -37,7 +37,7 @@ public class CompanyDatabaseTest extends Base {
         assertThat(list.size(), is(1));
         assertThat(list.get(0).get("id") + "", is("1"));
         assertThat(list.get(0).get("username") + "", is("aaa"));
-        assertThat(list.get(0).get("passwd") + "", is("fdsa"));
+        assertThat(list.get(0).get("passwd") + "", is("fc2baa01a20b4d50190b0122b383d744"));
         assertThat(list.get(0).get("state") + "", is("正常"));
         assertThat(list.get(0).get("company_name") + "", is("e路网"));
         assertThat(list.get(0).get("phone_number") + "", is("11111111111"));

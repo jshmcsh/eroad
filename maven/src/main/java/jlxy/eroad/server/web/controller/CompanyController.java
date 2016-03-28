@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jlxy.eroad.server.bean.param.IdBean;
@@ -53,9 +54,29 @@ public class CompanyController extends ControllerBase {
     public List do_login(@RequestParam("json") String json, HttpServletResponse resp, HttpServletRequest req) {
         resp.addHeader("Access-Control-Allow-Origin", "*");
         LoginBean param = new Gson().fromJson(json, LoginBean.class);
-        Sret sr = cs.login(param, req);
+        Sret sr = cs.login(param, req, resp);
         return getRetList(sr);
+        
     }
+    @RequestMapping("test_cookie.erd")
+    @ResponseBody
+    public List do_test_cookie( HttpServletResponse resp, HttpServletRequest req) {
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+        Sret sr=new Sret();
+        Cookie[] cookies=req.getCookies();
+        if(cookies !=null){
+            for(Cookie cookie: cookies){
+                String name=cookie.getName();
+                String value=cookie.getValue();
+                if("JSESSIONID".equals(name)&&req.getSession().getId().equals(value)){
+                      sr.setData((CompanyBean)req.getSession().getAttribute("companyInfo"));
+                }
+            }
+        }
+        return getRetList(sr);
+        
+    }
+    
 
     @RequestMapping("logout.erd")
     @ResponseBody
