@@ -114,6 +114,22 @@ function pageInit() {
     });
     //绑定页面状态监测对象到全局对象
     AllGlobal.setPageCheckHelper(pageCheckHelper);
+
+    /*监测用户是否已经登录*/
+
+    // var prefix = AllGlobal.getPrefix();
+    // var url = prefix + 'company/login.erd';
+    // var o = {};
+    // o.username = $("#input_un").val();
+    // o.password = $("#input_pw").val();
+    // ajaxPost(url, o, function(data, textStatus, xhr) {
+    //     var ret = data[0];
+    //     if (ret.status === "ok") {
+    //         AllGlobal.setPageStatus(1);
+    //     } else {
+    //         alert(ret.message);
+    //     }
+    // });
     AllGlobal.setPageStatus(0); //初始化未登录页面
 }
 
@@ -323,61 +339,59 @@ function logic_signinBox() {
         o.username = $("#input_un").val();
         o.password = $("#input_pw").val();
 
-        $("iframe")
-
-        crossDomainPost();
-
-        // var callback = function(data, textStatus, xhr){
-        //     console.log(data);
-        // }
-        // ajaxPost(url,JSON.stringify(o),callback);
-
-        // AllGlobal.setPageStatus(1);
+        ajaxPost(url, o, function(data, textStatus, xhr) {
+            var ret = data[0];
+            if (ret.status === "ok") {
+                AllGlobal.setPageStatus(1);
+            } else {
+                alert(ret.message);
+            }
+        });
     });
 }
 
-function crossDomainPost() {
-    //Add the iframe with a unique name
-    var uniqueString = "loginifm";
-    var iframe = document.createElement("iframe");
-    document.body.appendChild(iframe);
-    iframe.style.display = "none";
-    iframe.contentWindow.name = uniqueString;
-    iframe.src="./crossDomain";
-    var flag = 0;
+//iframe跨域
+// function crossDomainPost() {
+//     //Add the iframe with a unique name
+//     var uniqueString = "loginifm";
+//     var iframe = document.createElement("iframe");
+//     document.body.appendChild(iframe);
+//     iframe.style.display = "none";
+//     iframe.contentWindow.name = uniqueString;
+//     var flag = 0;
 
-    iframe.onload = function() {
-        if (flag === 1) {
-            var data = iframe.contentWindow.document;
-            console.log(data);
-        } else if (flag === 0) {
-            flag = 1;
-            var data = iframe.contentWindow.document;
-            console.log(data);
-            iframe.contentWindow.location = "./crossDomain.html";
-        }
+//     iframe.onload = function() {
+//         if (flag === 1) {
+//             var data = iframe.contentWindow.document;
+//             console.log(data);
+//         } else if (flag === 0) {
+//             flag = 1;
+//             var data = iframe.contentWindow.document;
+//             console.log(data);
+//             iframe.contentWindow.location = "./crossDomain.html";
+//         }
 
-    }
+//     }
 
 
-    //construct a form with hidden inputs, targeting the iframe
-    var form = document.createElement("form");
-    form.target = uniqueString;
-    form.action = "http://219.219.117.164/eroad-1.0/company/login.erd";
-    form.method = "post";
+//     //construct a form with hidden inputs, targeting the iframe
+//     var form = document.createElement("form");
+//     form.target = uniqueString;
+//     form.action = "http://219.219.117.164/eroad-1.0/company/login.erd";
+//     form.method = "post";
 
-    var o = {};
-    o.username = $("#input_un").val();
-    o.password = $("#input_pw").val();
+//     var o = {};
+//     o.username = $("#input_un").val();
+//     o.password = $("#input_pw").val();
 
-    //repeat for each parameter
-    var input_un = document.createElement("input");
-    input_un.type = "hidden";
-    input_un.name = "json";
-    input_un.value = JSON.stringify(o);
-    form.appendChild(input_un);
+//     //repeat for each parameter
+//     var input_un = document.createElement("input");
+//     input_un.type = "hidden";
+//     input_un.name = "json";
+//     input_un.value = JSON.stringify(o);
+//     form.appendChild(input_un);
 
-    document.body.appendChild(form);
-    form.submit();
-    form.remove();
-}
+//     document.body.appendChild(form);
+//     form.submit();
+//     form.remove();
+// }
