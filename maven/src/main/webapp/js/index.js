@@ -121,13 +121,12 @@ function pageInit() {
     ajaxPost(url, null, function(data, textStatus, xhr) {
         var ret = data[0];
         if (ret.status === "ok") {
-            AllGlobal.setPageStatus(1);//通过登录检测
+            AllGlobal.setPageStatus(1); //通过登录检测
             // console.log(data[1]);
-        }
-        else
+        } else
             AllGlobal.setPageStatus(0); //初始化未登录页面
     });
-    
+
 }
 
 /**
@@ -340,8 +339,6 @@ function logic_signinBox() {
             var ret = data[0];
             if (ret.status === "ok") {
                 // setCookie("JSESSIONID");
-                var cookies = xhr.getResponseHeader("Set-Cookie");
-                console.log(cookies);
                 AllGlobal.setPageStatus(1);
             } else {
                 alert(ret.message);
