@@ -41,6 +41,7 @@ public class CompanyService {
 
     private HttpServletRequest request;
     private CompanyBean cb;
+    private Corefunc cf;
     @Autowired
     private CompanyDatabase cdb;
 
@@ -67,7 +68,7 @@ public class CompanyService {
             session.setAttribute("companyInfo", cb);
             session.setMaxInactiveInterval(TIME_OUT);  // Session保存两小时
             System.out.println("sessionid---->"+session.getId());
-            Cookie cookie = new Cookie("JSESSIONID", session.getId());
+            Cookie cookie = new Cookie("MYSESSIONID", session.getId());
             cookie.setMaxAge(TIME_OUT);  // 客户端的JSESSIONID也保存两小时
             cookie.setPath("/");
             resp.addCookie(cookie);
@@ -121,30 +122,21 @@ public class CompanyService {
         List<Map<String, Object>> nextRet = new LinkedList();
         double distance;
         //获取ip
-        //String ipAddr = ul.getIpAddr(req);
+        //String ipAddr = cf.getIpAddr(req);
         //解析出地址
         LocationBean lb = Corefunc.getCityNameByIp("112.86.170.43");
         //与数据库数据比对
         List<Map<String, Object>> showCarAroundRet = cdb.showCarAround(lb);
         for (int i = 0; i < showCarAroundRet.size(); i++) {
-            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) showCarAroundRet.get(i).get("longtitude")), Double.parseDouble((String) showCarAroundRet.get(i).get("latitude")));
+            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), 
+                    Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) 
+                    showCarAroundRet.get(i).get("longtitude")), Double.parseDouble((String) 
+                            showCarAroundRet.get(i).get("latitude")));
             if (distance <= 5000) {
                 nextRet.add(showCarAroundRet.get(i));
             }
         }
-        /*
-         Iterator<Map<String, Object>> it = showCarAroundRet.iterator();
-         for (; it.hasNext();) {
-         Map<String, Object> compareMap = it.next();
-         distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) compareMap.get("longtitude")), Double.parseDouble((String) compareMap.get("latitude")));
-         System.out.println("distance---》" + distance);
-         if (distance <= 5000) {
-         nextRet.add(compareMap);
-         }
-         }
-         */
         //返回符合的经纬度
-
         sr.setOk();
         sr.setData(nextRet);
         return sr;

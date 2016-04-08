@@ -37,7 +37,6 @@ public class CompanyDatabase {
     }
     
     //显示周围5公里车辆
-    
     public List showCarAround(LocationBean lb) {
         String stmt = "select * from v_show_car_around where province=? and city=?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{lb.getProvince(),lb.getCity()});

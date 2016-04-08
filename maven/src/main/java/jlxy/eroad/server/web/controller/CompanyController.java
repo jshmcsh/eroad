@@ -52,35 +52,39 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("login.erd")
     @ResponseBody
     public List do_login(@RequestParam("json") String json, HttpServletResponse resp, HttpServletRequest req) {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
         LoginBean param = new Gson().fromJson(json, LoginBean.class);
         Sret sr = cs.login(param, req, resp);
         return getRetList(sr);
-        
+
     }
+
     @RequestMapping("test_cookie.erd")
     @ResponseBody
-    public List do_test_cookie( HttpServletResponse resp, HttpServletRequest req) {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-        Sret sr=new Sret();
-        Cookie[] cookies=req.getCookies();
-        if(cookies !=null){
-            for(Cookie cookie: cookies){
-                String name=cookie.getName();
-                String value=cookie.getValue();
-                if("JSESSIONID".equals(name)&&req.getSession().getId().equals(value)){
-                      sr.setData((CompanyBean)req.getSession().getAttribute("companyInfo"));
+    public List do_test_cookie(HttpServletResponse resp, HttpServletRequest req) {
+        Sret sr = null;
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String name = cookie.getName();
+                String value = cookie.getValue();
+                if ("JSESSIONID".equals(name) && req.getSession().getId().equals(value)) {
+                    sr = new Sret();
+                    sr.setOk("已登录");
+                    sr.setData((CompanyBean) req.getSession().getAttribute("companyInfo"));
                 }
             }
         }
+        if (sr == null) {
+            sr = new Sret();
+            sr.setFail("未登录");
+        }
         return getRetList(sr);
-        
+
     }
-    
 
     @RequestMapping("logout.erd")
     @ResponseBody
-    public List do_logout(HttpServletRequest req) {
+    public List do_logout(HttpServletResponse resp, HttpServletRequest req) {
         Sret sr = new Sret();
         req.getSession().invalidate();
         return getRetList(sr);
@@ -89,7 +93,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("show_car_around.erd")
     @ResponseBody
     //@Logged
-    public List do_show_car_around(HttpServletRequest req) throws IOException {
+    public List do_show_car_around(HttpServletResponse resp, HttpServletRequest req) throws IOException {
         Sret sr;
         sr = cs.show_car_around(req);
         return getRetList(sr);
@@ -98,7 +102,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("send_order.erd")
     @ResponseBody
     //@Logged
-    public List do_send_order(@RequestParam("json") String json) {
+    public List do_send_order(@RequestParam("json") String json, HttpServletResponse resp) {
         OrderBean param = new Gson().fromJson(json, OrderBean.class);
         Sret sr = cs.send_order(param);
         return getRetList(sr);
@@ -107,7 +111,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_bidding_order_list.erd")
     @ResponseBody
     //  @Logged
-    public List do_get_bidding_order_list(@RequestParam("json") String json) {
+    public List do_get_bidding_order_list(@RequestParam("json") String json, HttpServletResponse resp) {
         IdBean company_id = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_bidding_order_list(company_id);
         return getRetList(sr);
@@ -116,7 +120,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("deal_order.erd")
     @ResponseBody
     //@Logged
-    public List do_deal_order(@RequestParam("json") String json) {
+    public List do_deal_order(@RequestParam("json") String json, HttpServletResponse resp) {
         SelectBidBean orderId = new Gson().fromJson(json, SelectBidBean.class);
         Sret sr = cs.deal_order(orderId);
         return getRetList(sr);
@@ -125,7 +129,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_executing_order.erd")
     @ResponseBody
     //@Logged
-    public List do_get_executing_order(@RequestParam("json") String json) {
+    public List do_get_executing_order(@RequestParam("json") String json, HttpServletResponse resp) {
         IdBean companyId = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_executing_order(companyId);
         return getRetList(sr);
@@ -134,7 +138,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_executing_order_detail.erd")
     @ResponseBody
     //@Logged
-    public List do_get_executing_order_detail(@RequestParam("json") String json) {
+    public List do_get_executing_order_detail(@RequestParam("json") String json, HttpServletResponse resp) {
         IdBean orderId = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_executing_order_detail(orderId);
         return getRetList(sr);
@@ -144,7 +148,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("finish_order.erd")
     @ResponseBody
     //@Logged
-    public List do_finish_order(@RequestParam("json") String json) {
+    public List do_finish_order(@RequestParam("json") String json, HttpServletResponse resp) {
         FinishOrderBean fobean = new Gson().fromJson(json, FinishOrderBean.class);
         Sret sr = cs.finish_order(fobean);
         return getRetList(sr);
@@ -154,7 +158,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("cancel_launching_order.erd")
     @ResponseBody
     //@Logged
-    public List do_cancel_launching_order(@RequestParam("json") String json) {
+    public List do_cancel_launching_order(@RequestParam("json") String json, HttpServletResponse resp) {
         CancelLaunchingOrderBean clob = new Gson().fromJson(json, CancelLaunchingOrderBean.class);
         Sret sr = cs.cancel_launching_order(clob);
         return getRetList(sr);
@@ -164,7 +168,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("cancel_executing_order.erd")
     @ResponseBody
     //@Logged
-    public List do_cancel_executing_order(@RequestParam("json") String json) {
+    public List do_cancel_executing_order(@RequestParam("json") String json, HttpServletResponse resp) {
         CancelExecutingOrderBean ceob = new Gson().fromJson(json, CancelExecutingOrderBean.class);
         Sret sr = cs.cancel_executing_order(ceob);
         return getRetList(sr);
@@ -174,7 +178,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_car_remark.erd")
     @ResponseBody
     //@Logged
-    public List do_get_car_remark(@RequestParam("json") String json) {
+    public List do_get_car_remark(@RequestParam("json") String json, HttpServletResponse resp) {
         IdBean carId = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_car_remark(carId);
         System.out.println(sr.toString());
@@ -186,7 +190,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_history_order_list.erd")
     @ResponseBody
     //@Logged
-    public List do_get_history_order_list(@RequestParam("json") String json) {
+    public List do_get_history_order_list(@RequestParam("json") String json, HttpServletResponse resp) {
         IdBean companyId = new Gson().fromJson(json, IdBean.class);
         Sret sr = cs.get_history_order_list(companyId);
         return getRetList(sr);
@@ -196,7 +200,7 @@ public class CompanyController extends ControllerBase {
     @RequestMapping("get_history_order_detail.erd")
     @ResponseBody
     //@Logged
-    public List do_get_history_order_detail(@RequestParam("json") String json) {
+    public List do_get_history_order_detail(@RequestParam("json") String json, HttpServletResponse resp) {
         HistoryOrderDetailBean hodb = new Gson().fromJson(json, HistoryOrderDetailBean.class);
         Sret sr = cs.get_history_order_detail(hodb);
         return getRetList(sr);

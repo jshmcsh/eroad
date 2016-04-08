@@ -129,4 +129,5 @@ public class Corefunc {
                                 * Math.cos(lat2) * sb2 * sb2));
         return d;
     }
+    
 }
