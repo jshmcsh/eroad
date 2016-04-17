@@ -19,9 +19,9 @@ function ajaxPost(url, params, callback) {
             type: 'post',
             dataType: 'json',
             data: params === null ? {} : { json: JSON.stringify(params) },
-            crossDomain:true,
-            beforeSend:function(xhr){
-                xhr.withCredentials=true;
+            crossDomain: true,
+            beforeSend: function(xhr) {
+                xhr.withCredentials = true;
             }
         })
         .done(function(data, textStatus, xhr) {
@@ -33,8 +33,7 @@ function ajaxPost(url, params, callback) {
             console.log(xhr + " " + textStatus + " " + errorThrown);
         })
         .always(function() {
-            console.log(getCookie("MYSESSIONID"));
-            console.log("complete");
+            // console.log("complete");
         });
 }
 /**
@@ -74,5 +73,45 @@ function delCookie(name) {
 }
 
 $(document).ready(function() {
-    // console.log(getCookie("JSESSIONID"));
+    // demo1();
+    // demo2();
 });
+//内部Deferred对象
+function demo1() {
+    var info = "old";
+
+    function a() {
+        var dfd = $.Deferred();
+        setTimeout(function(){
+            info = "new";
+            dfd.resolve();
+        },3000);
+        return dfd.promise();
+    }
+
+    function b() {
+        console.log(info);
+    }
+
+    var d = a();
+    $.when(d).done(b);
+}
+//外部Deferred对象
+function demo2() {
+     var info = "old";
+     var dfd = $.Deferred();
+
+    function a() {
+        setTimeout(function(){
+            info = "new";
+            dfd.resolve();
+        },3000);
+    }
+
+    function b() {
+        console.log(info);
+    }
+
+    a();
+    $.when(dfd).done(b);
+}

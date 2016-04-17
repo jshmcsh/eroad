@@ -5,157 +5,173 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>公司</title>
+    <link rel="stylesheet" href="style/columnal.css">
     <link rel="stylesheet" href="style/reset.css">
-    <script type="text/javascript" src="js/jquery-2.2.1.min.js">
+    <script type="text/javascript" src="js/vendor/jquery-2.2.1.min.js">
     </script>
     <script type="text/javascript" src="js/init.js">
-    & nbsp;
     </script>
     <style>
-    table {
-        width: 100%;
+    * {
+        overflow: hidden;
     }
     
-    .line {
-        width: 70%;
-        height: auto;
-        min-height: 1.6rem;
-        margin: 0 auto;
+    body {
+        background: #F7F7F7;
+        color: #83888E;
     }
     
-    .left,
-    .right,
-    .l_left,
-    .l_right {
-        float: left;
-        min-height: 1.5rem;
-        line-height: 1.5rem;
-    }
-    .line label{
-        padding:5px;
+    label {
+        line-height: 2.2;
     }
     
-    .left,
-    .l_left {
-        text-align: right;
-        background: #E41819;
-        color: #fff;
-        margin-right: 1%;
+    input[type="text"],
+    input[type="date"] {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        line-height: 2;
+        outline: none;
+        border-bottom: 1px solid #DCDCDC;
     }
     
-    .right,
-    .l_right {
-        text-align: left;
-        background: #000;
-        color: #fff;
-        margin-right: 1%;
+    .ele {
+        opacity: 0;
+        position: relative;
+        left: 0;
     }
     
-    .left {
-        width: 18%;
+    @keyframes ele-show {
+        0% {
+            opacity: 0.2;
+            left: -10%;
+        }
+        90% {
+            opacity: .8;
+            left: 0;
+        }
+        100% {
+            opacity: 1;
+            left: 0;
+        }
     }
     
-    .right {
-        width: 80%;
+    .active .ele {
+        animation: ele-show .5s linear forwards;
     }
     
-    .l_left {
-        width: 18%;
+    .active .ele1 {
+        animation-delay: .2s;
     }
     
-    .l_right {
-        width: 30%;
+    .active .ele2 {
+        animation-delay: .4s;
     }
+    
+    .active .ele3 {
+        animation-delay: .6s;
+    }
+    
+    .active .ele4 {
+        animation-delay: .8s;
+    }
+    
+    .active .ele5 {
+        animation-delay: 1s;
+    }
+    
+    .active .ele6 {
+        animation-delay: 1.2s;
+    }
+    
+    .active .ele7 {
+        animation-delay: 1.4s;
+    }
+    
+    .active .ele8 {
+        animation-delay: 1.6s;
+    }
+    
+    .active .ele9 {
+        animation-delay: 1.8s;
+    }
+    
+    .active .ele10 {
+        animation-delay: 2.0s;
+    }
+    .active .ele11 {
+        animation-delay: 2.2s;
+    }
+    .active .ele12 {
+        animation-delay: 2.4s;
+    }
+
     </style>
 </head>
 
 <body>
-    <h1 style="font-size:36px;">公司</h1>
-    <div>
-        <div class="line">
-            <div class="left">
-                <label for="">公司名称</label>
-            </div>
-            <div class="right">
-                <label for="">货代公司bbd64c67</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">营业执照号码</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">组织机构代码证</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">运输经营许可证号码</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">法人姓名</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">身份证</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="l_left">
-                <label for="">电子邮箱</label>
-            </div>
-            <div class="l_right">
-                <label for="">&nbsp;</label>
-            </div>
-            <div class="l_left">
-                <label for="">传真</label>
-            </div>
-            <div class="l_right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">公司地址</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">注册时间</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
-            </div>
-        </div>
-        <div class="line">
-            <div class="left">
-                <label for="">公司说明</label>
-            </div>
-            <div class="right">
-                <label for="">&nbsp;</label>
+    <div class="container">
+        <div class="row">
+            <div class="col_12 active">
+                <div class="col_12 ele ele1">
+                    <h1 style="font-size:36px;text-align:center;">公司</h1>
+                </div>
+                <div class="col_12 ele ele2">
+                    <label class="col_2 textright" for="order_number">公司名称</label>
+                    <input class="col_10 omega" id="order_number" type="text" value="货代公司bbd64c67">
+                </div>
+                </br>
+                <div class="col_12 ele ele3">
+                    <label class="col_2 textright" for="description">营业执照号码</label>
+                    <input class="col_10 omega" id="description" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele4">
+                    <label class="col_2 textright" for="start_address">组织机构代码证</label>
+                    <input class="col_10 omega" id="start_address" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele5">
+                    <label class="col_2 textright" for="destination">运输经营许可证号码</label>
+                    <input class="col_10 omega" id="destination" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele6">
+                    <label class="col_2 textright" for="sketch">法人姓名</label>
+                    <input class="col_10 omega" id="sketch" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele7">
+                    <label class="col_2 textright" for="start_time">身份证</label>
+                    <input class="col_10 omega" id="start_time" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele8">
+                    <label class="col_2 textright" for="expect_end_time">电子邮箱</label>
+                    <input class="col_10 omega" id="expect_end_time" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele9">
+                    <label class="col_2 textright" for="expect_end_time">传真</label>
+                    <input class="col_10 omega" id="expect_end_time" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele10">
+                    <label class="col_2 textright" for="expect_end_time">公司地址</label>
+                    <input class="col_10 omega" id="expect_end_time" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele11">
+                    <label class="col_2 textright" for="expect_end_time">注册时间</label>
+                    <input class="col_10 omega" id="expect_end_time" type="text">
+                </div>
+                </br>
+                <div class="col_12 ele ele12">
+                    <label class="col_2 textright" for="expect_end_time">公司说明</label>
+                    <input class="col_10 omega" id="expect_end_time" type="text">
+                </div>
+                </br>
             </div>
         </div>
     </div>

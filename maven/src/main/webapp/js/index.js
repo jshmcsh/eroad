@@ -1,54 +1,250 @@
 //页面全局对象
-AllGlobal = (function global() {
-    var prefix = "http://219.219.117.164/eroad-1.0/";
-    //0未登录，1登录
-    var pageStatus = 0;
-    //绑定一个html元素，通过change事件的触发检测页面状态
-    var pageCheckHelper = null;
-    //dom映射数组，偶数值为容器，偶数的右相邻奇数值为dom内容
-    var unloginArray = null;
-    return {
-        getPrefix: function() {
-            return prefix;
-        },
-        setPageStatus: function(newStatus) {
-            pageStatus = newStatus;
-            pageCheckHelper.change();
-        },
-        getPageStatus: function() {
-            return pageStatus;
-        },
-        setPageCheckHelper: function(newHelper) {
-            pageCheckHelper = newHelper;
-        },
-        getPageCheckHelper: function() {
-            return pageCheckHelper;
-        },
-        setUnloginArray: function(newArray) {
-            //设置dom保存到数组
-            unloginArray = newArray;
-        },
-        getUnloginArray: function() {
-            return unloginArray;
-        },
-        //装载dom
-        loadUnloginArray: function() {
-            if (unloginArray === null)
-                return;
-            //从数组还原到dom
-            for (var i = 0; i < unloginArray.length; i += 2) {
-                unloginArray[i].html(unloginArray[i + 1]);
-            }
-            unloginArray = null;
-        }
-    };
-})();
+var AllGlobal = null;
 /**
  * 脚本入口
  * @param  {[type]}   [description]
  * @return {[type]}   [description]
  */
 $(document).ready(function() {
+    AllGlobal = (function global() {
+        //请求地址
+        var prefix = "";
+        var remotePrefix = "http://219.219.117.164/eroad-1.0/";
+        var localPrefix = "http://localhost:8080/eroad/";
+        //全局延迟对象
+        var globalDfd = $.Deferred();
+        //当前用户信息
+        var userInfo = null;
+        //坐标点数组
+        var pointArr = null;
+        //0未登录，1登录
+        var pageStatus = 0;
+        //绑定监听器，通过change事件的触发检测页面状态
+        var pageCheckHelper = null;
+
+        /*不同页面dom映射数组，偶数值为容器，偶数的右相邻奇数值为dom内容*/
+        var unloginArray = null; //未登录
+        var loginedArray = null; //登录初始页
+        var loginedMapArray = null; //登录地图页
+
+        return {
+            init: function() {
+                unloginArray = [];
+                loginedArray = [];
+                loginedMapArray = [];
+                //保存未登录页面dom
+                var str = "";
+                str += '<div class="col_2 noRmargin box_left">';
+                str += '    <div class="selector">';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">车长</option>';
+                str += '            <option value="">5m</option>';
+                str += '            <option value="">6m</option>';
+                str += '        </select>';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">载重</option>';
+                str += '            <option value="">1t</option>';
+                str += '            <option value="">2t</option>';
+                str += '        </select>';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">状态</option>';
+                str += '            <option value="">busy</option>';
+                str += '            <option value="">free</option>';
+                str += '        </select>';
+                str += '    </div>';
+                str += '    <div class="listView">';
+                str += '        <ul>';
+                str += '        </ul>';
+                str += '    </div>';
+                str += '</div>';
+                str += '<div class="col_10 omega box_right">';
+                str += '    <iframe id="iframe_map" src="./map/map.html"></iframe>';
+                str += '</div>';
+                unloginArray.push($("#content_box"));
+                unloginArray.push(str);
+                //保存登录页面dom
+                str = "";
+                str += '<div class="logined_top">';
+                str += '    <span id="text_company_name">UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
+                str += '    <a id="btn_map" href="javascript:void(0);">地图</a>';
+                str += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
+                str += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
+                str += '</div>';
+                str += '<div class="logined_bottom">';
+                str += '    <div id="btn_kzt" class="active ctrl"></div>';
+                str += '    <div id="btn_yd" class="ctrl"></div>';
+                str += '    <div id="btn_gs" class="ctrl"></div>';
+                str += '</div>';
+                loginedArray.push($("#header_box .nav_right"));
+                loginedArray.push(str);
+                str = "";
+                str += '<div id="loginedContent" class="col_12">';
+                str += '<iframe src="./l_kzt.html"></iframe>';
+                str += '</div>';
+                loginedArray.push($("#content_box"));
+                loginedArray.push(str);
+                //保存登录后进入地图的dom
+                str = "";
+                str += '<div class="logined_top">';
+                str += '    <a id="btn_system" href="javascript:void(0);">进入系统</a>';
+                str += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
+                str += '</div>';
+                str += '<div class="logined_bottom">';
+                str += '    <div id="btn_kzt" class="active ctrl"></div>';
+                str += '    <div id="btn_yd" class="ctrl"></div>';
+                str += '    <div id="btn_gs" class="ctrl"></div>';
+                str += '</div>';
+                loginedMapArray.push($("#header_box .nav_right"));
+                loginedMapArray.push(str);
+                str = "";
+                str += '<div class="col_2 noRmargin box_left">';
+                str += '    <div class="selector">';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">车长</option>';
+                str += '            <option value="">5m</option>';
+                str += '            <option value="">6m</option>';
+                str += '        </select>';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">载重</option>';
+                str += '            <option value="">1t</option>';
+                str += '            <option value="">2t</option>';
+                str += '        </select>';
+                str += '        <select class="" name="" id="">';
+                str += '            <option value="">状态</option>';
+                str += '            <option value="">busy</option>';
+                str += '            <option value="">free</option>';
+                str += '        </select>';
+                str += '    </div>';
+                str += '    <div class="listView">';
+                str += '        <ul>';
+                str += '        </ul>';
+                str += '    </div>';
+                str += '</div>';
+                str += '<div class="col_10 omega box_right">';
+                str += '    <iframe id="iframe_map" src="./map/map.html"></iframe>';
+                str += '</div>';
+                loginedMapArray.push($("#content_box"));
+                loginedMapArray.push(str);
+            },
+            getPrefix: function() {
+                prefix = localPrefix;
+                return prefix;
+            },
+            setPageStatus: function(newStatus) {
+                var contentArr = new Array();
+                /*保存原内容*/
+                var content_header = $("#header_box .nav_right").children();
+                contentArr.push($("#header_box .nav_right"));
+                contentArr.push(content_header);
+                var content_main = $("#content_box").children();
+                contentArr.push($("#content_box"));
+                contentArr.push(content_main);
+                /*清除原内容*/
+                content_header.remove();
+                content_main.remove();
+                //切换页面状态前将旧页面保存的内容分配到对应的数组
+                switch (pageStatus) {
+                    case 0:
+                        if (unloginArray != null) {
+                            delete unloginArray;
+                        }
+                        unloginArray = contentArr;
+                        break;
+                    case 1:
+                        if (loginedArray != null) {
+                            delete loginedArray;
+                        }
+                        loginedArray = contentArr;
+                        break;
+                    case 2:
+                        if (loginedMapArray != null) {
+                            delete loginedMapArray;
+                        }
+                        loginedMapArray = contentArr;
+                        break;
+                    default:
+                        break;
+                }
+                pageStatus = newStatus;
+                pageCheckHelper.change();
+            },
+            //获取全局延迟对象
+            getGlobalDfd:function(){
+                return globalDfd.promise();
+            },
+            //改变延迟对象状态
+            resolve:function(){
+                globalDfd.resolve();
+            },
+            getPageStatus: function() {
+                return pageStatus;
+            },
+            setPageCheckHelper: function(newHelper) {
+                pageCheckHelper = newHelper;
+            },
+            getPageCheckHelper: function() {
+                return pageCheckHelper;
+            },
+            setPointArr: function(newPointArr) {
+                pointArr = newPointArr;
+            },
+            getPointArr: function() {
+                return pointArr;
+            },
+            setContentArray: function(newArray) {
+                //设置dom保存到数组
+                unloginArray = newArray;
+            },
+            getContentArray: function() {
+                var contentArr = new Array();
+                switch (pageStatus) {
+                    case 0:
+                        contentArr = unloginArray;
+                        break;
+                    case 1:
+                        contentArr = loginedArray;
+                        break;
+                    case 2:
+                        contentArr = loginedMapArray;
+                        break;
+                    default:
+                        break;
+                }
+                return contentArr;
+            },
+            //装载dom
+            loadContentArray: function() {
+                var contentArr = new Array();
+                switch (pageStatus) {
+                    case 0:
+                        contentArr = unloginArray;
+                        break;
+                    case 1:
+                        contentArr = loginedArray;
+                        break;
+                    case 2:
+                        contentArr = loginedMapArray;
+                        break;
+                    default:
+                        break;
+                }
+                //从数组还原到dom
+                for (var i = 0; i < contentArr.length; i += 2) {
+                    contentArr[i].html(contentArr[i + 1]);
+                }
+                contentArr = null;
+            },
+            setUserInfo: function(data) {
+                var dfd = $.Deferred();
+                userInfo = data;
+                dfd.resolve();
+                return dfd.promise();
+            },
+            getUserInfo: function() {
+                return userInfo;
+            }
+        };
+    })();
     //页面初始化
     pageInit();
 });
@@ -58,6 +254,7 @@ $(document).ready(function() {
  */
 function pageInit() {
     //全局初始化
+    AllGlobal.init(); //初始化全局对象
     logic_nav(); //导航条效果
     $(window).resize(function(event) {
         $("nav ul li.checked").click();
@@ -66,74 +263,65 @@ function pageInit() {
     //实时监测页面状态
     var pageCheckHelper = $("#hidden_check");
     pageCheckHelper.change(function(event) {
-        //登录页面初始化
-        if (AllGlobal.getPageStatus() === 1) {
-            /*保存原内容*/
-            $("#btn_closeSignin").click();
-            var domArray = new Array();
-            var content_unlogin = $("#header_box .nav_right").children();
-            domArray.push($("#header_box .nav_right"));
-            domArray.push(content_unlogin);
-            var content_map = $("#content_box").children();
-            domArray.push($("#content_box"));
-            domArray.push(content_map);
-            //保存未登录时的dom
-            AllGlobal.setUnloginArray(domArray);
-            /*清除原内容*/
-            content_unlogin.remove();
-            content_map.remove();
-            /*更新当前内容*/
-            var domStr = '';
-            domStr += '<div class="logined_top">';
-            domStr += '    <span>UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
-            domStr += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
-            domStr += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
-            domStr += '</div>';
-            domStr += '<div class="logined_bottom">';
-            domStr += '    <div id="btn_kzt" class="active ctrl"></div>';
-            domStr += '    <div id="btn_hy" class="ctrl"></div>';
-            domStr += '    <div id="btn_yd" class="ctrl"></div>';
-            domStr += '    <div id="btn_gs" class="ctrl"></div>';
-            domStr += '    <div id="btn_sj" class="ctrl"></div>';
-            domStr += '</div>';
-            $("#header_box .nav_right").html(domStr);
-            /*绑定新内容监听*/
-            loginedPageTogglesInit();
-            //插入新的内容框
-            domStr = '';
-            domStr += '<div id="loginedContent" class="col_12">';
-            domStr += '<iframe src="./l_kzt.html"></iframe>';
-            domStr += '</div>';
-            $("#content_box").html(domStr);
-        } else { //未登录页面初始化
-            /*还原原有内容*/
-            AllGlobal.loadUnloginArray();
-            //未登录页面监听
-            pageTogglesInit();
+        //装载新的dom
+        AllGlobal.loadContentArray();
+        switch (AllGlobal.getPageStatus()) {
+            case 1:
+                /*登录后页面*/
+                init_LoginedPage();
+                break;
+            case 2:
+                /*进入登录地图状态*/
+                init_LoginedMapPage();
+                break;
+            case 0:
+                /*未登录页内容*/
+                init_UnloginedPage();
+                break;
+            default:
+                break;
         }
     });
     //绑定页面状态监测对象到全局对象
     AllGlobal.setPageCheckHelper(pageCheckHelper);
-
-    /*监测用户是否已经登录*/
-    var prefix = AllGlobal.getPrefix();
-    var url = prefix + 'company/test_cookie.erd';
-    ajaxPost(url, null, function(data, textStatus, xhr) {
-        var ret = data[0];
-        if (ret.status === "ok") {
-            AllGlobal.setPageStatus(1); //通过登录检测
-            // console.log(data[1]);
-        } else
-            AllGlobal.setPageStatus(0); //初始化未登录页面
-    });
-
+    //检测权限并绘制正确页面
+    logic_detectsLogin();
 }
 
 /**
- * 未登录页面监听
+ * 未登录页面监听  pageStatus = 0;
  * @return {[type]} [description]
  */
-function pageTogglesInit() {
+function init_UnloginedPage() {
+    var cars = logic_showCarAround();
+    $.when(cars[0]).done(function() {
+        var str = "";
+        var pointArr = [];
+        for (var i = 1; i < cars.length; i++) {
+            str += '<li class="li_car">';
+            str += '    <div class="img_car">';
+            str += '        <img src="img/icon_greencar.png" height="48" width="48" alt="car">';
+            str += '    </div>';
+            str += '    <div class="labels">';
+            str += '        <label class="title" for="" title="' + i + ' ' + cars[i].car_number + '(空闲)">' + i + ' ' + cars[i].car_number + '(空闲)</label>';
+            str += '        <label for="" title="司机:' + cars[i].username + '">司机:' + cars[i].username + '</label>';
+            str += '        <label for="" title="车辆情况：13.5米/35吨">车辆情况：13.5米/35吨</label>';
+            str += '        <label for="" title="信用等级：未选">信用等级：</label>';
+            str += '        <label for="" title="更新时间：2016/3/4 17:28:16">更新时间：2016/3/4 17:28:16</label>';
+            str += '    </div>';
+            str += '</li>';
+            var o = {};
+            o.latitude = cars[i].latitude;
+            o.longtitude = cars[i].longtitude;
+            pointArr.push(o);
+        }
+        $.when(AllGlobal.getGlobalDfd()).done(function(){
+            AllGlobal.setPointArr(pointArr);
+        });
+            
+        $("#content_box .box_left .listView ul").html(str);
+    });
+
     //显示注册快
     $("#btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
@@ -153,34 +341,41 @@ function pageTogglesInit() {
     // 关闭登录块
     $("#btn_closeSignin").off('click').on('click', function(event) {
         event.preventDefault();
-        $("#signin_box").toggleClass('display_none');
+        if (!$("#signin_box").hasClass('display_none')) {
+            $("#signin_box").toggleClass('display_none');
+        }
     });
 }
 /**
- * 登录页面监听
+ * 登录页面监听  pageStatus = 1;
  * @return {[type]} [description]
  */
-function loginedPageTogglesInit() {
+function init_LoginedPage() {
+    $("#text_company_name").html(AllGlobal.getUserInfo().company_name+"，欢迎您！");
+    //隐藏登录框
+    if (!$("#signin_box").hasClass('display_none'))
+        $("#signin_box").addClass('display_none');
     // 注销按钮
-    $("#btn_logout").click(function(event) {
-        AllGlobal.setPageStatus(0);
+    $("#btn_logout").off('click').click(function(event) {
+        logic_logout();
+    });
+    // 进入地图按钮
+    $("#btn_map").off('click').click(function(event) {
+        AllGlobal.setPageStatus(2);
     });
     // 通知按钮
-    $("#btn_notification").click(function(event) {
+    $("#btn_notification").off('click').click(function(event) {
         $('#loginedContent iframe').attr('src', './l_notification.html');
     });
     ////所有控制按钮样式变化
-    $('.logined_bottom .ctrl').click(function(event) {
+    $('.logined_bottom .ctrl').off('click').click(function(event) {
         $('.logined_bottom .ctrl').removeClass('active');
         $(this).toggleClass('active');
+        
     });
     // 控制台按钮
     $("#btn_kzt").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_kzt.html');
-    });
-    // 货源按钮
-    $("#btn_hy").click(function(event) {
-        $('#loginedContent iframe').attr('src', './l_hy.html');
     });
     // 运单按钮
     $("#btn_yd").click(function(event) {
@@ -190,14 +385,69 @@ function loginedPageTogglesInit() {
     $("#btn_gs").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_gs.html');
     });
-    // 司机按钮
-    $("#btn_sj").click(function(event) {
-        $('#loginedContent iframe').attr('src', './l_sj.html');
-    });
 }
 
-
-
+/**
+ * 登录后
+ * 地图页面监听 pageStatus = 2;
+ * @return {[type]} [description]
+ */
+function init_LoginedMapPage() {
+    var cars = logic_showCarAround();
+    $.when(cars[0]).done(function() {
+        var str = "";
+        var pointArr = [];
+        for (var i = 1; i < cars.length; i++) {
+            str += '<li class="li_car">';
+            str += '    <div class="img_car">';
+            str += '        <img src="img/icon_greencar.png" height="48" width="48" alt="car">';
+            str += '    </div>';
+            str += '    <div class="labels">';
+            str += '        <label class="title" for="" title="' + i + ' ' + cars[i].car_number + '(空闲)">' + i + ' ' + cars[i].car_number + '(空闲)</label>';
+            str += '        <label for="" title="司机:' + cars[i].username + '">司机:' + cars[i].username + '</label>';
+            str += '        <label for="" title="车辆情况：13.5米/35吨">车辆情况：13.5米/35吨</label>';
+            str += '        <label for="" title="信用等级：未选">信用等级：</label>';
+            str += '        <label for="" title="更新时间：2016/3/4 17:28:16">更新时间：2016/3/4 17:28:16</label>';
+            str += '    </div>';
+            str += '</li>';
+            var o = {};
+            o.latitude = cars[i].latitude;
+            o.longtitude = cars[i].longtitude;
+            pointArr.push(o);
+        }
+        $.when(AllGlobal.getGlobalDfd()).done(function(){
+            AllGlobal.setPointArr(pointArr);
+        });
+            
+        
+        $("#content_box .box_left .listView ul").html(str);
+    });
+    // 注销按钮
+    $("#btn_logout").off('click').click(function(event) {
+        logic_logout();
+    });
+    //进入系统按钮
+    $("#btn_system").off('click').click(function(event) {
+        AllGlobal.setPageStatus(1);
+    });
+    ////所有控制按钮样式变化
+    $('.logined_bottom .ctrl').off('click').click(function(event) {
+        $('.logined_bottom .ctrl').removeClass('active');
+        $(this).toggleClass('active');
+    });
+    // 控制台按钮
+    $("#btn_kzt").click(function(event) {
+        $('#loginedContent iframe').attr('src', './l_kzt.html');
+    });
+    // 运单按钮
+    $("#btn_yd").click(function(event) {
+        $('#loginedContent iframe').attr('src', './l_yd.html');
+    });
+    // 公司按钮
+    $("#btn_gs").click(function(event) {
+        $('#loginedContent iframe').attr('src', './l_gs.html');
+    });
+}
 
 
 
@@ -338,13 +588,70 @@ function logic_signinBox() {
         ajaxPost(url, o, function(data, textStatus, xhr) {
             var ret = data[0];
             if (ret.status === "ok") {
-                // setCookie("JSESSIONID");
-                AllGlobal.setPageStatus(1);
+                var dfd = AllGlobal.setUserInfo(data[1]);
+                $.when(dfd).done(function() {
+                    AllGlobal.setPageStatus(1);
+                });
             } else {
                 alert(ret.message);
             }
         });
     });
+}
+
+/**
+ * 注销
+ * @return {[type]} [description]
+ */
+function logic_logout() {
+    var prefix = AllGlobal.getPrefix();
+    var url = prefix + 'company/logout.erd';
+    ajaxPost(url, null, function(data, textStatus, xhr) {
+        if (data[0].status == "ok") {
+            AllGlobal.setUserInfo(null);
+            AllGlobal.setPageStatus(0);
+        }
+    });
+}
+/**
+ * 检测用户是否已经登录
+ * @return {[type]} [description]
+ */
+function logic_detectsLogin() {
+    var prefix = AllGlobal.getPrefix();
+    var url = prefix + 'company/test_cookie.erd';
+    ajaxPost(url, null, function(data, textStatus, xhr) {
+        var ret = data[0];
+        if (ret.status === "ok") {
+            var dfd = AllGlobal.setUserInfo(data[1]);
+            $.when(dfd).done(function() {
+                AllGlobal.setPageStatus(1);
+            }); //通过登录检测
+        } else {
+            AllGlobal.setUserInfo(null);
+            AllGlobal.setPageStatus(0); //初始化未登录页面
+        }
+    });
+}
+/**
+ * 获取附近车辆
+ * @return {[type]} [description]
+ */
+function logic_showCarAround() {
+    var ret = [];
+    var dfd = $.Deferred();
+    ret.push(dfd.promise());
+    //获取IP地址周围50公里的车
+    var prefix = AllGlobal.getPrefix();
+    var url = prefix + 'company/show_car_around.erd';
+    ajaxPost(url, null, function(data, textStatus, xhr) {
+        if (data[0].status === "ok") {
+            for (var i = 1; i < data.length; i++)
+                ret.push(data[i]);
+        }
+        dfd.resolve();
+    });
+    return ret;
 }
 
 //iframe跨域

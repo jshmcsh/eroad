@@ -5,15 +5,201 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>控制台</title>
-    <script type="text/javascript" src="js/jquery-2.2.1.min.js">
+    <link rel="stylesheet" href="style/columnal.css">
+    <link rel="stylesheet" href="style/reset.css">
+    <script type="text/javascript" src="js/vendor/jquery-2.2.1.min.js">
     </script>
     <script type="text/javascript" src="js/init.js"></script>
+    <style type="text/css">
+    * {
+        overflow: hidden;
+    }
+    
+    body {
+        background: #F7F7F7;
+        color: #83888E;
+    }
+    
+    label {
+        line-height: 2.2;
+    }
+    
+    input[type="text"],
+    input[type="date"] {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        line-height: 2;
+        outline: none;
+        border-bottom: 1px solid #DCDCDC;
+    }
+    
+    .ele {
+        opacity: 0;
+        position: relative;
+        left: 0;
+    }
+    
+    @keyframes ele-show {
+        0% {
+            opacity: 0.2;
+            left: -10%;
+        }
+        90% {
+            opacity: .8;
+            left: 0;
+        }
+        100% {
+            opacity: 1;
+            left: 0;
+        }
+    }
+    
+    .active .ele {
+        animation: ele-show .5s linear forwards;
+    }
+    
+    .active .ele1 {
+        animation-delay: .2s;
+    }
+    
+    .active .ele2 {
+        animation-delay: .4s;
+    }
+    
+    .active .ele3 {
+        animation-delay: .6s;
+    }
+    
+    .active .ele4 {
+        animation-delay: .8s;
+    }
+    
+    .active .ele5 {
+        animation-delay: 1s;
+    }
+    
+    .active .ele6 {
+        animation-delay: 1.2s;
+    }
+    
+    .active .ele7 {
+        animation-delay: 1.4s;
+    }
+    
+    .active .ele8 {
+        animation-delay: 1.6s;
+    }
+    
+    .active .ele9 {
+        animation-delay: 1.8s;
+    }
+    
+    .active .ele10 {
+        animation-delay: 2.0s;
+    }
+    </style>
 </head>
 
 <body>
-  <h1 style="font-size:36px;">控制台</h1>
-  <h2>公司概况</h2>
-  <h2>代办事项</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col_12 active">
+                <div class="col_12 ele ele1">
+                    <h1 style="font-size:36px;text-align:center;">发布订单</h1>
+                </div>
+                <div class="col_12 ele ele2">
+                    <label class="col_2 textright" for="order_number">订单号</label>
+                    <input class="col_10 omega" id="order_number" type="text" placeholder="请输入订单号">
+                </div>
+                </br>
+                <div class="col_12 ele ele3">
+                    <label class="col_2 textright" for="expect_fare">期望费用</label>
+                    <input class="col_10 omega" id="expect_fare" type="text" placeholder="请输入期望费用">
+                </div>
+                </br>
+                <div class="col_12 ele ele4">
+                    <label class="col_2 textright" for="description">详细描述</label>
+                    <input class="col_10 omega" id="description" type="text" placeholder="请输入详细描述">
+                </div>
+                </br>
+                <div class="col_12 ele ele5">
+                    <label class="col_2 textright" for="start_address">出发城市</label>
+                    <input class="col_10 omega" id="start_address" type="text" placeholder="请输入出发城市">
+                </div>
+                </br>
+                <div class="col_12 ele ele6">
+                    <label class="col_2 textright" for="destination">目的地</label>
+                    <input class="col_10 omega" id="destination" type="text" placeholder="请输入目的地">
+                </div>
+                </br>
+                <div class="col_12 ele ele7">
+                    <label class="col_2 textright" for="sketch">概述</label>
+                    <input class="col_10 omega" id="sketch" type="text" placeholder="请输入简单描述">
+                </div>
+                </br>
+                <div class="col_12 ele ele8" style="margin-top:5px;">
+                    <label class="col_2 textright" for="start_time">期望开始时间</label>
+                    <input class="col_10 omega" id="start_time" type="date">
+                </div>
+                </br>
+                <div class="col_12 ele ele9">
+                    <label class="col_2 textright" for="expect_end_time">期望结束时间</label>
+                    <input class="col_10 omega" id="expect_end_time" type="date">
+                </div>
+                </br>
+                <div class="col_12 ele ele10">
+                    <div class="col_2">&nbsp;</div>
+                    <button class="col_10 omega" id="btn_release_order">发布订单</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <img src="img/login_bg.png" class="bgk" alt=""> -->
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var AllGlobal = window.top.AllGlobal;
+        $("#order_number").val("123456");
+        $("#start_time").val("2016-02-15");
+        $("#expect_end_time").val("2016-03-30");
+        $("#expect_fare").val("20000");
+        $("#description").val("description");
+        $("#start_address").val("some words about address");
+        $("#destination").val("nanjing");
+        $("#sketch").val("6");
+
+
+        if (AllGlobal != null && AllGlobal != undefined) {} else {
+            console.log("mediator undefined");
+        }
+        //发布订单按钮点击事件
+        $("#btn_release_order").off().click(function(event) {
+            var prefix = AllGlobal.getPrefix();
+            var url = prefix + 'company/send_order.erd';
+            var o = {};
+            o.order_number = $("#order_number").val();
+            o.start_time = $("#start_time").val();
+            o.expect_end_time = $("#expect_end_time").val();
+            o.expect_fare = $("#expect_fare").val();
+            o.description = $("#description").val();
+            o.start_address = $("#start_address").val();
+            o.destination = $("#destination").val();
+            o.sketch = $("#sketch").val();
+            o.company_id = AllGlobal.getUserInfo().id;
+
+            ajaxPost(url, o, function(data, textStatus, xhr) {
+                console.log(data);
+                if (data[0].status === "ok") {
+                    alert("发布成功");
+                } else {
+                    alert(data[0].message);
+                }
+            });
+        });
+
+    });
+    </script>
 </body>
 
 </html>

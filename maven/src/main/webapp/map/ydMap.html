@@ -15,6 +15,7 @@
     <script>
     window.jQuery || document.write('<script src="../js/vendor/jquery-2.2.1.min.js"><\/script>');
     </script>
+    <script type="text/javascript" src="../js/init.js"></script>
     <script type="text/javascript" src="map.js"></script>
 </head>
 
@@ -224,28 +225,40 @@
         //////////////////////////////////////////end功能测试end///////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        var domStr = '<input type="text" id="pageListener_map" style="width:0;padding:0;margin:0;border:0;" value="">';
-        $("body").append(domStr);
-        var AllGlobal = window.top.AllGlobal;
-        if (AllGlobal != null && AllGlobal != undefined) {
-            // var mapPageCheckHelper = $("#pageListener_map");
-            // mapPageCheckHelper.change(function(event) {
-                var pointArr = AllGlobal.getPointArr();
-                var mapPoints = [];
-                var o1 = new BMap.Point(116.399, 39.910);
-                var o2 = new BMap.Point(116.405, 39.920);
-                var o3 = new BMap.Point(116.425, 39.900);
 
-                mapPoints.push(o1);
-                mapPoints.push(o2);
-                mapPoints.push(o3);
-          
-                showCarsByCoordinates(map, mapPoints);
-            // });
-            // AllGlobal.setMapPageCheckHelper(mapPageCheckHelper);
-            // AllGlobal.resolve();
+        var crtOderId = window.location.search;
+        crtOderId = crtOderId.split("id=")[1];
+        var AllGlobal = window.top.AllGlobal;
+        var prefix = null;
+        if (AllGlobal != null && AllGlobal != undefined) {
+            prefix = AllGlobal.getPrefix();
         } else {
             console.log("mediator undefined");
+        }
+
+        if (crtOderId != null && crtOderId != undefined && prefix != null) {
+            var url = prefix + 'company/get_executing_order_detail.erd';
+            var o = {};
+            o.id = crtOderId;
+
+            ajaxPost(url, o, function(data, textStatus, xhr) {
+                console.log(data);
+                if (data[0].status === "ok") {
+                    var o1 = new BMap.Point(116.399, 39.910);
+                    var o2 = new BMap.Point(116.405, 39.920);
+                    var o3 = new BMap.Point(116.425, 39.900);
+                    var mapPoints = [];
+                    mapPoints.push(o1);
+                    mapPoints.push(o2);
+                    mapPoints.push(o3);
+
+                    showTrack(map, mapPoints);
+                } else {
+                    console.log(data[0]);
+                }
+            });
+        } else {
+            console.log("crtOderId or mediator undefined ");
         }
     });
     </script>

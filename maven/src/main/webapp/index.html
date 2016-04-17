@@ -12,7 +12,13 @@
     <link rel="stylesheet" href="style/reset.css">
     <!-- Custom styles -->
     <link rel="stylesheet" href="style/index.css">
-    <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+    <script>
+    //没网则从本地加载
+    window.Modernizr || document.write('<script src="js/vendor/modernizr-2.6.2.min.js"><\/script>');
+    window.jQuery || document.write('<script src="js/vendor/jquery-2.2.1.min.js"><\/script>');
+    </script>
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
@@ -254,6 +260,32 @@
     </div>
     <!-- end 登录 end -->
     <input type="text" id="hidden_check" style="position:absolute;z-index:-10000;width:0;padding:0;margin:0;" value="">
+    <script type="text/javascript">
+    $(document).ready(function() {
+        Modernizr.load({
+            test: Modernizr.mq('only all'),
+            nope: ['js/vendor/respond.min.js']
+        });
+        // Modernizr.load({
+        //     // 如果 max-width 等于 600px，则加载菜单转换脚本
+        //     test: Modernizr.mq('only screen and (max-width: 600px)'),
+        //     yep: ['js/vendor/jquery.mobilemenu.min.js'],
+        //     callback: function() {
+        //         // 资源完全加载后运行
+        //         $(document).ready(function() {
+        //             alert("s");
+        //             $('#mainNav').mobileMenu({
+        //                 switchWidth: 600, //转换宽度 (用 px 表示)
+        //                 topOptionText: 'Select a page', //第一个选项的内容
+        //                 indentString: '&nbsp;&nbsp;&nbsp;' //缩进嵌套选项的字符串
+        //             });
+        //         });
+        //     }
+        // });
+
+
+    });
+    </script>
 </body>
 
 </html>
