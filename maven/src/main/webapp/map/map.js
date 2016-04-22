@@ -109,7 +109,7 @@ function customMarker(point, type) {
     return marker;
 }
 /**
- * 给定一组坐标显示轨迹
+ * 给定一组坐标显示折线
  * @param  {[type]} map   [description]
  * @param  {[type]} coors [一组坐标]
  * @return {[type]}       [description]
