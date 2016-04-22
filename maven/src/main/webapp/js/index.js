@@ -323,7 +323,7 @@ function init_UnloginedPage() {
     });
 
     //显示注册快
-    $("#btn_signupbox").off('click').click(function(event) {
+    $(".btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
     });
     //注册块内效果
@@ -333,7 +333,7 @@ function init_UnloginedPage() {
         $("#signup_box").toggleClass('display_none');
     });
     // 显示登录块
-    $("#btn_signinbox").off('click').click(function(event) {
+    $(".btn_signinbox").off('click').click(function(event) {
         $("#signin_box").toggleClass('display_none');
     });
     // 登录逻辑
