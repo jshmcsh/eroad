@@ -11,9 +11,6 @@
     </script>
     <script type="text/javascript" src="js/init.js"></script>
     <style type="text/css">
-    * {
-        overflow: hidden;
-    }
     
     body {
         background: #F7F7F7;
@@ -102,8 +99,24 @@
     /*iphone 5s 竖屏*/
     
     @media screen and (max-device-width:320px) and (orientation:portrait) {
+        h1{
+            font-size: 1.5rem!important;
+        }
         label{
-            font-size: .5rem;
+            display: block;
+            text-align: left!important;
+            width:100%!important;
+        }
+        input{
+            display:block;
+            width:100%!important;
+        }
+        .ele10 .col_2{
+            width:0;
+
+        }
+        .ele10 .col_10{
+            width:100%;
         }
     }
     </style>
@@ -159,6 +172,7 @@
                 <div class="col_12 ele ele10">
                     <div class="col_2">&nbsp;</div>
                     <button class="col_10 omega" id="btn_release_order">发布订单</button>
+                    <div class="col_12">&nbsp;</div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 * { color: #666;   /*overflow: hidden;*/ }
-html { font-size: 16px; width: 100%; height: 100%; }
-body { width: 100%; height: 100%; }
+html { font-size: 16px; width: 100%; height: 100%; overflow-x:hidden; }
+body { width: 100%; height: 100%; overflow-x:hidden; }
 .template {	/*红*/
 color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 
@@ -13,8 +13,8 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #footer_box { height: 5%; }
 #header_box .logo { height: 100%; }
 #header_box .nav { height: 100%; }
-#signup_box { position: absolute; top: 0; left: 0; z-index: 100; width: 100%; height: 100%; background: rgba(0, 0, 0, .5); }
-#signin_box { position: absolute; top: 0; left: 0; z-index: 100; width: 100%; height: 100%; background: rgba(0, 0, 0, .5); }
+#signup_box { position: absolute; top: 0; left: 0; z-index: 1000; width: 100%; height: 100%; background: rgba(0, 0, 0, .5); }
+#signin_box { position: absolute; top: 0; left: 0; z-index: 1000; width: 100%; height: 100%; background: rgba(0, 0, 0, .5); }
 
 /*顶部框 #header_box*/
 #header_box .logo { }
@@ -79,6 +79,7 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #content_box .box_left .listView ul li.li_car .labels label { display: block; width: 100%; line-height: 1.5; color: #000; font-size: .8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 #content_box .box_left .listView ul li.li_car .labels label.title { color: #00CC00; }
 #content_box .box_right iframe { width: 100%; height: 100%; }
+#content_box .left_toggle{display:none;}
 
 /*登录内容框 #loginedContent*/
 #loginedContent iframe { width: 100%; height: 100%; }
@@ -89,8 +90,8 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 
 /*注册登录快公共*/
 #signup_box .content, #signin_box .content { width: 50%; height: 60%; margin: 0 auto; background: #fff; border: 3px solid #E41819; position: relative; overflow-x: hidden; }
-#signup_box .close, #signin_box .close { position: absolute; top: 0; right: 0; width: 10%; text-align: center; }
-#signup_box .close button, #signin_box .close button { width: 100%; height: 1.5rem; padding: 2px; }
+#signup_box .close, #signin_box .close { position: absolute; top: 0; right: 0; width: auto;  text-align: center; }
+#signup_box .close button, #signin_box .close button { width: 100%; height: 1.5rem; padding: 0 5px; }
 
 /*注册块 #signup_box*/
 #signup_box .step { position: absolute; top: 0; z-index: 100; width: 90%; height: 10%; }
@@ -126,12 +127,27 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 	/*响应式菜单*/
 	#header_box .nav_right{display:none;}
 	#header_box .nav_right_mobile{ width:100%; position: relative; z-index: 1000;display:block;}
-	#header_box .nav_right_mobile .toggle{width:25px; height:25px; position: absolute;top:2px;right:10px;}
-	#header_box .nav_right_mobile .sign{ width:0;position:absolute; right:0px; top:10px;list-style: none; }
-	#header_box .nav_right_mobile .sign li { width:50%; float:right;}
-	#header_box .nav_right_mobile .sign li a{ width:100%; background:transparent; color:#000; border-radius: 0;}
-	
+	#header_box .nav_right_mobile .toggle{width:25px; height:25px; position: absolute;top:0;right:10px;}
+	#header_box .nav_right_mobile ul{ width:0;position:absolute; right:0px; top:7px;list-style: none; }
+	#header_box .nav_right_mobile ul li { float:left;margin-right: 5px;  }
+	#header_box .nav_right_mobile ul li a{ outline:none;  background:transparent; color:#000; border-radius: 0;}
 	/*地图全屏*/
-	#content_box .box_left {width:0;}
-	#content_box .box_right{width:100%;}
+	#content_box { position: relative; }
+	#content_box .left_toggle{display:block; position: absolute; bottom:0; width:100%; height:20px;text-align: center;background:#DBDFE5;}
+	#content_box .box_left { width: 100%; height: 0;padding-top:0; position: absolute; bottom: 0; z-index: 1000; background: rgba(0, 0, 0, .5); }
+	#content_box .box_left select{display:none;}
+	#content_box .box_left .listView li {background:rgba(200,200,200,.4);}
+	#content_box .box_left .listView ul li:hover { background: rgba(255, 255, 255, .5); }
+	#content_box .box_left .listView li label{color:#fff!important; }
+	#content_box .box_right { width: 100%; }
+
+	/*登录注册块调整*/
+	#signin_box .content,#signup_box .content {
+		width:90%;
+		height:30%;
+	}
+	#btn_signin{
+		width:100%;
+	}
+	#signup_box .close button, #signin_box .close button { width: 90%; height: 1.4rem; padding: 0 3px; }
 }

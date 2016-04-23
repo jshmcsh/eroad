@@ -78,6 +78,16 @@ $(document).ready(function() {
                 loginedArray.push($("#header_box .nav_right"));
                 loginedArray.push(str);
                 str = "";
+                str += '<div class="toggle icon-double-angle-left icon-2x"></div>';
+                str += '<ul class="logined_bottom">';
+                str += '    <li><a id="btn_kzt_mobile" class="active ctrl" href="#">发布</a></li>';
+                str += '    <li><a id="btn_yd_mobile" class="ctrl" href="#">运单</a></li>';
+                str += '    <li><a id="btn_gs_mobile" class="ctrl" href="#">公司</a></li>';
+                str += '    <li><a id="btn_logout_mobile" class="ctrl" href="#">退出</a></li>';
+                str += '</ul>';
+                loginedArray.push($("#header_box .nav_right_mobile"));
+                loginedArray.push(str);
+                str = "";
                 str += '<div id="loginedContent" class="col_12">';
                 str += '<iframe src="./l_kzt.html"></iframe>';
                 str += '</div>';
@@ -136,6 +146,9 @@ $(document).ready(function() {
                 var content_header = $("#header_box .nav_right").children();
                 contentArr.push($("#header_box .nav_right"));
                 contentArr.push(content_header);
+                var content_header_mobile = $("#header_box .nav_right_mobile").children();
+                contentArr.push($("#header_box .nav_right_mobile"));
+                contentArr.push(content_header_mobile);
                 var content_main = $("#content_box").children();
                 contentArr.push($("#content_box"));
                 contentArr.push(content_main);
@@ -169,11 +182,11 @@ $(document).ready(function() {
                 pageCheckHelper.change();
             },
             //获取全局延迟对象
-            getGlobalDfd:function(){
+            getGlobalDfd: function() {
                 return globalDfd.promise();
             },
             //改变延迟对象状态
-            resolve:function(){
+            resolve: function() {
                 globalDfd.resolve();
             },
             getPageStatus: function() {
@@ -315,10 +328,10 @@ function init_UnloginedPage() {
             o.longtitude = cars[i].longtitude;
             pointArr.push(o);
         }
-        $.when(AllGlobal.getGlobalDfd()).done(function(){
+        $.when(AllGlobal.getGlobalDfd()).done(function() {
             AllGlobal.setPointArr(pointArr);
         });
-            
+
         $("#content_box .box_left .listView ul").html(str);
     });
 
@@ -345,13 +358,18 @@ function init_UnloginedPage() {
             $("#signin_box").toggleClass('display_none');
         }
     });
+    /*移动设备菜单*/
+    if (typeof(responsiveMenu)!="undefined") {
+        responsiveMenu.res_nav_right_mobile();
+        responsiveMenu.res_left_listview();
+    }
 }
 /**
  * 登录页面监听  pageStatus = 1;
  * @return {[type]} [description]
  */
 function init_LoginedPage() {
-    $("#text_company_name").html(AllGlobal.getUserInfo().company_name+"，欢迎您！");
+    $("#text_company_name").html(AllGlobal.getUserInfo().company_name + "，欢迎您！");
     //隐藏登录框
     if (!$("#signin_box").hasClass('display_none'))
         $("#signin_box").addClass('display_none');
@@ -371,7 +389,7 @@ function init_LoginedPage() {
     $('.logined_bottom .ctrl').off('click').click(function(event) {
         $('.logined_bottom .ctrl').removeClass('active');
         $(this).toggleClass('active');
-        
+
     });
     // 控制台按钮
     $("#btn_kzt").click(function(event) {
@@ -384,6 +402,24 @@ function init_LoginedPage() {
     // 公司按钮
     $("#btn_gs").click(function(event) {
         $('#loginedContent iframe').attr('src', './l_gs.html');
+    });
+    /*移动设备登录后的菜单*/
+    if(typeof(responsiveMenu)!="undefined"){
+        responsiveMenu.res_nav_right_mobile();
+    }
+    $("#header_box .nav_right_mobile .toggle").click();
+    $("#btn_kzt_mobile").click(function(event) {
+        $("#btn_kzt").click();
+    });
+    $("#btn_yd_mobile").click(function(event) {
+        $("#btn_yd").click();
+    });
+    $("#btn_gs_mobile").click(function(event) {
+        $("#btn_gs").click();
+    });
+    $("#btn_logout_mobile").click(function(event) {
+        $("#btn_logout").click();
+        $("#header_box .nav_right_mobile .toggle").click();
     });
 }
 
@@ -415,11 +451,11 @@ function init_LoginedMapPage() {
             o.longtitude = cars[i].longtitude;
             pointArr.push(o);
         }
-        $.when(AllGlobal.getGlobalDfd()).done(function(){
+        $.when(AllGlobal.getGlobalDfd()).done(function() {
             AllGlobal.setPointArr(pointArr);
         });
-            
-        
+
+
         $("#content_box .box_left .listView ul").html(str);
     });
     // 注销按钮
