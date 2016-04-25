@@ -12,7 +12,6 @@
     <script type="text/javascript" src="js/init.js">
     </script>
     <style>
-    
     body {
         background: #F7F7F7;
         color: #83888E;
@@ -38,6 +37,7 @@
         position: relative;
         left: 0;
     }
+    
     @-webkit-keyframes ele-show {
         0% {
             opacity: 0.2;
@@ -52,6 +52,7 @@
             left: 0;
         }
     }
+    
     @keyframes ele-show {
         0% {
             opacity: 0.2;
@@ -68,70 +69,83 @@
     }
     
     .active .ele {
+        -webkit-animation: ele-show .5s linear forwards;
         animation: ele-show .5s linear forwards;
     }
     
     .active .ele1 {
+        -webkit-animation-delay: .2s;
         animation-delay: .2s;
     }
     
     .active .ele2 {
+        -webkit-animation-delay: .4s;
         animation-delay: .4s;
     }
     
     .active .ele3 {
+        -webkit-animation-delay: .6s;
         animation-delay: .6s;
     }
     
     .active .ele4 {
+        -webkit-animation-delay: .8s;
         animation-delay: .8s;
     }
     
     .active .ele5 {
-        animation-delay: 1s;
+        -webkit-animation-delay: 1s;
+        animation-delay: .8s;
     }
     
     .active .ele6 {
+        -webkit-animation-delay: 1.2s;
         animation-delay: 1.2s;
     }
     
     .active .ele7 {
+        -webkit-animation-delay: 1.4s;
         animation-delay: 1.4s;
     }
     
     .active .ele8 {
+        -webkit-animation-delay: 1.6s;
         animation-delay: 1.6s;
     }
     
     .active .ele9 {
+        -webkit-animation-delay: 1.8s;
         animation-delay: 1.8s;
     }
     
     .active .ele10 {
+        -webkit-animation-delay: 2.0s;
         animation-delay: 2.0s;
     }
     
     .active .ele11 {
+        -webkit-animation-delay: 2.2s;
         animation-delay: 2.2s;
     }
     
     .active .ele12 {
+        -webkit-animation-delay: 2.4s;
         animation-delay: 2.4s;
     }
     /*iphone 5s 竖屏*/
     
     @media screen and (max-device-width:320px) and (orientation:portrait) {
-         h1{
+        h1 {
             font-size: 1.5rem!important;
         }
-        label{
+        label {
             display: block;
             text-align: left!important;
-            width:100%!important;
+            width: 100%!important;
         }
-        input{
-            display:block;
-            width:100%!important;
+        input {
+            display: block;
+            width: 100%!important;
         }
     }
     </style>
