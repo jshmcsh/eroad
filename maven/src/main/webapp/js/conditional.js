@@ -20,11 +20,11 @@
     //     }
     // });
 	
-	// //响应式菜单
- //    Modernizr.load({
- //        test: Modernizr.mq('only screen and (max-device-width: 320px) and (orientation:portrait)'),
- //        yep: ['js/responsiveMenu.js']
- //    });
+	//响应式菜单
+    Modernizr.load({
+        test: Modernizr.mq('only screen and (max-device-width: 320px) and (orientation:portrait)'),
+        yep: ['js/responsiveMenu.js']
+    });
     //480px 菜单
     Modernizr.load({
         test: Modernizr.mq('only screen and (max-device-width: 480px) and (orientation:portrait)'),
