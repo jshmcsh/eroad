@@ -222,7 +222,7 @@
     $(document).ready(function() {
         var isMobile = false;
         Modernizr.load({
-            test: Modernizr.mq('only screen and (max-device-width:320px) and (orientation:portrait)'),
+            test: Modernizr.mq('only screen and (max-device-width:480px) and (orientation:portrait)'),
             yep: 'js/l_yd.js',
             callback: function() {
                 isMobile = true;
