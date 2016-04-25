@@ -306,7 +306,9 @@ function pageInit() {
  * @return {[type]} [description]
  */
 function init_UnloginedPage() {
+    alert("sss");
     var cars = logic_showCarAround();
+    alert("ss");
     $.when(cars[0]).done(function() {
         var str = "";
         var pointArr = [];
@@ -331,7 +333,7 @@ function init_UnloginedPage() {
         $.when(AllGlobal.getGlobalDfd()).done(function() {
             AllGlobal.setPointArr(pointArr);
         });
-
+        alert("s");
         $("#content_box .box_left .listView ul").html(str);
     });
 
