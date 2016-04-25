@@ -137,7 +137,7 @@ $(document).ready(function() {
                 loginedMapArray.push(str);
             },
             getPrefix: function() {
-                prefix = remotePrefix;
+                prefix = localPrefix;
                 return prefix;
             },
             setPageStatus: function(newStatus) {
