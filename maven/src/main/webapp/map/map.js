@@ -155,8 +155,8 @@ function showTrack(map, coors) {
             return;
         var pts = driving.getResults().getPlan(0).getRoute(0).getPath(); //通过驾车实例，获得一系列点的数组
         var polyline = new BMap.Polyline(pts);
-        polyline.setStrokeColor("#FF0033");
-        polyline.setStrokeOpacity(0);
+        polyline.setStrokeColor("#27A415");
+        polyline.setStrokeOpacity(1);
         map.addOverlay(polyline);
         //绘制起点终点
         showPosByCoordinate(map, driving.getResults().getStart().point, 2);
