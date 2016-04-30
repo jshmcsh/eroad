@@ -2,50 +2,50 @@ package jlxy.eroad.server.bean.result.company;
 
 public class BiddingCarBean {
 
-    private String car_id;
-    private String plate_number;
-    private int credit;
-    private double price;
-
-    public BiddingCarBean() {
-    }
-
-    public BiddingCarBean(String car_id, String plate_number, int credit, double price) {
-        this.car_id = car_id;
-        this.plate_number = plate_number;
-        this.credit = credit;
+    private String username;
+    private String phone_number;
+    private String car_number;
+    private String price;
+    
+    public BiddingCarBean(){}
+    public BiddingCarBean(String username, String phone_number, String car_number, String price) {
+        this.username = username;
+        this.phone_number = phone_number;
+        this.car_number = car_number;
         this.price = price;
     }
 
-    public double getPrice() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public String getCar_number() {
+        return car_number;
+    }
+
+    public void setCar_number(String car_number) {
+        this.car_number = car_number;
+    }
+
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public String getCar_id() {
-        return car_id;
-    }
-
-    public void setCar_id(String car_id) {
-        this.car_id = car_id;
-    }
-
-    public String getPlate_number() {
-        return plate_number;
-    }
-
-    public void setPlate_number(String plate_number) {
-        this.plate_number = plate_number;
-    }
-
-    public int getCredit() {
-        return credit;
-    }
-
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
+   
 }

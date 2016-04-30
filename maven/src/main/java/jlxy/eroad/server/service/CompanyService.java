@@ -2,6 +2,7 @@ package jlxy.eroad.server.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +24,8 @@ import jlxy.eroad.server.bean.param.company.LocationBean;
 import jlxy.eroad.server.bean.param.company.OrderBean;
 import jlxy.eroad.server.bean.param.company.RegistBean;
 import jlxy.eroad.server.bean.param.company.SelectBidBean;
+import jlxy.eroad.server.bean.result.company.BiddingCarBean;
+import jlxy.eroad.server.bean.result.company.BiddingRetBean;
 import jlxy.eroad.server.core.CompanyDatabase;
 import jlxy.eroad.server.core.Corefunc;
 import jlxy.eroad.server.core.Md5;
@@ -46,7 +49,7 @@ public class CompanyService {
     private CompanyDatabase cdb;
 
     // private Corefunc cf;
-    public Sret login(LoginBean param, HttpServletRequest req,  HttpServletResponse resp) {
+    public Sret login(LoginBean param, HttpServletRequest req, HttpServletResponse resp) {
         //取用户名、密码，
         Sret sr = new Sret();
         String username = param.getUsername();
@@ -63,11 +66,11 @@ public class CompanyService {
             cb = new CompanyBean(loginRet.get(0).get("id") + "", loginRet.get(0).get("username") + "", loginRet.get(0).get("state") + "", loginRet.get(0).get("company_name") + "", loginRet.get(0).get("company_license") + "", loginRet.get(0).get("phone_number") + "", loginRet.get(0).get("companylicence_pic_path") + "", loginRet.get(0).get("company_represent") + "");
 
             //保存用户登录状态
-            int TIME_OUT=20*60;
+            int TIME_OUT = 20 * 60;
             HttpSession session = req.getSession();
             session.setAttribute("companyInfo", cb);
             session.setMaxInactiveInterval(TIME_OUT);  // Session保存两小时
-            System.out.println("sessionid---->"+session.getId());
+            System.out.println("sessionid---->" + session.getId());
             Cookie cookie = new Cookie("MYSESSIONID", session.getId());
             cookie.setMaxAge(TIME_OUT);  // 客户端的JSESSIONID也保存两小时
             cookie.setPath("/");
@@ -98,11 +101,11 @@ public class CompanyService {
 
     public Sret regist(RegistBean rb, MultipartFile file) {
         String filePath = "";
+        String still_path = "/Users/CP/Documents/Study/code/netbeans/eroad/maven/src/main/webapp/pic_upload/";
         if (!file.isEmpty()) {
             try {
                 // 文件保存路径  
-                filePath = request.getSession().getServletContext().getRealPath("/") + "pic/"
-                        + file.getOriginalFilename();
+                filePath = still_path + file.getOriginalFilename();
                 // 转存文件  
                 file.transferTo(new File(filePath));
             } catch (Exception e) {
@@ -113,6 +116,25 @@ public class CompanyService {
         String registRet = cdb.regist(rb);
         Sret sr = new Sret();
         sr.setData(registRet);
+        return sr;
+    }
+
+    public Sret uploadtest(MultipartFile file) {
+        String filePath = "";
+        String still_path = "/Users/CP/Documents/Study/code/netbeans/eroad/maven/src/main/webapp/pic_upload/";
+        if (!file.isEmpty()) {
+            try {
+                // 文件保存路径  
+                filePath = still_path + file.getOriginalFilename();
+                // 转存文件  
+                file.transferTo(new File(filePath));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        Sret sr = new Sret();
+        sr.setOk();
         return sr;
     }
 
@@ -128,10 +150,8 @@ public class CompanyService {
         //与数据库数据比对
         List<Map<String, Object>> showCarAroundRet = cdb.showCarAround(lb);
         for (int i = 0; i < showCarAroundRet.size(); i++) {
-            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()), 
-                    Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) 
-                    showCarAroundRet.get(i).get("longtitude")), Double.parseDouble((String) 
-                            showCarAroundRet.get(i).get("latitude")));
+            distance = Corefunc.Distance(Double.parseDouble(lb.getLongtitude()),
+                    Double.parseDouble(lb.getLatitude()), Double.parseDouble((String) showCarAroundRet.get(i).get("longtitude")), Double.parseDouble((String) showCarAroundRet.get(i).get("latitude")));
             if (distance <= 5000) {
                 nextRet.add(showCarAroundRet.get(i));
             }
@@ -151,10 +171,43 @@ public class CompanyService {
     }
 
     public Sret get_bidding_order_list(IdBean companyId) {
-        List BiddingOrderList = cdb.getBiddingOrderList(companyId);
+        List BiddingOrderNumList = cdb.getBiddingOrderListNum(companyId);
+        List<Map<String, Object>> BiddingOrderList = cdb.getBiddingOrderList(companyId);
+        List<BiddingRetBean> ToRetBid = new LinkedList();
+        int sum = 0;
+
+        for (int i = 0; i < BiddingOrderNumList.size(); i++) {
+            BiddingRetBean brb = new BiddingRetBean();
+            brb.setCreate_time(BiddingOrderList.get(i).get("create_time") + "");
+            brb.setOrder_id(BiddingOrderList.get(i).get("order_id") + "");
+            brb.setDestination(BiddingOrderList.get(i).get("destination") + "");
+            brb.setStart_address(BiddingOrderList.get(i).get("start_address") + "");
+            brb.setStart_time(BiddingOrderList.get(i).get("start_time") + "");
+            brb.setExpect_end_time(BiddingOrderList.get(i).get("expect_end_time") + "");
+            brb.setSketch(BiddingOrderList.get(i).get("sketch") + "");
+            brb.setExpect_fare(BiddingOrderList.get(i).get("expect_fare") + "");
+            ToRetBid.add(brb);
+
+            //进入到设置竞价车辆信息
+            int j = 0;
+            System.out.println("4的类型是-->" + BiddingOrderNumList.get(i).getClass());
+            for (; j < Integer.parseInt(((Map<String, Object>) BiddingOrderNumList.get(i)).get("count(order_id)") + ""); j++) {
+                BiddingCarBean bcb = new BiddingCarBean();
+                bcb.setCar_number(BiddingOrderList.get(j + sum).get("car_number") + "");
+                bcb.setUsername(BiddingOrderList.get(j + sum).get("username") + "");
+                bcb.setPhone_number(BiddingOrderList.get(j + sum).get("phone_number") + "");
+                bcb.setPrice(BiddingOrderList.get(j + sum).get("price") + "");
+                ToRetBid.get(i).getBid_car_arr().add(bcb);
+             
+
+            }
+            sum = sum + j;
+        }
+        //重新弄个list
+        //先把基本订单信息存起来
         Sret sr = new Sret();
         sr.setOk();
-        sr.setData(BiddingOrderList);
+        sr.setData(ToRetBid);
         return sr;
     }
 

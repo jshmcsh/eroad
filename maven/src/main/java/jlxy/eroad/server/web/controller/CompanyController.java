@@ -49,6 +49,13 @@ public class CompanyController extends ControllerBase {
         return getRetList(sr);
     }
 
+    @RequestMapping("uploadtest.erd")
+    @ResponseBody
+    public List do_uploadtest( @RequestParam("file") MultipartFile file) {
+        Sret sr = cs.uploadtest( file);
+        return getRetList(sr);
+    }
+
     @RequestMapping("login.erd")
     @ResponseBody
     public List do_login(@RequestParam("json") String json, HttpServletResponse resp, HttpServletRequest req) {

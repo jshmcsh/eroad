@@ -7,6 +7,7 @@
     <orders id="4" order_number="555" start_time="2012-1-1" exact_end_time="2012-2-1" expect_end_time="2012-2-1" exact_fare="111" expect_fare="111" start_address="香港" destination="广州" sketch="猫" description="来自西方的猫"  state="completed"/>
     <orders id="5" order_number="666" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="常州" destination="镇江" sketch="材料" description="来自常州的材料"  state="executing"/>
     <orders id="6" order_number="777" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="深圳" destination="南昌" sketch="生鲜" description="来自深圳的生鲜"  state="executing"/>
+    <orders id="7" order_number="888" start_time="2012-1-1" expect_end_time="2012-2-1" expect_fare="111" start_address="上海" destination="北京" sketch="玩具" description="来自上海的玩具"  state="displaying"/>
   
     
     <company id="1" username="aaa" passwd="fc2baa01a20b4d50190b0122b383d744" state="正常" company_name="e路网" phone_number="11111111111" company_represent="chris"/>
@@ -38,9 +39,17 @@
     
     <bidding id="1" price="111" car_id="1" order_id="1"/>
     <bidding id="2" price="111" car_id="1" order_id="2"/>
+    <bidding id="3" price="113" car_id="4" order_id="2"/>
+    <bidding id="4" price="114" car_id="5" order_id="2"/>
+    <bidding id="5" price="115" car_id="6" order_id="2"/>
+    
+    <bidding id="6" price="113" car_id="4" order_id="7"/>
+    <bidding id="7" price="114" car_id="5" order_id="7"/>
+    <bidding id="8" price="115" car_id="6" order_id="7"/>
     
     <launching id="1" flag="valid" company_id="1" order_id="1"/>
     <launching id="2" flag="valid" company_id="1" order_id="2"/>
+    <launching id="3" flag="valid" company_id="1" order_id="7"/> 
     <remark id="1" evaluate="2" remark="good" car_id="1" order_id="1" company_id="1"/>
     
      
@@ -54,7 +63,7 @@
     <track id="7" longtitude="120.11" latitude="130.11"  orders_id="5" car_id="8"  time="2016-03-11 21:30:40"/>
     <track id="8" longtitude="121.11" latitude="131.11"  orders_id="5" car_id="8" time="2016-03-11 21:40:40"/>
     <track id="9" longtitude="122.11" latitude="132.11"  orders_id="5" car_id="8" time="2016-03-11 21:50:40"/>
-   <track id="10" longtitude="120.11" latitude="130.11"  orders_id="6" car_id="7"  time="2016-03-11 21:30:40"/>
+    <track id="10" longtitude="120.11" latitude="130.11"  orders_id="6" car_id="7"  time="2016-03-11 21:30:40"/>
     <track id="11" longtitude="121.11" latitude="131.11"  orders_id="6" car_id="7" time="2016-03-11 21:40:40"/>
     <track id="12" longtitude="122.11" latitude="132.11"  orders_id="6" car_id="7" time="2016-03-11 21:50:40"/>
     

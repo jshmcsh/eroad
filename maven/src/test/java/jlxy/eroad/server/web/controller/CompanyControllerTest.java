@@ -110,28 +110,56 @@ public class CompanyControllerTest extends IntegrateBase {
     @Test
     public void test_do_get_bidding_order_list() {
         IdBean companyId = new IdBean("1");
-        List list = getJsonReturn("/company/get_bidding_order_list.erd", companyId);
+        List<Map<String, Object>> list = getJsonReturn("/company/get_bidding_order_list.erd", companyId);
         Head head = getHeader(list);
         assertThat(head.getStatus(), is("ok"));
 
-        List orderlist = getListObject(list, Map.class);
         //如果是多个数据就是getlistObject()方法
+        assertThat(list.size() + "", is("8"));
 
-        Iterator<Map<String, Object>> it = orderlist.iterator();
-        for (; it.hasNext();) {
-            Map<String, Object> map2 = it.next();
-            assertThat(map2.get("expect_fare") + "", is("111.0"));
-            assertThat((String) map2.get("start_time"), is("2012-01-01"));
-            assertThat((String) map2.get("expect_end_time"), is("2012-02-01"));
-            assertThat((String) map2.get("sketch"), is("狗"));
-            assertThat((String) map2.get("username"), is("aaa"));
-            assertThat((String) map2.get("phone_number"), is("11111111111"));
-            assertThat((String) map2.get("car_number"), is("苏E12345"));
-            //assertThat(Double.parseDouble(map2.get("expect_fare"))+"", is("111"));//不知为何，这里的get方法返回的都要默认转成string类型，而这个字段在数据库是double类型，所以他报错无法转成string
-            assertThat((String) map2.get("start_address"), is("南京"));
-            assertThat((String) map2.get("destination"), is("苏州"));
+        assertThat(list.get(1).get("expect_fare") + "", is("111.0"));
+        assertThat(list.get(1).get("start_time") + "", is("2012-01-01"));
+        assertThat(list.get(1).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(list.get(1).get("sketch") + "", is("狗"));
+        assertThat(list.get(1).get("username") + "", is("aaa"));
+        assertThat(list.get(1).get("price") + "", is("111.0"));
+        assertThat(list.get(1).get("phone_number") + "", is("11111111111"));
+        assertThat(list.get(1).get("car_number") + "", is("苏E12345"));
+        assertThat(list.get(1).get("start_address") + "", is("南京"));
+        assertThat(list.get(1).get("destination") + "", is("苏州"));
 
-        }
+        assertThat(list.get(2).get("expect_fare") + "", is("111.0"));
+        assertThat(list.get(2).get("start_time") + "", is("2012-01-01"));
+        assertThat(list.get(2).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(list.get(2).get("sketch") + "", is("狗"));
+        assertThat(list.get(2).get("price") + "", is("113.0"));
+        assertThat(list.get(2).get("username") + "", is("ddd"));
+        assertThat(list.get(2).get("phone_number") + "", is("4"));
+        assertThat(list.get(2).get("car_number") + "", is("苏A123457"));
+        assertThat(list.get(2).get("start_address") + "", is("南京"));
+        assertThat(list.get(2).get("destination") + "", is("苏州"));
+
+        assertThat(list.get(3).get("expect_fare") + "", is("111.0"));
+        assertThat(list.get(3).get("start_time") + "", is("2012-01-01"));
+        assertThat(list.get(3).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(list.get(3).get("sketch") + "", is("狗"));
+        assertThat(list.get(3).get("price") + "", is("114.0"));
+        assertThat(list.get(3).get("username") + "", is("eee"));
+        assertThat(list.get(3).get("phone_number") + "", is("5"));
+        assertThat(list.get(3).get("car_number") + "", is("苏E123458"));
+        assertThat(list.get(3).get("start_address") + "", is("南京"));
+        assertThat(list.get(3).get("destination") + "", is("苏州"));
+
+        assertThat(list.get(4).get("expect_fare") + "", is("111.0"));
+        assertThat(list.get(4).get("start_time") + "", is("2012-01-01"));
+        assertThat(list.get(4).get("expect_end_time") + "", is("2012-02-01"));
+        assertThat(list.get(4).get("sketch") + "", is("狗"));
+        assertThat(list.get(4).get("price") + "", is("115.0"));
+        assertThat(list.get(4).get("username") + "", is("fff"));
+        assertThat(list.get(4).get("phone_number") + "", is("6"));
+        assertThat(list.get(4).get("car_number") + "", is("苏A123459"));
+        assertThat(list.get(4).get("start_address") + "", is("南京"));
+        assertThat(list.get(4).get("destination") + "", is("苏州"));
 
     }
 
@@ -306,7 +334,7 @@ public class CompanyControllerTest extends IntegrateBase {
         assertThat(((Map) list.get(1)).get("username") + "", is("aaa"));
         assertThat(((Map) list.get(1)).get("car_number") + "", is("苏E12345"));
         assertThat(((Map) list.get(1)).get("company_name") + "", is("e路网"));
-        
+
         System.out.println(list.toString());
     }
 

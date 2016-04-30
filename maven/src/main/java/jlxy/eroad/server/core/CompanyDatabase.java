@@ -52,10 +52,16 @@ public class CompanyDatabase {
        
         return ids2[0];
     }
-
+    
+    //得到正在发布的订单的报价个数
+     public List getBiddingOrderListNum(IdBean companyId) {
+        String stmt = "select count(order_id) from bidding_order_list where company_id=? group by order_id";
+        List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
+        return ret;
+    }
     //得到所有正在发布的订单
     public List getBiddingOrderList(IdBean companyId) {
-        String stmt = "select * from bidding_order_list where id=?";
+        String stmt = "select * from bidding_order_list where company_id=?";
         List<Map<String, Object>> ret = Root.getInstance().getSqlOperator().query(stmt, new Object[]{companyId.getId()});
         return ret;
     }
