@@ -227,22 +227,19 @@
         $("body").append(domStr);
         var AllGlobal = window.top.AllGlobal;
         if (AllGlobal != null && AllGlobal != undefined) {
-            // var mapPageCheckHelper = $("#pageListener_map");
-            // mapPageCheckHelper.change(function(event) {
+            var mapPageCheckHelper = $("#pageListener_map");
+            mapPageCheckHelper.change(function(event) {
                 var pointArr = AllGlobal.getPointArr();
                 var mapPoints = [];
-                var o1 = new BMap.Point(116.399, 39.910);
-                var o2 = new BMap.Point(116.405, 39.920);
-                var o3 = new BMap.Point(116.425, 39.900);
+                for (var i = 0; i < pointArr.length; i++) {
+                    var o = new BMap.Point(pointArr[i].longtitude,pointArr[i].latitude);
+                    mapPoints.push(o)
+                }
 
-                mapPoints.push(o1);
-                mapPoints.push(o2);
-                mapPoints.push(o3);
-          
                 showCarsByCoordinates(map, mapPoints);
-            // });
-            // AllGlobal.setMapPageCheckHelper(mapPageCheckHelper);
-            // AllGlobal.resolve();
+            });
+            AllGlobal.setMapPageCheckHelper(mapPageCheckHelper);
+            AllGlobal.resolve();
         } else {
             console.log("mediator undefined");
         }

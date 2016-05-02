@@ -35,6 +35,7 @@
     
     .title {
         width: 98%;
+        height: 8%;
         /*background: #E41819;*/
         background: #424242;
         color: #767676;
@@ -52,7 +53,9 @@
     }
     
     .active {
-        height: 91%;
+        position: relative;
+        padding-top: 1.2rem;
+        height: 88%;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
     }
@@ -68,8 +71,14 @@
     }
     
     .line {
+        width: 95%;
+        margin: 0 auto;
         text-align: center;
         line-height: 1.5;
+    }
+    
+    .prompt {
+        font-size: 3rem;
     }
     /*列表动画*/
     
@@ -96,12 +105,37 @@
     }
     
     .active .ele1 {
-        -webkit-animation-delay: .4s;
-        animation-delay: .4s;
+        -webkit-animation-delay: .3s;
+        animation-delay: .3s;
     }
     
     .active .ele2 {
-        -webkit-animation-delay: .8s;
+        -webkit-animation-delay: .5s;
+        animation-delay: .5s;
+    }
+    
+    .active .ele3 {
+        -webkit-animation-delay: .7s;
+        animation-delay: .7s;
+    }
+    
+    .active .ele4 {
+        -webkit-animation-delay: .9s;
+        animation-delay: .9s;
+    }
+    
+    .active .ele5 {
+        -webkit-animation-delay: .11s;
+        animation-delay: .11s;
+    }
+    
+    .active .ele6 {
+        -webkit-webkit-animation-d: ;
+        -moz-webkit-animation-d: ;
+        -ms-webkit-animation-d: ;
+        -o-webkit-animation-d: ;
+        webkit-animation-d: ;
+        elay: .8s;
         animation-delay: .8s;
     }
     /*右边地图*/
@@ -116,6 +150,35 @@
     
     .left_toggle {
         display: none;
+    }
+    
+    .btn_queren,
+    .btn_finish {
+        width: auto;
+        font-size: .8rem;
+        padding: 1rem .8rem 1rem 1rem;
+        background: #eee;
+        border-radius: 5px;
+        line-height: 1.5;
+        color: #000;
+    }
+    
+    .btn_queren:hover,
+    .btn_finish:hover {
+        color: #fff;
+        background: #4fe268;
+        cursor: pointer;
+    }
+    
+    .btn_refresh {
+        position: absolute;
+        font-size: .6rem;
+        top: 0;
+        width: 100%;
+    }
+    
+    .btn_refresh:hover {
+        cursor: pointer;
     }
     /*iphone 5s 竖屏*/
     
@@ -147,6 +210,9 @@
         }
         .right.col_9 {
             width: 100%;
+        }
+        .title {
+            font-size: 1.2rem;
         }
     }
     /*480 竖屏*/
@@ -180,6 +246,9 @@
         .right.col_9 {
             width: 100%;
         }
+        .title {
+            font-size: 1.1rem;
+        }
     }
     </style>
 </head>
@@ -195,19 +264,10 @@
                         <input id="r_2" type="radio" value="2" name="radio_yd_type" hidden>发布中订单</label>
                     <label for="r_3">
                         <input id="r_3" type="radio" value="3" name="radio_yd_type" hidden>历史订单</label>
+                    <!-- 辅助刷新作用 -->
+                    <input id="r_helper" type="radio" value="4" name="radio_yd_type" hidden>
                 </div>
                 <ul class="col_12 active">
-                    <li class="col_12 ele">
-                        <div class="line">car_number："苏E12345"</div>
-                        <div class="line">username："aaa"</div>
-                        <div class="line">phone_number："11111111111"</div>
-                        <div class="line">sketch："猪"</div>
-                        <div class="line">
-                            <div class="float_left">start_address</div>
-                            ————→
-                            <div class="float_right">destination</div>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <div class="right col_9 omega height_100">
@@ -230,13 +290,14 @@
         });
 
         var AllGlobal = window.top.AllGlobal;
-
+        var Prompt = window.top.Prompt;
 
         $("input:radio[name=radio_yd_type]").change(function(event) {
             $("input:radio[name=radio_yd_type]").parent().css('color', '#767676');
             $("input:radio[name=radio_yd_type]:checked").parent().css('color', '#fff');
             var yd_type = $("input:radio[name=radio_yd_type]:checked").val();
-
+            if (yd_type === "4") //选中无用的辅助值不做处理
+                return;
             if (AllGlobal != null && AllGlobal != undefined) {
                 if (yd_type === "1") {
                     // 获取正在运行的订单信息列表
@@ -246,29 +307,64 @@
                     o.id = AllGlobal.getUserInfo().id;
 
                     ajaxPost(url, o, function(data, textStatus, xhr) {
+                        console.log(data);
                         var domStr = "";
                         if (data[0].status === "ok") {
+                            if (data.length === 1) {
+                                domStr += '    <div class="line prompt"><i class="icon-inbox"> 无数据</i></div>';
+                                $("ul.active").html(domStr);
+                                return;
+                            }
                             for (var i = 1; i < data.length; i++) {
                                 domStr += '<li class="col_12 ele ele' + i + '">';
-                                domStr += '    <div class="display_none">' + data[i].id + '</div>';
+                                domStr += '    <div class="display_none">' + data[i].order_id + '</div>';
+                                domStr += '    <div class="textright"><i class="icon-ok-sign btn_finish"> 完成订单</i></div>';
                                 domStr += '    <div class="line">司机：' + data[i].username + '</div>';
                                 domStr += '    <div class="line">车辆牌照：' + data[i].car_number + '</div>';
                                 domStr += '    <div class="line">手机：' + data[i].phone_number + '</div>';
                                 domStr += '    <div class="line">货物：' + data[i].sketch + '</div>';
-                                domStr += '    <div class="line">';
+                                domStr += '    <div class="line"> ';
                                 domStr += '        <div class="float_left">' + data[i].start_address + '</div>';
-                                domStr += '        ————→';
+                                domStr += '        ———————→';
                                 domStr += '        <div class="float_right">' + data[i].destination + '</div>';
                                 domStr += '    </div>';
                                 domStr += '</li>';
                             }
                             $("ul.active").html(domStr);
+                            //显示运单运输轨迹
                             $("ul.active li").click(function(event) {
                                 if (isMobile) {
                                     $(".left_toggle").click();
                                 }
                                 var crtOderId = $(this).children('.display_none').html();
                                 $("#iframe_map").attr('src', 'map/ydMap.html?id=' + crtOderId);
+                            });
+                            //完成订单
+                            $(".btn_finish").click(function(event) {
+                                var _this = $(this);
+                                var dfd = Prompt.confirm("确定完成该订单?");
+                                $.when(dfd).done(function() {
+                                    if (Prompt.getRet()) {
+                                        var prefix = AllGlobal.getPrefix();
+                                        var url = prefix + 'company/finish_order.erd';
+                                        var o = {};
+                                        o.id = _this.parent().parent().children(".display_none").html();
+
+                                        ajaxPost(url, o, function(data, textStatus, xhr) {
+                                            if (data[0].status === "ok") {
+                                                //转向运输中订单
+                                                $("input#r_3").click();
+                                                Prompt.alert("订单已结束");
+                                            } else {
+                                                Prompt.alert(data[0].message);
+                                            }
+                                        });
+                                    }
+                                });
+
+                                return false; //阻止冒泡
+
+
                             });
                         } else {
                             console.log(data[0]);
@@ -282,31 +378,94 @@
                     o.id = AllGlobal.getUserInfo().id;
 
                     ajaxPost(url, o, function(data, textStatus, xhr) {
-                        console.log(data);
-                        // var domStr = "";
-                        // if (data[0].status === "ok") {
-                        //     for (var i = 1; i < data.length; i++) {
-                        //         domStr += '<li class="col_12 ele ele' + i + '">';
-                        //         domStr += '    <div class="display_none">' + data[i].id + '</div>';
-                        //         domStr += '    <div class="line">司机：' + data[i].username + '</div>';
-                        //         domStr += '    <div class="line">车辆牌照：' + data[i].car_number + '</div>';
-                        //         domStr += '    <div class="line">手机：' + data[i].phone_number + '</div>';
-                        //         domStr += '    <div class="line">货物：' + data[i].sketch + '</div>';
-                        //         domStr += '    <div class="line">';
-                        //         domStr += '        <div class="float_left">' + data[i].start_address + '</div>';
-                        //         domStr += '        ————→';
-                        //         domStr += '        <div class="float_right">' + data[i].destination + '</div>';
-                        //         domStr += '    </div>';
-                        //         domStr += '</li>';
-                        //     }
-                        //     $("ul.active").html(domStr);
-                        //     $("ul.active li").click(function(event) {
-                        //         var crtOderId = $(this).children('.display_none').html();
-                        //         $("#iframe_map").attr('src', 'map/ydMap.html?id=' + crtOderId);
-                        //     });
-                        // } else {
-                        //     console.log(data[0]);
-                        // }
+                        // console.log(data);
+                        var domStr = "";
+                        if (data[0].status === "ok") {
+                            if (data.length === 1) {
+                                domStr += '    <div class="line prompt"><i class="icon-inbox"> 无数据</i></div>';
+                                $("ul.active").html(domStr);
+                                return;
+                            }
+                            for (var i = 1; i < data.length; i++) {
+                                domStr += '<li class="col_12 ele ele' + i + '" order="' + i + '">';
+                                domStr += '    <div class="display_none">' + data[i].order_id + '</div>';
+                                domStr += '    <div class="line">运输货物：' + data[i].sketch + '</div>';
+                                domStr += '    <div class="line">开始日期：' + data[i].start_time + '</div>';
+                                domStr += '    <div class="line">运达期限：' + data[i].expect_end_time + '</div>';
+                                domStr += '    <div class="line">运费预算：¥ ' + data[i].expect_fare + '</div>';
+                                domStr += '    <div class="line">';
+                                domStr += '        <div class="float_left">' + data[i].start_address + '</div>';
+                                domStr += '        ———————→';
+                                domStr += '        <div class="float_right">' + data[i].destination + '</div>';
+                                domStr += '    </div>';
+                                domStr += '    <div class="line"><b class="float_left">当前有 <i style="font-size:1.5rem;color:red;">' + data[i].bid_car_arr.length + '</i> 个报价</b><b class="float_right"><i style="font-size:1.5rem;color:red;">&nbsp;</i>' + data[i].create_time + '</b></div>';
+                                domStr += '</li>';
+                            }
+                            $("ul.active").html(domStr);
+                            //获取订单报价列表
+                            $("ul.active li").click(function(event) {
+                                //报价对象数组
+                                var index = $(this).attr('order');
+                                var biddingArr = data[index].bid_car_arr;
+                                if (biddingArr.length === 0) {
+                                    Prompt.alert("暂无报价");
+                                    return;
+                                }
+                                //被报价订单编号
+                                var crtOderId = $(this).children('.display_none').html();
+                                domStr = "";
+                                domStr += '<li class="btn_refresh col_12 ele ele0">';
+                                domStr += '    <div class="line"><i class="icon-circle-arrow-left"> 没有满意的，返回</i></div>';
+                                domStr += '</li>';
+                                for (var i = 0; i < biddingArr.length; i++) {
+                                    domStr += '<li class="col_12 ele ele' + (i + 1) + '">';
+                                    domStr += '    <div class="display_none car_id">' + biddingArr[i].car_id + '</div>';
+                                    domStr += '    <div class="display_none bidding_id">' + biddingArr[i].bidding_id + '</div>';
+                                    domStr += '    <div class="line">司机姓名：' + biddingArr[i].username + '</div>';
+                                    domStr += '    <div class="line">司机牌照：' + biddingArr[i].car_number + '</div>';
+                                    domStr += '    <div class="line">司机电话：' + biddingArr[i].phone_number + '</div>';
+                                    domStr += '    <div class="line">司机报价：<i style="font-size:1.4rem;color:red;">¥ ' + biddingArr[i].price + '</i></div>';
+                                    domStr += '    <div class="textright"><i class="icon-ambulance btn_queren"> 选他运</i></div>';
+                                    domStr += '</li>';
+                                }
+                                $("ul.active").html(domStr);
+                                $("ul.active li.btn_refresh").click(function(event) {
+                                    //转向运输中订单
+                                    $("input#r_helper").click();
+                                    $("input#r_2").click();
+                                });
+                                //选择报价成交
+                                $("ul.active li .btn_queren").click(function(event) {
+                                    var dfd = Prompt.confirm("确认选择这个报价成交吗？");
+                                    var _this = $(this);
+                                    $.when(dfd).done(function() {
+                                        if (Prompt.getRet()) {
+                                            var car_id = _this.parent().parent().children('.car_id').html();
+                                            var bidding_id = _this.parent().parent().children('.bidding_id').html();
+                                            var price = _this.parent().prev(".line").children('i').html().split("¥ ")[1];
+                                            var prefix = AllGlobal.getPrefix();
+                                            var url = prefix + 'company/deal_order.erd';
+                                            var o = {};
+                                            o.order_id = crtOderId;
+                                            o.company_id = AllGlobal.getUserInfo().id;
+                                            o.car_id = car_id;
+                                            o.price = price;
+                                            o.bidding_id = bidding_id;
+                                            ajaxPost(url, o, function(data, textStatus, xhr) {
+                                                console.log(data);
+                                                if (data[0].status === "ok")
+                                                    Prompt.alert("运单已确认");
+                                            });
+                                            //转向运输中订单
+                                            $("input#r_1").click();
+                                        }
+                                    });
+
+                                });
+                            });
+                        } else {
+                            console.log(data[0]);
+                        }
                     });
                 } else if (yd_type === "3") {
                     // 获取历史订单信息列表
@@ -316,14 +475,19 @@
                     o.id = AllGlobal.getUserInfo().id;
 
                     ajaxPost(url, o, function(data, textStatus, xhr) {
-                        console.log(data);
+                        // console.log(data);
                         var domStr = "";
                         if (data[0].status === "ok") {
+                            if (data.length === 1) {
+                                domStr += '    <div class="line prompt"><i class="icon-inbox"> 无数据</i></div>';
+                                $("ul.active").html(domStr);
+                                return;
+                            }
                             for (var i = 1; i < data.length; i++) {
                                 domStr += '<li class="col_12 ele ele' + i + '">';
                                 domStr += '    <div class="display_none">' + data[i].order_number + '</div>';
                                 domStr += '    <div class="line">司机：' + data[i].username + '</div>';
-                                domStr += '    <div class="line">成交价：' + data[i].exact_fare + '</div>';
+                                domStr += '    <div class="line">成交价：¥ ' + data[i].exact_fare + '</div>';
                                 domStr += '    <div class="line">持续时间：' + data[i].last_time + '天</div>';
                                 domStr += '    <div class="line">货物：' + data[i].sketch + '</div>';
                                 domStr += '    <div class="line">';
@@ -334,6 +498,7 @@
                                 domStr += '</li>';
                             }
                             $("ul.active").html(domStr);
+
                             $("ul.active li").click(function(event) {
                                 if (isMobile) {
                                     $(".left_toggle").click();
@@ -349,9 +514,9 @@
             } else {
                 console.log("mediator undefined");
             }
-
         });
-        $("input:radio[name=radio_yd_type]").change();
+        //默认选中发布中订单
+        $("input#r_2").click();
 
 
 

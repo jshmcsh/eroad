@@ -6,6 +6,7 @@ var AllGlobal = null;
  * @return {[type]}   [description]
  */
 $(document).ready(function() {
+    Prompt.init();
     AllGlobal = (function global() {
         //请求地址
         var prefix = "";
@@ -21,6 +22,7 @@ $(document).ready(function() {
         var pageStatus = 0;
         //绑定监听器，通过change事件的触发检测页面状态
         var pageCheckHelper = null;
+        var mapPageCheckHelper = null;
 
         /*不同页面dom映射数组，偶数值为容器，偶数的右相邻奇数值为dom内容*/
         var unloginArray = null; //未登录
@@ -67,7 +69,6 @@ $(document).ready(function() {
                 str += '<div class="logined_top">';
                 str += '    <span id="text_company_name">UR_d0623e8e（货代公司bbd64c67），欢迎您！</span>';
                 str += '    <a id="btn_map" href="javascript:void(0);">地图</a>';
-                str += '    <a id="btn_notification" href="javascript:void(0);">通知(<span class="count">0</span>)</a>';
                 str += '    <a id="btn_logout" href="javascript:void(0);">退出</a>';
                 str += '</div>';
                 str += '<div class="logined_bottom">';
@@ -198,6 +199,12 @@ $(document).ready(function() {
             getPageCheckHelper: function() {
                 return pageCheckHelper;
             },
+            getMapPageCheckHelper: function() {
+                return mapPageCheckHelper;
+            },
+            setMapPageCheckHelper: function(newHelper) {
+                mapPageCheckHelper = newHelper;
+            },
             setPointArr: function(newPointArr) {
                 pointArr = newPointArr;
             },
@@ -307,33 +314,39 @@ function pageInit() {
  */
 function init_UnloginedPage() {
     var cars = logic_showCarAround();
-    $.when(cars[0]).done(function() {
-        var str = "";
-        var pointArr = [];
-        for (var i = 1; i < cars.length; i++) {
-            str += '<li class="li_car">';
-            str += '    <div class="img_car">';
-            str += '        <img src="img/icon_greencar.png" height="48" width="48" alt="car">';
-            str += '    </div>';
-            str += '    <div class="labels">';
-            str += '        <label class="title" for="" title="' + i + ' ' + cars[i].car_number + '(空闲)">' + i + ' ' + cars[i].car_number + '(空闲)</label>';
-            str += '        <label for="" title="司机:' + cars[i].username + '">司机:' + cars[i].username + '</label>';
-            str += '        <label for="" title="车辆情况：13.5米/35吨">车辆情况：13.5米/35吨</label>';
-            str += '        <label for="" title="信用等级：未选">信用等级：</label>';
-            str += '        <label for="" title="更新时间：2016/3/4 17:28:16">更新时间：2016/3/4 17:28:16</label>';
-            str += '    </div>';
-            str += '</li>';
-            var o = {};
-            o.latitude = cars[i].latitude;
-            o.longtitude = cars[i].longtitude;
-            pointArr.push(o);
-        }
-        $.when(AllGlobal.getGlobalDfd()).done(function() {
-            AllGlobal.setPointArr(pointArr);
+    if (cars.length > 1) {
+        $.when(cars[0]).done(function() {
+            var pointArr = [];
+            var domStr = "";
+            for (var i = 1; i < cars.length; i++) {
+                domStr += '<li class="li_car">';
+                domStr += '    <div class="img_car">';
+                domStr += '        <img src="img/icon_greencar.png" height="48" width="48" alt="car">';
+                domStr += '    </div>';
+                domStr += '    <div class="labels">';
+                domStr += '        <label class="title" for="" title="' + i + ' ' + cars[i].car_number + '(空闲)">' + i + ' ' + cars[i].car_number + '(空闲)</label>';
+                domStr += '        <label for="" title="司机:' + cars[i].username + '">司机:' + cars[i].username + '</label>';
+                domStr += '        <label for="" title="车辆情况：13.5米/35吨">车辆情况：13.5米/35吨</label>';
+                domStr += '        <label for="" title="信用等级：未选">信用等级：</label>';
+                domStr += '        <label for="" title="更新时间：2016/3/4 17:28:16">更新时间：2016/3/4 17:28:16</label>';
+                domStr += '    </div>';
+                domStr += '</li>';
+                var o = {};
+                o.latitude = cars[i].latitude;
+                o.longtitude = cars[i].longtitude;
+                pointArr.push(o);
+            }
+            $.when(AllGlobal.getGlobalDfd()).done(function() {
+                AllGlobal.setPointArr(pointArr);
+                AllGlobal.getMapPageCheckHelper().change();
+            });
+            $("#content_box .box_left .listView ul").html(domStr);
         });
-        $("#content_box .box_left .listView ul").html(str);
-    });
-
+    }else{
+        var domStr = "";
+        domStr += '<li><div class="line prompt"><i class="icon-inbox"> 无车辆</i></div></li>';
+        $("#content_box .box_left .listView ul").html(domStr);
+    }
     //显示注册快
     $(".btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
@@ -358,7 +371,7 @@ function init_UnloginedPage() {
         }
     });
     /*移动设备菜单*/
-    if (typeof(responsiveMenu)!="undefined") {
+    if (typeof(responsiveMenu) != "undefined") {
         responsiveMenu.res_nav_right_mobile();
         responsiveMenu.res_left_listview();
     }
@@ -368,7 +381,9 @@ function init_UnloginedPage() {
  * @return {[type]} [description]
  */
 function init_LoginedPage() {
-    $("#text_company_name").html(AllGlobal.getUserInfo().company_name + "，欢迎您！");
+    if (AllGlobal.getUserInfo() != null) {
+        $("#text_company_name").html(AllGlobal.getUserInfo().company_name + "，欢迎您！");
+    }
     //隐藏登录框
     if (!$("#signin_box").hasClass('display_none'))
         $("#signin_box").addClass('display_none');
@@ -403,7 +418,7 @@ function init_LoginedPage() {
         $('#loginedContent iframe').attr('src', './l_gs.html');
     });
     /*移动设备登录后的菜单*/
-    if(typeof(responsiveMenu)!="undefined"){
+    if (typeof(responsiveMenu) != "undefined") {
         responsiveMenu.res_nav_right_mobile();
     }
     $("#header_box .nav_right_mobile .toggle").click();
@@ -487,7 +502,7 @@ function init_LoginedMapPage() {
 
 
 
-///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * 导航逻辑
  * @return {[type]} [description]
@@ -625,6 +640,7 @@ function logic_signinBox() {
             if (ret.status === "ok") {
                 var dfd = AllGlobal.setUserInfo(data[1]);
                 $.when(dfd).done(function() {
+                    // setCookie("MYSESSIONID",data[0].message,0.1);
                     AllGlobal.setPageStatus(1);
                 });
             } else {
@@ -660,6 +676,7 @@ function logic_detectsLogin() {
         if (ret.status === "ok") {
             var dfd = AllGlobal.setUserInfo(data[1]);
             $.when(dfd).done(function() {
+                AllGlobal.setUserInfo(data[1]);
                 AllGlobal.setPageStatus(1);
             }); //通过登录检测
         } else {

@@ -1,7 +1,7 @@
-* { color: #666;   /*overflow: hidden;*/ }
-html { font-size: 16px; width: 100%; height: 100%; overflow:hidden; }
-body { width: 100%; height: 100%; overflow:hidden; }
-.template {	/*红*/
+* { color: #666;    /*overflow: hidden;*/ }
+html { font-size: 16px; width: 100%; height: 100%; overflow: hidden; }
+body { width: 100%; height: 100%; overflow: hidden; }
+.template {    /*红*/
 color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 
 /*容器*/
@@ -63,7 +63,8 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #header_box .nav_right .logined_bottom #btn_gs { background: url(../img/gs_01.png) no-repeat; background-size: 100% 100%; }
 #header_box .nav_right .logined_bottom #btn_gs:hover { background: url(../img/gs_11.png) no-repeat; background-size: 100% 100%; }
 #header_box .nav_right .logined_bottom #btn_gs.active { background: url(../img/gs_11.png) no-repeat; background-size: 100% 100%; }
-#header_box .nav_right_mobile{display:none;}
+#header_box .nav_right_mobile { display: none; }
+
 /*未登录内容框 #content_box*/
 #content_box .box_left, .box_right { height: 99%; padding-top: 5px; }
 #content_box .box_left .selector { width: 100%; min-height: 5%; }
@@ -73,13 +74,15 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #content_box .box_left .listView ul { width: 98%; margin-right: 2%; height: 100%; overflow-y: scroll; list-style: none; }
 #content_box .box_left .listView ul li.li_car { width: 100%; min-height: 6rem; border-bottom: 1px dashed rgba(0, 0, 0, .4); }
 #content_box .box_left .listView ul li.li_car:hover { background: rgba(0, 204, 0, .1); }
+#content_box .box_left .listView .line { width: 95%; margin: 0 auto; text-align: center; line-height: 1.5; }
+#content_box .box_left .listView .prompt i { font-size: 3rem; }
 #content_box .box_left .listView ul li.li_car .img_car { float: left; width: 10%; margin: 0 auto; padding: 5% 5%; }
 #content_box .box_left .listView ul li.li_car .img_car img { width: 100%; height: auto; }
 #content_box .box_left .listView ul li.li_car .labels { float: left; width: 80%; }
 #content_box .box_left .listView ul li.li_car .labels label { display: block; width: 100%; line-height: 1.5; color: #000; font-size: .8rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
 #content_box .box_left .listView ul li.li_car .labels label.title { color: #00CC00; }
 #content_box .box_right iframe { width: 100%; height: 100%; }
-#content_box .left_toggle{display:none;}
+#content_box .left_toggle { display: none; }
 
 /*登录内容框 #loginedContent*/
 #loginedContent iframe { width: 100%; height: 100%; }
@@ -90,7 +93,7 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 
 /*注册登录快公共*/
 #signup_box .content, #signin_box .content { width: 50%; height: 60%; margin: 0 auto; background: #fff; border: 3px solid #E41819; position: relative; overflow-x: hidden; }
-#signup_box .close, #signin_box .close { position: absolute; top: 0; right: 0; width: auto;  text-align: center; }
+#signup_box .close, #signin_box .close { position: absolute; top: 0; right: 0; width: auto; text-align: center; }
 #signup_box .close button, #signin_box .close button { width: 100%; height: 1.5rem; padding: 0 5px; }
 
 /*注册块 #signup_box*/
@@ -125,36 +128,35 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 	#header_box .nav .search { width: 100%; }
 
 	/*响应式菜单*/
-	#header_box .nav_right{display:none;}
-	#header_box .nav_right_mobile{ width:100%; position: relative; z-index: 1000;display:block;}
-	#header_box .nav_right_mobile .toggle{width:25px; height:25px; position: absolute;top:0;right:10px;}
-	#header_box .nav_right_mobile ul{ width:0;position:absolute; right:0px; top:7px;list-style: none; }
-	#header_box .nav_right_mobile ul li { float:left;margin-right: 5px;  }
-	#header_box .nav_right_mobile ul li a{ outline:none;  background:transparent; color:#000; border-radius: 0;}
+	#header_box .nav_right { display: none; }
+	#header_box .nav_right_mobile { width: 100%; position: relative; z-index: 1000; display: block; }
+	#header_box .nav_right_mobile .toggle { width: 25px; height: 25px; position: absolute; top: 0; right: 10px; }
+	#header_box .nav_right_mobile ul { width: 0; position: absolute; right: 0px; top: 7px; list-style: none; }
+	#header_box .nav_right_mobile ul li { float: left; margin-right: 5px; }
+	#header_box .nav_right_mobile ul li a { outline: none; background: transparent; color: #000; border-radius: 0; }
+
 	/*地图全屏*/
 	#content_box { position: relative; }
-	#content_box .left_toggle{display:block; position: absolute; bottom:0; width:100%; height:20px;text-align: center;background:#DBDFE5;}
-	#content_box .box_left { width: 100%; height: 0;padding-top:0; position: absolute; bottom: 0; z-index: 1000; background: rgba(0, 0, 0, .5); }
-	#content_box .box_left select{display:none;}
-	#content_box .box_left .listView li {background:rgba(200,200,200,.4);}
+	#content_box .left_toggle { display: block; position: absolute; bottom: 0; width: 100%; height: 20px; text-align: center; background: #DBDFE5; }
+	#content_box .box_left { width: 100%; height: 0; padding-top: 0; position: absolute; bottom: 0; z-index: 1000; background: rgba(0, 0, 0, .5); }
+	#content_box .box_left select { display: none; }
+	#content_box .box_left .listView li { background: rgba(200, 200, 200, .4); }
 	#content_box .box_left .listView ul li:hover { background: rgba(255, 255, 255, .5); }
-	#content_box .box_left .listView li label{color:#fff!important; }
+	#content_box .box_left .listView .prompt i { font-size: 1rem; color:#fff;}
+	#content_box .box_left .listView li label { color: #fff !important; }
 	#content_box .box_right { width: 100%; }
 
 	/*登录注册块调整*/
-	#signin_box .content,#signup_box .content {
-		width:90%;
-		height:30%;
-	}
-	#btn_signin{
-		width:100%;
-	}
+	#signin_box .content, #signup_box .content { width: 90%; height: 30%; }
+	#btn_signin { width: 100%; }
 	#signup_box .close button, #signin_box .close button { width: 90%; height: 1.4rem; padding: 0 3px; }
 }
+
 /*480 竖屏*/
 @media screen and (max-device-width:480px) and (orientation:portrait) {
 
 	/*body { background-color:#000; }*/
+	#top-prompt { font-size: 1rem !important; }
 
 	/*1 logo 替换成小图 */
 	#header_box .logo { height: 80%; }
@@ -165,29 +167,26 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 	#header_box .nav .search { width: 100%; }
 
 	/*响应式菜单*/
-	#header_box .nav_right{display:none;}
-	#header_box .nav_right_mobile{ width:100%; position: relative; z-index: 1000;display:block;}
-	#header_box .nav_right_mobile .toggle{width:25px; height:25px; position: absolute;top:0;right:10px;}
-	#header_box .nav_right_mobile ul{ width:0;position:absolute; right:0px; top:7px;list-style: none; }
-	#header_box .nav_right_mobile ul li { float:left;margin-right: 5px;  }
-	#header_box .nav_right_mobile ul li a{ outline:none;  background:transparent; color:#000; border-radius: 0;}
+	#header_box .nav_right { display: none; }
+	#header_box .nav_right_mobile { width: 100%; position: relative; z-index: 1000; display: block; }
+	#header_box .nav_right_mobile .toggle { width: 25px; height: 25px; position: absolute; top: 0; right: 10px; }
+	#header_box .nav_right_mobile ul { width: 0; position: absolute; right: 0px; top: 7px; list-style: none; }
+	#header_box .nav_right_mobile ul li { float: left; margin-right: 5px; }
+	#header_box .nav_right_mobile ul li a { outline: none; background: transparent; color: #000; border-radius: 0; }
+
 	/*地图全屏*/
 	#content_box { position: relative; }
-	#content_box .left_toggle{display:block; position: absolute; bottom:0; width:100%; height:20px;text-align: center;background:#DBDFE5;}
-	#content_box .box_left { width: 100%; height: 0;padding-top:0; position: absolute; bottom: 0; z-index: 1000; background: rgba(0, 0, 0, .5); }
-	#content_box .box_left select{display:none;}
-	#content_box .box_left .listView li {background:rgba(200,200,200,.4);}
-	#content_box .box_left .listView ul li:hover { background: rgba(255, 255, 255, .5); }
-	#content_box .box_left .listView li label{color:#fff!important; }
+	#content_box .left_toggle { display: block; position: absolute; bottom: 0; width: 100%; height: 20px; text-align: center; background: #DBDFE5; }
+	#content_box .box_left { width: 100%; height: 0; padding-top: 0; position: absolute; bottom: 0; z-index: 1000; background: rgba(0, 0, 0, .5); }
+	#content_box .box_left select { display: none; }
+	#content_box .box_left .listView li { background: rgba(200, 200, 200, .4); }
+	#content_box .box_left .listView li:hover { background: rgba(255, 255, 255, .5); }
+	#content_box .box_left .listView .prompt i { font-size: 2rem; color:#fff;}
+	#content_box .box_left .listView li label { color: #fff !important; }
 	#content_box .box_right { width: 100%; }
 
 	/*登录注册块调整*/
-	#signin_box .content,#signup_box .content {
-		width:90%;
-		height:30%;
-	}
-	#btn_signin{
-		width:100%;
-	}
+	#signin_box .content, #signup_box .content { width: 90%; height: 30%; }
+	#btn_signin { width: 100%; }
 	#signup_box .close button, #signin_box .close button { width: 90%; height: 1.4rem; padding: 0 3px; }
 }

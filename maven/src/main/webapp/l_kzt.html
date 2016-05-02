@@ -171,8 +171,8 @@
                 </div>
                 </br>
                 <div class="col_12 ele ele3">
-                    <label class="col_2 textright" for="expect_fare">期望费用</label>
-                    <input class="col_10 omega" id="expect_fare" type="text" placeholder="请输入期望费用">
+                    <label class="col_2 textright" for="expect_fare">期望运费</label>
+                    <input class="col_10 omega" id="expect_fare" type="text" placeholder="请输入期望运费">
                 </div>
                 </br>
                 <div class="col_12 ele ele4">
@@ -217,15 +217,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         var AllGlobal = window.top.AllGlobal;
-        $("#order_number").val("123456");
-        $("#start_time").val("2016-02-15");
-        $("#expect_end_time").val("2016-03-30");
-        $("#expect_fare").val("20000");
-        $("#description").val("description");
-        $("#start_address").val("some words about address");
-        $("#destination").val("nanjing");
-        $("#sketch").val("6");
-
+        var Prompt = window.top.Prompt;
 
         if (AllGlobal != null && AllGlobal != undefined) {} else {
             console.log("mediator undefined");
@@ -244,13 +236,13 @@
             o.destination = $("#destination").val();
             o.sketch = $("#sketch").val();
             o.company_id = AllGlobal.getUserInfo().id;
-
+            
             ajaxPost(url, o, function(data, textStatus, xhr) {
                 console.log(data);
                 if (data[0].status === "ok") {
-                    alert("发布成功");
+                    Prompt.alert("发布成功");
                 } else {
-                    alert(data[0].message);
+                    Prompt.alert(data[0].message);
                 }
             });
         });
