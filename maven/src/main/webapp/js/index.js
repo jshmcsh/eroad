@@ -692,6 +692,7 @@ function logic_detectsLogin() {
  * @return {[type]} [description]
  */
 function logic_showCarAround() {
+    var mockData = [];
     var ret = [];
     var dfd = $.Deferred();
     ret.push(dfd.promise());
@@ -699,6 +700,56 @@ function logic_showCarAround() {
     var prefix = AllGlobal.getPrefix();
     var url = prefix + 'company/show_car_around.erd';
     ajaxPost(url, null, function(data, textStatus, xhr) {
+        console.log(data);
+        mockData.push(data[0]);
+        mockData.push(data[1]);
+        
+            var o1 = {};
+            o1.car_number = "苏E123458";
+            o1.city = "南京市";
+            o1.id = "5";
+            o1.latitude = "32.057266";
+            o1.longtitude = "118.779691";
+            o1.phone_number = "";
+            o1.province = "";
+            o1.time = "2016/5/6 12:23:16";
+            o1.username = "吴明";
+            mockData.push(o1);        
+            var o2 = {};
+            o2.car_number = "苏E1880";
+            o2.city = "南京市";
+            o2.id = "7";
+            o2.latitude = "32.055399";
+            o2.longtitude = "118.77635";
+            o2.phone_number = "";
+            o2.province = "";
+            o2.time = "2016/5/6 12:23:16";
+            o2.username = "李文峰";
+            mockData.push(o2);        
+            var o3 = {};
+            o3.car_number = "苏A123459";
+            o3.city = "南京市";
+            o3.id = "9";
+            o3.latitude = "32.052982";
+            o3.longtitude = "118.783788";
+            o3.phone_number = "";
+            o3.province = "";
+            o3.time = "2016/5/6 12:23:16";
+            o3.username = "陈子川";
+            mockData.push(o3);        
+            var o4 = {};
+            o4.car_number = "苏E433428";
+            o4.city = "南京市";
+            o4.id = "10";
+            o4.latitude = "32.053502";
+            o4.longtitude = "118.772756";
+            o4.phone_number = "";
+            o4.province = "";
+            o4.time = "2016/5/6 12:23:16";
+            o4.username = "杨文义";
+            mockData.push(o4);
+        
+        data = mockData;
         if (data[0].status === "ok") {
             for (var i = 1; i < data.length; i++)
                 ret.push(data[i]);
