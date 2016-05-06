@@ -84,12 +84,11 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #content_box .box_right iframe { width: 100%; height: 100%; }
 #content_box .left_toggle { display: none; }
 
-/*登录内容框 #loginedContent*/
-#loginedContent iframe { width: 100%; height: 100%; }
-
 /*底部栏 #footer_box*/
 #footer_box .labels { width: 100%; text-align: center; position: absolute; bottom: 1px; }
 #footer_box .labels label { font-size: .5rem; }
+
+
 
 /*注册登录快公共*/
 #signup_box .content, #signin_box .content { width: 50%; height: 60%; margin: 0 auto; background: #fff; border: 3px solid #E41819; position: relative; overflow-x: hidden; }
@@ -110,9 +109,15 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 #signup_box .switch { display: none; position: absolute; bottom: 5px; width: 100%; text-align: center; }
 .left, .right { display: inline-block; width: 10px; height: 10px; background: #fff; }
 { width: 100%; height: 100%; }
-
+/*登录内容框 #loginedContent*/
+#loginedContent iframe { width: 100%; height: 100%; }
 /* 登录块 #signin_box */
 #signin_box .content header { width: 100%; height: 1.5rem; background: #E41819; color: #fff; line-height: 1.5rem; }
+#signin_box .form_signin { width: 100%; height: 88%; background: url(../img/bgk_material01.png) no-repeat; background-size: 125% 125%; background-position: 50% 50%; }
+#signin_box .form_signin .form_field { text-align: center; width: 60%; margin: 0 auto; }
+#signin_box .form_signin .form_field label{color:#000;}
+#signin_box .form_signin .form_field input{  border-bottom: 1px solid #000;}
+#signin_box .signin_btn { border-radius: 0; text-align: center; width: 100%; margin: 5px auto 0; }
 
 /*iphone 5s 竖屏*/
 @media screen and (max-device-width:320px) and (orientation:portrait) {
@@ -142,7 +147,7 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 	#content_box .box_left select { display: none; }
 	#content_box .box_left .listView li { background: rgba(200, 200, 200, .4); }
 	#content_box .box_left .listView ul li:hover { background: rgba(255, 255, 255, .5); }
-	#content_box .box_left .listView .prompt i { font-size: 1rem; color:#fff;}
+	#content_box .box_left .listView .prompt i { font-size: 1rem; color: #fff; }
 	#content_box .box_left .listView li label { color: #fff !important; }
 	#content_box .box_right { width: 100%; }
 
@@ -181,12 +186,14 @@ color: #EE0033; background: #EE0033; color: #E41819; background: #E41819; }
 	#content_box .box_left select { display: none; }
 	#content_box .box_left .listView li { background: rgba(200, 200, 200, .4); }
 	#content_box .box_left .listView li:hover { background: rgba(255, 255, 255, .5); }
-	#content_box .box_left .listView .prompt i { font-size: 2rem; color:#fff;}
+	#content_box .box_left .listView .prompt i { font-size: 2rem; color: #fff; }
 	#content_box .box_left .listView li label { color: #fff !important; }
 	#content_box .box_right { width: 100%; }
 
 	/*登录注册块调整*/
-	#signin_box .content, #signup_box .content { width: 90%; height: 30%; }
+	#signin_box .content, #signup_box .content { width: 90%; height: 70%; }
 	#btn_signin { width: 100%; }
+	#signin_box .form_signin .form_field{text-align: left; margin-top: 5px;}
+	#signin_box .form_signin .form_field input{  width:90%;}
 	#signup_box .close button, #signin_box .close button { width: 90%; height: 1.4rem; padding: 0 3px; }
 }

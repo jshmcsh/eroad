@@ -314,8 +314,9 @@ function pageInit() {
  */
 function init_UnloginedPage() {
     var cars = logic_showCarAround();
-    if (cars.length > 1) {
-        $.when(cars[0]).done(function() {
+
+    $.when(cars[0]).done(function() {
+        if (cars.length > 1) {
             var pointArr = [];
             var domStr = "";
             for (var i = 1; i < cars.length; i++) {
@@ -341,12 +342,13 @@ function init_UnloginedPage() {
                 AllGlobal.getMapPageCheckHelper().change();
             });
             $("#content_box .box_left .listView ul").html(domStr);
-        });
-    }else{
-        var domStr = "";
-        domStr += '<li><div class="line prompt"><i class="icon-inbox"> 无车辆</i></div></li>';
-        $("#content_box .box_left .listView ul").html(domStr);
-    }
+        } else {
+            var domStr = "";
+            domStr += '<li><div class="line prompt"><i class="icon-inbox"> 无车辆</i></div></li>';
+            $("#content_box .box_left .listView ul").html(domStr);
+        }
+    });
+
     //显示注册快
     $(".btn_signupbox").off('click').click(function(event) {
         $("#signup_box").toggleClass('display_none');
@@ -703,6 +705,7 @@ function logic_showCarAround() {
         }
         dfd.resolve();
     });
+
     return ret;
 }
 

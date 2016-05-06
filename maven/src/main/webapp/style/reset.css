@@ -38,7 +38,7 @@ background-color: #fff !important; -webkit-box-shadow: 0 0 0px 1000px white inse
 /*我的默认按钮样式*/
 input[type="submit"], button { border: 1px solid rgba(0, 0, 0, 0.4); background: #000; color: #fff; padding: 5px; border-radius: 1em; }
 input[type="submit"]:focus, button:focus { outline: none; }
-input[type="submit"]:hover, button:hover { background: #4fe268; color: #fff; cursor: pointer; }
+input[type="submit"]:hover, button:hover { background: #E41819; color: #fff; cursor: pointer; }
 
 /*我的默认超链接样式*/
 a { background: #C11B0B; color: #fff; font-size: .5em; text-align: center !important; border-radius: 1em; padding: 0; text-decoration: none; }
