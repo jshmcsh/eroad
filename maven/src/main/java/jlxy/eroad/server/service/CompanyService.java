@@ -112,7 +112,4 @@ public class CompanyService {
     public Sret throwException() {
         throw new IllegalStateException("错误的状态");
     }
-    
-    
-    
 }
